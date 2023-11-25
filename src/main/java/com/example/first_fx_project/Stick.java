@@ -1,18 +1,15 @@
 package com.example.first_fx_project;
 public class Stick {
-    static private int width;
+    static private int width = 20;
     private int length;
-    private int startPosition;
-    private int maxLength;
+    private Position position;
+    private int maxLength= 1000;
 
-    public Stick(int width, int length, int startPosition, int maxLength) {
-        this.width = width;
-        this.length = length;
-        this.startPosition = startPosition;
-        this.maxLength = maxLength;
+    public Stick() {
+        generateStick(5);
     }
 
-    public void extendStick(int length) {
+    public void generateStick(int length) {
         // Implement stick extension logic
     }
 

@@ -9,12 +9,14 @@ public class Player {
     private boolean isInverted;
     private boolean meterIsFull;
 
-    public Player(int length, int width, int speed, boolean isInverted, boolean meterIsFull) {
-        this.length = length;
-        this.width = width;
-        this.speed = speed;
-        this.isInverted = isInverted;
-        this.meterIsFull = meterIsFull;
+    private Position position;
+
+    public Player() {
+        this.position = new Position(500,100);
+    }
+
+    public void changePosition(Position position){
+        this.position = position;
     }
 
     public void invert() {

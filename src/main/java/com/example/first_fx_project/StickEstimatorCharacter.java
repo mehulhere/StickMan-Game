@@ -3,6 +3,6 @@ public class StickEstimatorCharacter extends Player{
     static private int maxMeter;
 
     public StickEstimatorCharacter(int length, int width, int speed, boolean isInverted, boolean meterIsFull) {
-        super(length, width, speed, isInverted, meterIsFull);
+        super();
     }
 }

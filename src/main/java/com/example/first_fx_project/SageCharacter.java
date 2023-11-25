@@ -3,6 +3,6 @@ public class SageCharacter extends Player{
     static private int maxMeter;
 
     public SageCharacter(int length, int width, int speed, boolean isInverted, boolean meterIsFull) {
-        super(length, width, speed, isInverted, meterIsFull);
+        super();
     }
 }

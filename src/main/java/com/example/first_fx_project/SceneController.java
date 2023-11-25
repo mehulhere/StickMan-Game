@@ -33,20 +33,22 @@ public class SceneController {
     }
 
     public void switchToGamePlayPage(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gamePlayPage.fxml"));
-        root = fxmlLoader.load(); // Set the loaded FXML as the root
+        GamePlayController stickHeroGame = new GamePlayController(); // Create an instance of StickHeroGame
+
+
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        stickHeroGame.start(stage); // Get the content of StickHeroGame
     }
 
+
     public void switchToCharacterPage(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("characterPage.fxml"));
-        root = fxmlLoader.load(); // Set the loaded FXML as the root
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gamePlayPage.fxml"));
+        Parent root = fxmlLoader.load();
+
+        GamePlayController controller = fxmlLoader.getController(); // Get the controller instance
+
+        stage.setTitle("Game Play Page");
+        stage.setScene(new Scene(root, 800, 600));
         stage.show();
     }
 

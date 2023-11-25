@@ -1,28 +1,24 @@
 package com.example.first_fx_project;
-public class Platform {
-    static private int length;
-    private int width;
-    private int midPosition;
-    private int startPosition;
-    private int endPosition;
-    static private int hitPointWidth;
-    private int hitPointStart;
-    private int hitPointEnd;
 
-    public Platform(int length, int width, int midPosition, int startPosition, int endPosition,
-                    int hitPointWidth, int hitPointStart, int hitPointEnd) {
-        this.length = length;
-        this.width = width;
-        this.midPosition = midPosition;
-        this.startPosition = startPosition;
-        this.endPosition = endPosition;
-        this.hitPointWidth = hitPointWidth;
-        this.hitPointStart = hitPointStart;
-        this.hitPointEnd = hitPointEnd;
+import java.util.Random;
+
+public class Platform {
+    Random random = new Random();
+    static private int height = 100;
+    private int width;
+
+    private Position position;
+
+
+    public Platform() { // Width should be between some particular values
+
     }
 
-    static public void generatePlatform() {
+    public void generatePlatform() {
         // Logic to generate the platform
+        this.width = random.nextInt(50) + 20;
+        int randomX = random.nextInt(100)+300;
+        this.position = new Position(randomX, height);
     }
 
     static public void removePlatform() {

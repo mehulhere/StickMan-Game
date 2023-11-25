@@ -29,9 +29,7 @@
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="32.0" layoutX="15.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="71.0" />
 
     <Circle centerX="400.0" centerY="520.0" fill="Red" layoutX="-335.0" layoutY="-489.0" radius="10.0" />
-   <Rectangle fx:id="platformRectangle3" height="100.0" layoutX="178.0" width="50.0" x="650.0" y="500.0" />
-   <Label layoutX="23.0" layoutY="23.0" text="Label" />
-   <Label layoutX="377.0" layoutY="110.0" text="Label" />
+    <Rectangle fx:id="platformRectangle3" height="100.0" layoutX="178.0" width="50.0" x="650.0" y="500.0" />
+    <Label layoutX="23.0" layoutY="23.0" text="Label" />
+    <Label layoutX="377.0" layoutY="110.0" text="Label" />
 </AnchorPane>
-
-

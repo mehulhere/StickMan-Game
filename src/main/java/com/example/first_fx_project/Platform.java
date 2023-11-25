@@ -9,21 +9,30 @@ public class Platform {
 
     private Position position;
 
-    private int midX; //Mid-point of the piller
+    private int midX; //Mid-point of the platform
 
     private boolean currentPlatform;
+    private boolean invisiblePlatform;
 
-    public Platform(boolean currentPlatform) { // Width should be between some particular values
-        this.currentPlatform=currentPlatform;
+    public Platform(int platformNumber) { // Width should be between some particular values
+        if (platformNumber == 1){
+            this.currentPlatform=true;
+        }
+        else if (platformNumber == 3){
+            this.invisiblePlatform=true;
+        }
         platformDefine();
     }
 
     public void platformDefine() {
         if(currentPlatform){
-            midX = 10;
+            midX = 125;
+        }
+        else if(invisiblePlatform){
+            midX = random.nextInt(1000,1200);
         }
         else{
-            midX = random.nextInt(200,600);
+            midX = random.nextInt(300,600);
         }
         this.width = random.nextInt(20,100);
         this.position = new Position(midX-width/2, height);

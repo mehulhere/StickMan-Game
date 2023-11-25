@@ -40,7 +40,7 @@ public class GamePlayController extends SceneController{
     private Button invertPlayerButton;
 
     @FXML
-    private Rectangle platformRectangle1;
+    public Rectangle platformRectangle1;
 
     @FXML
     private Rectangle platformRectangle2;
@@ -102,6 +102,7 @@ public class GamePlayController extends SceneController{
             timeline.play();
         }
     }
+
 
 
 

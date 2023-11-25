@@ -9,7 +9,7 @@
 
 <AnchorPane id="firstController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.GamePlayController">
     <!-- Pillars at the bottom -->
-    <Rectangle fx:id="platformRectangle1" height="100.0" layoutX="-30.0" width="50.0" x="100.0" y="500.0" />
+    <Rectangle fx:id="platformRectangle1" height="100.0" width="50.0" x="70.0" y="500.0" />
     <Rectangle fx:id="platformRectangle2" height="100.0" width="50.0" x="650.0" y="500.0" />
 
     <!-- Rectangle for the player above the first pillar -->

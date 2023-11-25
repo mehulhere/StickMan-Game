@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class SceneController {
     private Scene scene;
     private Parent root;
 
-    public void switchToPausePage(ActionEvent event) throws IOException {
+    public void switchToPausePage(MouseEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pausePage.fxml"));
         root = fxmlLoader.load(); // Set the loaded FXML as the root
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -32,12 +33,15 @@ public class SceneController {
         stage.show();
     }
 
-    public void switchToGamePlayPage(ActionEvent event) throws IOException {
-        GamePlayController stickHeroGame = new GamePlayController(); // Create an instance of StickHeroGame
+    public void switchToGamePlayPage(ActionEvent event) throws Exception {
 
-
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gamePlayPage.fxml"));
+        root = fxmlLoader.load(); // Set the loaded FXML as the root
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stickHeroGame.start(stage); // Get the content of StickHeroGame
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
     }
 
 

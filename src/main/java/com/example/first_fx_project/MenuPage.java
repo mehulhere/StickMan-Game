@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class MenuPage extends Application {
     private GraphicsContext g;
 
@@ -13,7 +15,7 @@ public class MenuPage extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("menuPage.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("menuPage.fxml")));
         primaryStage.setTitle("Stick Hero Menu");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();

@@ -9,16 +9,24 @@ public class Platform {
 
     private Position position;
 
+    private int midX; //Mid-point of the piller
 
-    public Platform() { // Width should be between some particular values
+    private boolean currentPlatform;
 
+    public Platform(boolean currentPlatform) { // Width should be between some particular values
+        this.currentPlatform=currentPlatform;
+        platformDefine();
     }
 
-    public void generatePlatform() {
-        // Logic to generate the platform
-        this.width = random.nextInt(50) + 20;
-        int randomX = random.nextInt(100)+300;
-        this.position = new Position(randomX, height);
+    public void platformDefine() {
+        if(currentPlatform){
+            midX = 10;
+        }
+        else{
+            midX = random.nextInt(200,600);
+        }
+        this.width = random.nextInt(20,100);
+        this.position = new Position(midX-width/2, height);
     }
 
     static public void removePlatform() {
@@ -26,5 +34,53 @@ public class Platform {
     }
 
     // Getters and setters for the attributes
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
+    public static int getHeight() {
+        return height;
+    }
+
+    public static void setHeight(int height) {
+        Platform.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public int getMidX() {
+        return midX;
+    }
+
+    public void setMidX(int midX) {
+        this.midX = midX;
+    }
+
+    public boolean isCurrentPlatform() {
+        return currentPlatform;
+    }
+
+    public void setCurrentPlatform(boolean currentPlatform) {
+        this.currentPlatform = currentPlatform;
+    }
 }
 

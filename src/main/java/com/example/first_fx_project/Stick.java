@@ -6,7 +6,7 @@ public class Stick {
     private int maxLength= 1000;
 
     public Stick() {
-        generateStick(5);
+        generateStick(0);
     }
 
     public void generateStick(int length) {

@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SceneController {
-    public ImageView imgDefaultCharacter;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -46,6 +45,8 @@ public class SceneController {
         Player player = new Player();
         GamePlayController gamePlayController = fxmlLoader.getController();
 
+        DefaultCharacter defaultCharacter = new DefaultCharacter(gamePlayController.getImgDefaultCharacter());
+
         gamePlayController.getPlatformRectangle1().setX(platform1.getPosition().getX());
         gamePlayController.getPlatformRectangle1().setWidth(platform1.getWidth());
         gamePlayController.getPlatformRectangle2().setX(platform2.getPosition().getX());
@@ -70,7 +71,6 @@ public class SceneController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     public void switchToCharacterPage(ActionEvent event) throws IOException {

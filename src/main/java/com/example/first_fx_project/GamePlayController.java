@@ -1,27 +1,16 @@
 package com.example.first_fx_project;
 
 import javafx.animation.*;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.util.Duration;
-
-import java.io.IOException;
 
 public class GamePlayController extends SceneController{
 
@@ -55,31 +44,118 @@ public class GamePlayController extends SceneController{
     private Platform platform1;
     private Platform platform2;
     private Platform platform3;
-    @FXML
+
     private Stick stick1;
-    @FXML
+
     private Stick stick2;
     private Player player;
 
+    private int totalIncrement;
 
-    public Line getStickLine1() {
-        return stickLine1;
+    private int invisiblePlatform = 0;
+    private int targetPlatform = 0;
+
+    public Line getStickLine() {
+        if (stick1.isCurrentStick()) {
+            return stickLine1;
+        }
+        else{
+            return stickLine2;
+        }
     }
+
 
     public ImageView getImgDefaultCharacter() {
         return imgDefaultCharacter;
     }
 
-    public Rectangle getPlatformRectangle1() {
+    public Rectangle getCurrentPlatformRectangle() {
+        if (platform1.getPlatformType() == 1) {
+            return platformRectangle1;
+        }
+        else if (platform2.getPlatformType() == 1){
+            return platformRectangle2;
+        }
+        else if (platform3.getPlatformType() == 1){
+            return platformRectangle3;
+        }
+        System.exit(1);
         return platformRectangle1;
     }
 
-    public Rectangle getPlatformRectangle2() {
-        return platformRectangle2;
+    public Rectangle getTargetPlatformRectangle() {
+        if (platform1.getPlatformType() == 2) {
+            return platformRectangle1;
+        }
+        else if (platform2.getPlatformType() == 2){
+            return platformRectangle2;
+        }
+        else if (platform3.getPlatformType() == 2){
+            return platformRectangle3;
+        }
+        System.out.println("Hello");
+        System.exit(1);
+        return platformRectangle1;
     }
 
-    public Rectangle getPlatformRectangle3() {
-        return platformRectangle3;
+    public Platform getInvisiblePlatform() {
+        if(platform1.getPlatformType() == 3){
+            return platform1;
+        }
+        else if(platform2.getPlatformType() == 3){
+            return platform2;
+        }
+        else if(platform3.getPlatformType() == 3){
+            return platform3;
+        }
+        System.out.println("Hello");
+        System.exit(1);
+        return platform1;
+    }
+
+    public Platform getTargetPlatform() {
+        if(platform1.getPlatformType() == 2){
+            return platform1;
+        }
+        else if(platform2.getPlatformType() == 2){
+            return platform2;
+        }
+        else if(platform3.getPlatformType() == 2){
+            return platform3;
+        }
+        System.out.println("Hello");
+        System.exit(1);
+        return platform1;
+    }
+
+    public Platform getCurrentPlatform() {
+        if(platform1.getPlatformType() == 1){
+            return platform1;
+        }
+        else if(platform2.getPlatformType() == 1){
+            return platform2;
+        }
+        else if(platform3.getPlatformType() == 1){
+            return platform3;
+        }
+        System.out.println("Hlo");
+        System.exit(1);
+        return platform1;
+    }
+
+    public Rectangle getInvsiblePlatformRectangle() {
+        if(platform1.getPlatformType() == 3){
+            return platformRectangle1;
+        }
+        else if(platform2.getPlatformType() == 3){
+            return platformRectangle2;
+        }
+        else if(platform3.getPlatformType() == 3){
+            return platformRectangle3;
+        }
+        System.out.println("Hello1");
+        System.exit(1);
+        return platformRectangle1;
     }
 
 
@@ -88,8 +164,8 @@ public class GamePlayController extends SceneController{
         platform1 = new Platform(1); // Initialize with appropriate parameters
         platform2 = new Platform(2); // Initialize with appropriate parameters
         platform3 = new Platform(3); // Initialize with appropriate parameters
-        stick1 = new Stick(); // Initialize with appropriate parameters
-        stick2 = new Stick(); // Initialize with appropriate parameters
+        stick1 = new Stick(true); // Initialize with appropriate parameters
+        stick2 = new Stick(false); // Initialize with appropriate parameters
         player = new Player(); // Initialize with appropriate parameters
 
         // Now you can use these objects in your controller as needed
@@ -100,19 +176,22 @@ public class GamePlayController extends SceneController{
         platformRectangle2.setWidth(platform2.getWidth());
         platformRectangle3.setX(platform3.getPosition().getX());
         platformRectangle3.setWidth(platform3.getWidth());
+        initializeStick();
 
+    }
 
-        int stickStartX = 0;
-        if (platform1.isCurrentPlatform()) {
-            stickStartX = platform1.getPosition().getX() + platform1.getWidth() - 5;
-        } else if (platform2.isCurrentPlatform()) {
-            stickStartX = platform2.getPosition().getX() + platform2.getWidth() - 5 ;
-        }
-        if (platform3.isCurrentPlatform()) {
-            stickStartX = platform3.getPosition().getX() + platform3.getWidth() - 5;
-        }
-        getStickLine1().setStartX(stickStartX);
-        getStickLine1().setEndX(stickStartX);
+    private void initializeStick() {
+        int stickStartX = getCurrentPlatform().getPosition().getX() + getCurrentPlatform().getWidth() - 3;
+        System.out.println("K: " +getCurrentPlatform().getWidth());
+        System.out.println("<E<E<E<E: "+stickStartX + totalIncrement);
+        getStickLine().getTransforms().clear();
+        getStickLine().setEndY(getStickLine().getStartY());
+
+        getStickLine().setStartX(stickStartX + totalIncrement);
+        getStickLine().setEndX(stickStartX + 1 + totalIncrement);
+        System.out.println(stickLine2.getStartX());
+
+        System.out.println(stickLine1.getStartX());
     }
 
     @FXML
@@ -120,7 +199,7 @@ public class GamePlayController extends SceneController{
         if (event.getCode() == KeyCode.SPACE) {
             Timeline timeline = new Timeline();
             timeline.getKeyFrames().clear(); // Clear existing keyframes
-            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.03), new KeyValue(stickLine1.endYProperty(), stickLine1.getEndY() - 10)));
+            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.03), new KeyValue(getStickLine().endYProperty(), getStickLine().getEndY() - 10)));
             timeline.play();
         }
     }
@@ -132,12 +211,9 @@ public class GamePlayController extends SceneController{
     }
 
     boolean checkStickCollision() {
-        double stickLength = stickLine1.getStartY() - stickLine1.getEndY();
-        double stickX = stickLength + stickLine1.getStartX();
-        System.out.println(stickX);
-        System.out.println(platformRectangle2.getX());
-        System.out.println(platformRectangle2.getX() + platformRectangle2.getWidth());
-        if (stickX > platformRectangle2.getX() && stickX < (platformRectangle2.getX() + platformRectangle2.getWidth())) {
+        double stickLength = getStickLine().getStartY() - getStickLine().getEndY();
+        double stickX = stickLength + getStickLine().getStartX();
+        if (stickX > getTargetPlatformRectangle().getX() && stickX < (getTargetPlatformRectangle().getX() + getTargetPlatformRectangle().getWidth())) {
             //score ++
             //check collision with hitPoint
             //Player Moves
@@ -147,29 +223,67 @@ public class GamePlayController extends SceneController{
             return true;
         }
         System.out.println("NO Collision!! DONT RUN");
+        changeScene();
         return false;
     }
 
 
     void changeScene(){
-        int increment = platform2.getMidX() - 125;
+        int increment = getTargetPlatform().getMidX() - 125;
+        System.out.println("I AM MOVING"+ increment);
         // Create a TranslateTransition for the AnchorPane
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
         translateTransition.setToX(movableComponents.getTranslateX() - increment);
         translateTransition.play();
+        totalIncrement += increment;
+
+        translateTransition.setOnFinished(event -> {
+            redefineVariables(increment);
+            extendStickButton.setDisable(false);
+        });
         }
+
+
+    private void invertStickConfiguration() {
+        if (stick1.isCurrentStick()){
+            stick1.setCurrentStick(false);
+            stick2.setCurrentStick(true);
+        }
+        else{
+            stick1.setCurrentStick(true);
+            stick2.setCurrentStick(false);
+        }
+    }
+
+    private void redefineVariables(int increment) {
+        platform1.redefinePosition(increment);
+        platform2.redefinePosition(increment);
+        platform3.redefinePosition(increment);
+
+        invertStickConfiguration(); //Inverts currentStick Variable
+        initializeStick(); //
+        initializeInvisiblePlatform();
+       // stick1.redefinePosition(increment);
+       // stick2.redefinePosition(increment);
+    }
+
+    private void initializeInvisiblePlatform() {
+        getInvsiblePlatformRectangle().setX(getInvisiblePlatform().getPosition().getX()+totalIncrement);
+        getInvsiblePlatformRectangle().setWidth(getInvisiblePlatform().getWidth());
+
+    }
 
 
     @FXML
     void rotateStick(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE){
             extendStickButton.setDisable(true);
-            invertPlayerButton.setDisable(false);
+            //invertPlayerButton.setDisable(false);
             Rotate rotate = new Rotate();
-            rotate.setPivotX(stickLine1.getStartX());
-            rotate.setPivotY(stickLine1.getStartY());
+            rotate.setPivotX(getStickLine().getStartX());
+            rotate.setPivotY(getStickLine().getStartY());
 
-            stickLine1.getTransforms().add(rotate);
+            getStickLine().getTransforms().add(rotate);
 
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.ZERO, new KeyValue(rotate.angleProperty(), 0)),
@@ -177,13 +291,11 @@ public class GamePlayController extends SceneController{
             );
 
             timeline.setCycleCount(1);
-            timeline.setCycleCount(1);
 
             timeline.setOnFinished(e -> {
                 checkStickCollision(); // Call the collision check after animation finishes
             });
 
-            timeline.play();
             timeline.play();
         }
     }

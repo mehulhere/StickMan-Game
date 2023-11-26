@@ -5,8 +5,12 @@ public class Stick {
     private Position position;
     private int maxLength= 1000;
 
-    public Stick() {
-        generateStick(0);
+    private boolean currentStick;
+
+
+
+    public Stick(boolean currentStick) {
+        this.currentStick = currentStick;
     }
 
     public void generateStick(int length) {
@@ -18,5 +22,13 @@ public class Stick {
     }
 
     // Getters and setters for the class properties (width, length, startPosition, maxLength)
+    public boolean isCurrentStick() {
+        return currentStick;
+    }
+
+    public void setCurrentStick(boolean currentStick) {
+        this.currentStick = currentStick;
+    }
 }
+
 

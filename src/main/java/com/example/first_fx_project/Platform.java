@@ -29,12 +29,12 @@ public class Platform {
             midX = 125;
         }
         else if(invisiblePlatform){
-            midX = random.nextInt(1000,1200);
+            midX = random.nextInt(900,1000);
         }
         else{
             midX = random.nextInt(300,600);
         }
-        this.width = random.nextInt(20,100);
+        this.width = random.nextInt(80,150);
         this.position = new Position(midX-width/2, height);
     }
 

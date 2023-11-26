@@ -49,6 +49,7 @@ public class GamePlayController extends SceneController{
 
     private Stick stick2;
     private Player player;
+    private GameMechanics gameMechanics;
 
     private int totalIncrement;
 
@@ -158,6 +159,7 @@ public class GamePlayController extends SceneController{
         return platformRectangle1;
     }
 
+    public DefaultCharacter defaultCharacter;
 
     @FXML
     public void initialize() {
@@ -167,6 +169,8 @@ public class GamePlayController extends SceneController{
         stick1 = new Stick(true); // Initialize with appropriate parameters
         stick2 = new Stick(false); // Initialize with appropriate parameters
         player = new Player(); // Initialize with appropriate parameters
+        defaultCharacter = new DefaultCharacter(this, imgDefaultCharacter);
+        gameMechanics = new GameMechanics(this);
 
         // Now you can use these objects in your controller as needed
         // For example:
@@ -205,55 +209,63 @@ public class GamePlayController extends SceneController{
     }
 
     @FXML
+    void stopExtendStick(KeyEvent event) {
+        if (event.getCode() == KeyCode.SPACE) {
+            extendStickButton.setDisable(true);
+            invertPlayerButton.setDisable(false);
+            rotateStick(0);
+        }
+    }
+
+    @FXML
     void invertPlayer(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE) {
+            defaultCharacter.invert();
         }
     }
 
     boolean checkStickCollision() {
-        double stickLength = getStickLine().getStartY() - getStickLine().getEndY();
-        double stickX = stickLength + getStickLine().getStartX();
-        if (stickX > getTargetPlatformRectangle().getX() && stickX < (getTargetPlatformRectangle().getX() + getTargetPlatformRectangle().getWidth())) {
-            //score ++
-            //check collision with hitPoint
-            //Player Moves
-            //Calls Scenes Change
-            System.out.println("Collision!! RUN");
-            changeScene();
-            return true;
-        }
-        System.out.println("NO Collision!! DONT RUN");
-        changeScene();
-        return false;
+        return gameMechanics.checkCollision(getStickLine(), platformRectangle2, platform2);
+    }
+
+    void playerMove(double increment){
+        defaultCharacter.move(increment, platform2, stickLine1);
+    }
+
+
+   // void changeScene(){
+      //  int increment = getTargetPlatform().getMidX() - 125;
+        //System.out.println("I AM MOVING"+ increment);
+        // Create a TranslateTransition for the AnchorPane
+        //TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
+        //translateTransition.setToX(movableComponents.getTranslateX() - increment);
+        //translateTransition.play();
+        //totalIncrement += increment;
+
+        //translateTransition.setOnFinished(event -> {
+          //  redefineVariables(increment);
+           // extendStickButton.setDisable(false);
+        //});
+        //}
+    void playerFall(){
+        defaultCharacter.fall();
     }
 
 
     void changeScene(){
-        int increment = getTargetPlatform().getMidX() - 125;
-        System.out.println("I AM MOVING"+ increment);
-        // Create a TranslateTransition for the AnchorPane
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
-        translateTransition.setToX(movableComponents.getTranslateX() - increment);
-        translateTransition.play();
-        totalIncrement += increment;
-
-        translateTransition.setOnFinished(event -> {
-            redefineVariables(increment);
-            extendStickButton.setDisable(false);
-        });
-        }
-
-
-    private void invertStickConfiguration() {
-        if (stick1.isCurrentStick()){
-            stick1.setCurrentStick(false);
-            stick2.setCurrentStick(true);
-        }
-        else{
-            stick1.setCurrentStick(true);
-            stick2.setCurrentStick(false);
-        }
+        gameMechanics.changeScene(platform2, movableComponents);
     }
+
+    // private void invertStickConfiguration() {
+    //     if (stick1.isCurrentStick()){
+    //         stick1.setCurrentStick(false);
+    //         stick2.setCurrentStick(true);
+    //     }
+    //     else{
+    //         stick1.setCurrentStick(true);
+    //         stick2.setCurrentStick(false);
+    //     }
+    // }
 
     private void redefineVariables(int increment) {
         platform1.redefinePosition(increment);
@@ -275,33 +287,32 @@ public class GamePlayController extends SceneController{
 
 
     @FXML
-    void rotateStick(KeyEvent event) {
-        if (event.getCode() == KeyCode.SPACE){
-            extendStickButton.setDisable(true);
-            //invertPlayerButton.setDisable(false);
-            Rotate rotate = new Rotate();
-            rotate.setPivotX(getStickLine().getStartX());
-            rotate.setPivotY(getStickLine().getStartY());
+    void rotateStick(int num) {
+        Rotate rotate = new Rotate();
+        extendStickButton.setDisable(true);
+        rotate.setPivotX(stickLine1.getStartX());
+        rotate.setPivotY(stickLine1.getStartY());
 
-            getStickLine().getTransforms().add(rotate);
+        getStickLine().getTransforms().add(rotate);
 
-            Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(rotate.angleProperty(), 0)),
-                    new KeyFrame(Duration.seconds(1), new KeyValue(rotate.angleProperty(), 90))
-            );
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(rotate.angleProperty(), 0)),
+                new KeyFrame(Duration.seconds(1), new KeyValue(rotate.angleProperty(), 90))
+        );
 
-            timeline.setCycleCount(1);
 
+        timeline.setCycleCount(1);
+
+
+        if(num == 0){
             timeline.setOnFinished(e -> {
                 checkStickCollision(); // Call the collision check after animation finishes
             });
 
-            timeline.play();
         }
+
+        timeline.play();
     }
-
-
-
 
 }
 

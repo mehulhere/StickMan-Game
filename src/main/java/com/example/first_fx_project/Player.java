@@ -1,6 +1,9 @@
 package com.example.first_fx_project;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Line;
+import javafx.util.Duration;
 
 public class Player {
 
@@ -11,33 +14,60 @@ public class Player {
     static private int speed;
     private boolean isInverted;
     private boolean meterIsFull;
-
     private Position position;
+    GamePlayController gamePlayController;
+    ImageView image;
+    boolean isFlipped = false;
 
-    public Player() {
-        this.position = new Position(500,100);
+    public Player(GamePlayController gamePlayController, ImageView image) {
+        this.gamePlayController = gamePlayController;
+        this.image = image;
     }
 
-    public void changePosition(Position position){
-        this.position = position;
+    public void move(double increment, Platform platform2, Line stickLine1) {
+        if(increment == platform2.getMidX() - 125){
+            // Create a TranslateTransition for the AnchorPane
+            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), image);
+            translateTransition.setToX(image.getTranslateX() + increment);
+            translateTransition.play();
+
+            translateTransition.setOnFinished(event -> {
+                gamePlayController.changeScene();
+            });
+        }
+
+        else{
+
+            double increment2  = increment + (stickLine1.getStartX() - image.getX() - image.getFitWidth());
+            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), image);
+            translateTransition.setToX(image.getTranslateX() + increment2);
+            translateTransition.play();
+
+            translateTransition.setOnFinished(event -> {
+                gamePlayController.rotateStick(1);
+                gamePlayController.playerFall();
+            });
+        }
     }
 
-    public void invert(ImageView image) {
-        image.setScaleX(-1);
+    public void fall(){
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), image);
+        translateTransition.setToY(image.getTranslateY() + 150);
+        translateTransition.play();
     }
 
-    public int createStick(double time) {
-        // Implement stick creation based on time
-        // Return stick length
-        return 0;
-    }
+    public void invert() {
+        image.getTransforms().clear();
 
-    public void move() {
-        // Implement movement logic
-    }
-
-    public void stop() {
-        // Implement stop logic
+        // Apply the transformation to the ImageView
+        if(image.getScaleY() == -1){
+            image.setTranslateY(0);
+            image.setScaleY(1);
+        }
+        else{
+            image.setTranslateY(image.getFitHeight());
+            image.setScaleY(-1);
+        }
     }
 
     // Getters and setters can be added for the private fields

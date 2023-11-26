@@ -63,6 +63,14 @@ public class SceneController {
         stage.show();
     }
 
+    public void switchToGameOverPage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("themesPage.fxml"));
+        root = fxmlLoader.load(); // Set the loaded FXML as the root
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void exitGame(ActionEvent event) throws IOException {
         System.exit(0);
     }

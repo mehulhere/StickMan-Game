@@ -60,6 +60,7 @@ public class GamePlayController extends SceneController{
     @FXML
     private Stick stick2;
     private Player player;
+    private GameMechanics gameMechanics;
 
 
     public Line getStickLine1() {
@@ -82,6 +83,7 @@ public class GamePlayController extends SceneController{
         return platformRectangle3;
     }
 
+    public DefaultCharacter defaultCharacter;
 
     @FXML
     public void initialize() {
@@ -90,7 +92,8 @@ public class GamePlayController extends SceneController{
         platform3 = new Platform(3); // Initialize with appropriate parameters
         stick1 = new Stick(); // Initialize with appropriate parameters
         stick2 = new Stick(); // Initialize with appropriate parameters
-        player = new Player(); // Initialize with appropriate parameters
+        defaultCharacter = new DefaultCharacter(this, imgDefaultCharacter);
+        gameMechanics = new GameMechanics(this);
 
         // Now you can use these objects in your controller as needed
         // For example:
@@ -100,7 +103,6 @@ public class GamePlayController extends SceneController{
         platformRectangle2.setWidth(platform2.getWidth());
         platformRectangle3.setX(platform3.getPosition().getX());
         platformRectangle3.setWidth(platform3.getWidth());
-
 
         int stickStartX = 0;
         if (platform1.isCurrentPlatform()) {
@@ -126,70 +128,59 @@ public class GamePlayController extends SceneController{
     }
 
     @FXML
+    void stopExtendStick(KeyEvent event) {
+        if (event.getCode() == KeyCode.SPACE) {
+            extendStickButton.setDisable(true);
+            invertPlayerButton.setDisable(false);
+            rotateStick(0);
+        }
+    }
+
+    @FXML
     void invertPlayer(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE) {
+            defaultCharacter.invert();
         }
     }
 
     boolean checkStickCollision() {
-        double stickLength = stickLine1.getStartY() - stickLine1.getEndY();
-        double stickX = stickLength + stickLine1.getStartX();
-        System.out.println(stickX);
-        System.out.println(platformRectangle2.getX());
-        System.out.println(platformRectangle2.getX() + platformRectangle2.getWidth());
-        if (stickX > platformRectangle2.getX() && stickX < (platformRectangle2.getX() + platformRectangle2.getWidth())) {
-            //score ++
-            //check collision with hitPoint
-            //Player Moves
-            //Calls Scenes Change
-            System.out.println("Collision!! RUN");
-            changeScene();
-            return true;
-        }
-        System.out.println("NO Collision!! DONT RUN");
-        return false;
+        return gameMechanics.checkCollision(stickLine1, platformRectangle2, platform2);
     }
 
+    void playerMove(double increment){
+        defaultCharacter.move(increment, platform2, stickLine1);
+    }
+
+    void playerFall(){
+        defaultCharacter.fall();
+    }
 
     void changeScene(){
-        int increment = platform2.getMidX() - 125;
-        // Create a TranslateTransition for the AnchorPane
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
-        translateTransition.setToX(movableComponents.getTranslateX() - increment);
-        translateTransition.play();
-        }
+        gameMechanics.changeScene(platform2, movableComponents);
+    }
 
+    void rotateStick(int num) {
+        Rotate rotate = new Rotate();
+        rotate.setPivotX(stickLine1.getStartX());
+        rotate.setPivotY(stickLine1.getStartY());
 
-    @FXML
-    void rotateStick(KeyEvent event) {
-        if (event.getCode() == KeyCode.SPACE){
-            extendStickButton.setDisable(true);
-            invertPlayerButton.setDisable(false);
-            Rotate rotate = new Rotate();
-            rotate.setPivotX(stickLine1.getStartX());
-            rotate.setPivotY(stickLine1.getStartY());
+        stickLine1.getTransforms().add(rotate);
 
-            stickLine1.getTransforms().add(rotate);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(rotate.angleProperty(), 0)),
+                new KeyFrame(Duration.seconds(1), new KeyValue(rotate.angleProperty(), 90))
+        );
 
-            Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(rotate.angleProperty(), 0)),
-                    new KeyFrame(Duration.seconds(1), new KeyValue(rotate.angleProperty(), 90))
-            );
+        timeline.setCycleCount(1);
 
-            timeline.setCycleCount(1);
-            timeline.setCycleCount(1);
-
+        if(num == 0){
             timeline.setOnFinished(e -> {
                 checkStickCollision(); // Call the collision check after animation finishes
             });
-
-            timeline.play();
-            timeline.play();
         }
+
+        timeline.play();
     }
-
-
-
 
 }
 

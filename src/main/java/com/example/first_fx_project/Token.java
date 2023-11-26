@@ -5,9 +5,7 @@ package com.example.first_fx_project;
         private int width;
 
         public Token(int position, int height, int width) {
-            this.position = position;
-            this.height = height;
-            this.width = width;
+
         }
 
         public void generateToken() {

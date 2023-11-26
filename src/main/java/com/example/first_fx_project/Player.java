@@ -1,4 +1,7 @@
 package com.example.first_fx_project;
+
+import javafx.scene.image.ImageView;
+
 public class Player {
 
     Stick stick;
@@ -19,8 +22,8 @@ public class Player {
         this.position = position;
     }
 
-    public void invert() {
-        // Implement inversion logic
+    public void invert(ImageView image) {
+        image.setScaleX(-1);
     }
 
     public int createStick(double time) {

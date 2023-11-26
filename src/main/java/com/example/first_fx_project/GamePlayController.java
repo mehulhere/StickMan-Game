@@ -66,6 +66,10 @@ public class GamePlayController extends SceneController{
         return stickLine1;
     }
 
+    public ImageView getImgDefaultCharacter() {
+        return imgDefaultCharacter;
+    }
+
     public Rectangle getPlatformRectangle1() {
         return platformRectangle1;
     }
@@ -124,7 +128,6 @@ public class GamePlayController extends SceneController{
     @FXML
     void invertPlayer(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE) {
-
         }
     }
 
@@ -161,6 +164,7 @@ public class GamePlayController extends SceneController{
     void rotateStick(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE){
             extendStickButton.setDisable(true);
+            invertPlayerButton.setDisable(false);
             Rotate rotate = new Rotate();
             rotate.setPivotX(stickLine1.getStartX());
             rotate.setPivotY(stickLine1.getStartY());

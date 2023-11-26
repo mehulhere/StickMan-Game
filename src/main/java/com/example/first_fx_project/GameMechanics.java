@@ -1,6 +1,7 @@
 package com.example.first_fx_project;
 
 import javafx.animation.TranslateTransition;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -13,13 +14,18 @@ public class GameMechanics {
         this.gamePlayController = gamePlayController;
     }
 
-    public void changeScene(Platform platform2, AnchorPane movableComponents){
-        int increment = platform2.getMidX() - 125;
-        // Create a TranslateTransition for the AnchorPane
+    public void changeScene(AnchorPane movableComponents, int increment, Button extendStickButton){
+        //Create a TranslateTransition for the AnchorPane
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
         translateTransition.setToX(movableComponents.getTranslateX() - increment);
         translateTransition.play();
+        translateTransition.setOnFinished(event -> {
+            gamePlayController.redefineVariables(increment);
+            extendStickButton.setDisable(false);
+        });
     }
+
+
 
     public boolean checkCollision(Line stickLine1, Rectangle platformRectangle2, Platform platform2){
 

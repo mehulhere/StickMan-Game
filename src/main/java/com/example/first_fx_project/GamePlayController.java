@@ -53,8 +53,6 @@ public class GamePlayController extends SceneController{
 
     private int totalIncrement;
 
-    private int invisiblePlatform = 0;
-    private int targetPlatform = 0;
 
     public Line getStickLine() {
         if (stick1.isCurrentStick()) {
@@ -168,7 +166,7 @@ public class GamePlayController extends SceneController{
         platform3 = new Platform(3); // Initialize with appropriate parameters
         stick1 = new Stick(true); // Initialize with appropriate parameters
         stick2 = new Stick(false); // Initialize with appropriate parameters
-        player = new Player(); // Initialize with appropriate parameters
+        player = new Player(this, imgDefaultCharacter); // Initialize with appropriate parameters
         defaultCharacter = new DefaultCharacter(this, imgDefaultCharacter);
         gameMechanics = new GameMechanics(this);
 
@@ -224,50 +222,39 @@ public class GamePlayController extends SceneController{
         }
     }
 
-    boolean checkStickCollision() {
-        return gameMechanics.checkCollision(getStickLine(), platformRectangle2, platform2);
+    void checkStickCollision() {
+        gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform());
     }
 
     void playerMove(double increment){
-        defaultCharacter.move(increment, platform2, stickLine1);
+        defaultCharacter.move(increment, getTargetPlatform(), getStickLine());
     }
 
 
-   // void changeScene(){
-      //  int increment = getTargetPlatform().getMidX() - 125;
-        //System.out.println("I AM MOVING"+ increment);
-        // Create a TranslateTransition for the AnchorPane
-        //TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
-        //translateTransition.setToX(movableComponents.getTranslateX() - increment);
-        //translateTransition.play();
-        //totalIncrement += increment;
 
-        //translateTransition.setOnFinished(event -> {
-          //  redefineVariables(increment);
-           // extendStickButton.setDisable(false);
-        //});
-        //}
     void playerFall(){
         defaultCharacter.fall();
     }
 
 
     void changeScene(){
-        gameMechanics.changeScene(platform2, movableComponents);
+        int increment = getTargetPlatform().getMidX() - 125;
+        gameMechanics.changeScene(movableComponents, increment, extendStickButton);
+        totalIncrement += increment;
     }
 
-    // private void invertStickConfiguration() {
-    //     if (stick1.isCurrentStick()){
-    //         stick1.setCurrentStick(false);
-    //         stick2.setCurrentStick(true);
-    //     }
-    //     else{
-    //         stick1.setCurrentStick(true);
-    //         stick2.setCurrentStick(false);
-    //     }
-    // }
+     private void invertStickConfiguration() {
+        if (stick1.isCurrentStick()){
+             stick1.setCurrentStick(false);
+             stick2.setCurrentStick(true);
+        }
+      else{
+            stick1.setCurrentStick(true);
+            stick2.setCurrentStick(false);
+       }
+     }
 
-    private void redefineVariables(int increment) {
+    void redefineVariables(int increment) {
         platform1.redefinePosition(increment);
         platform2.redefinePosition(increment);
         platform3.redefinePosition(increment);
@@ -275,8 +262,7 @@ public class GamePlayController extends SceneController{
         invertStickConfiguration(); //Inverts currentStick Variable
         initializeStick(); //
         initializeInvisiblePlatform();
-       // stick1.redefinePosition(increment);
-       // stick2.redefinePosition(increment);
+
     }
 
     private void initializeInvisiblePlatform() {
@@ -314,5 +300,12 @@ public class GamePlayController extends SceneController{
         timeline.play();
     }
 
+    public int getTotalIncrement() {
+        return totalIncrement;
+    }
+
+    public void setTotalIncrement(int totalIncrement) {
+        this.totalIncrement = totalIncrement;
+    }
 }
 

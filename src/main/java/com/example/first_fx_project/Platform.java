@@ -9,28 +9,50 @@ public class Platform {
 
     private Position position;
 
-    private int midX; //Mid-point of the piller
+    private int midX; //Mid-point of the platform
 
-    private boolean currentPlatform;
 
-    public Platform(boolean currentPlatform) { // Width should be between some particular values
-        this.currentPlatform=currentPlatform;
+
+
+    private int platformType; // 1 for current. 2 for target. 3 for invisible.
+
+
+    public Platform(int platformNumber) { // Width should be between some particular values
+        this.platformType = platformNumber;
         platformDefine();
     }
 
     public void platformDefine() {
-        if(currentPlatform){
-            midX = 10;
+        switch(platformType){
+            case 1-> midX = 125;
+            case 2-> midX = random.nextInt(300,600);
+            case 3-> midX = random.nextInt(900,1000);
         }
-        else{
-            midX = random.nextInt(200,600);
-        }
-        this.width = random.nextInt(20,100);
+        this.width = random.nextInt(80,150);
         this.position = new Position(midX-width/2, height);
     }
 
-    static public void removePlatform() {
-        // Logic to remove the platform from the game
+    public void redefinePosition(int increment) {
+        int newX = position.getX() - increment;
+       // System.out.println(position.getX());
+        //System.out.println(newX);
+        System.out.println(increment);
+        if (platformType == 1){
+            System.out.println("I am becoming new Invisible");
+            platformType = 3;
+            platformDefine();
+        }
+        else if(platformType == 2){ //Better Condition Required
+            platformType = 1;
+            position = new Position(newX, position.getY());
+            midX = newX + width/2;
+        }
+        else{
+            System.out.println(" I Am becoming new Target");
+            platformType = 2;
+            position = new Position(newX, position.getY());
+            midX = newX + width/2;
+        }
     }
 
     // Getters and setters for the attributes
@@ -75,12 +97,14 @@ public class Platform {
         this.midX = midX;
     }
 
-    public boolean isCurrentPlatform() {
-        return currentPlatform;
+
+    public int getPlatformType() {
+        return platformType;
     }
 
-    public void setCurrentPlatform(boolean currentPlatform) {
-        this.currentPlatform = currentPlatform;
+    public void setPlatformType(int platformType) {
+        this.platformType = platformType;
     }
+
 }
 

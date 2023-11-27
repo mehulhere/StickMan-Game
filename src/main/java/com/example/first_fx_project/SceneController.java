@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SceneController {
-    public ImageView imgDefaultCharacter;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -36,17 +35,15 @@ public class SceneController {
     }
 
     public void switchToGamePlayPage(ActionEvent event) throws Exception {
-
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gamePlayPage.fxml"));
-        root = fxmlLoader.load(); // Set the loaded FXML as the root
+        Parent root = fxmlLoader.load();
+
+    // Set the loaded FXML as the root
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
-
-
 
     public void switchToCharacterPage(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("characterPage.fxml"));
@@ -61,6 +58,14 @@ public class SceneController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("themesPage.fxml"));
         root = fxmlLoader.load(); // Set the loaded FXML as the root
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToGameOverPage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("themesPage.fxml"));
+        root = fxmlLoader.load(); // Set the loaded FXML as the root
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

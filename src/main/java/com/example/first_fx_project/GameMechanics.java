@@ -1,12 +1,54 @@
 package com.example.first_fx_project;
 
+import javafx.animation.TranslateTransition;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+
 public class GameMechanics {
-    GameStatistics gs;
-    public int checkStickCollision(Platform current, Platform next) {
-        // Method to check collision between the stick and platforms
-        // Returns 0 if no collision, 1 if collision, 2 if collision if miss is less than power_up ommision distance
-        return 0;
+    private GamePlayController gamePlayController;
+
+    public GameMechanics(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
     }
+
+    public void changeScene(Platform platform2, AnchorPane movableComponents, int increment, Button extendStickButton){
+
+        // Create a TranslateTransition for the AnchorPane
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
+        translateTransition.setToX(movableComponents.getTranslateX() - increment);
+        translateTransition.play();
+        translateTransition.setOnFinished(event -> {
+            gamePlayController.redefineVariables(increment);
+            extendStickButton.setDisable(false);
+        });
+    }
+
+
+
+    public boolean checkCollision(Line stickLine1, Rectangle platformRectangle2, Platform platform2){
+
+        double stickLength = stickLine1.getStartY() - stickLine1.getEndY();
+        double stickX = stickLength + stickLine1.getStartX();
+        System.out.println(stickX);
+        System.out.println(platformRectangle2.getX());
+        System.out.println(platformRectangle2.getX() + platformRectangle2.getWidth());
+        if (stickX > platformRectangle2.getX() && stickX < (platformRectangle2.getX() + platformRectangle2.getWidth())) {
+            //score ++
+            //check collision with hitPoint
+            //Player Moves
+            //Calls Scenes Change
+            System.out.println("Collision!! RUN");
+            gamePlayController.playerMove(platform2.getMidX() - 125, true);
+            return true;
+        }
+        System.out.println("NO Collision!! DONT RUN");
+        gamePlayController.playerMove(stickX - 125, false);
+        return false;
+    }
+
 
     public boolean checkTokenCollision(Token token) {
         // Method to check collision between the player and a token

@@ -1,5 +1,8 @@
 package com.example.first_fx_project;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
@@ -25,18 +28,27 @@ public class Player {
     }
 
     public void move(double increment, Platform platform, Line stickLine, boolean alive) {
-        if(alive){
-            // Create a TranslateTransition for the AnchorPane
-            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), image);
-            translateTransition.setToX(image.getTranslateX() + increment);
-            translateTransition.play();
+        if (alive) {
+            Timeline timeline = new Timeline();
+            double seconds =  increment * 0.002;
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(seconds), event -> {
+                    if (image.getScaleY() == -1) { //Collision with Pillar Logic
+                        System.out.println("GAME OVER");
+                        fall();
+                    } else {
+                        Timeline secondaryTimeline = new Timeline();
+                        KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(0.001 * platform.getWidth()), event2 ->{
+                            gamePlayController.changeScene();
+                        }, new KeyValue(image.translateXProperty(), image.getTranslateX() + platform.getWidth()/2 ));
+                        secondaryTimeline.getKeyFrames().add(keyFrame2);
+                        secondaryTimeline.play();
+                    }
+            }, new KeyValue(image.translateXProperty(), image.getTranslateX() + increment -platform.getWidth()/2));
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.play();
 
-            translateTransition.setOnFinished(event -> {
-                gamePlayController.changeScene();
-            });
         }
         else{
-            System.out.println("NEREWR");
             TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), image);
             System.out.println(image.getTranslateX());
             System.out.println(platform.getMidX());

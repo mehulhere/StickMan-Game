@@ -15,7 +15,11 @@ public class GameMechanics {
     }
 
     public void changeScene(Platform platform2, AnchorPane movableComponents, int increment, Button extendStickButton){
-
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         // Create a TranslateTransition for the AnchorPane
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
         translateTransition.setToX(movableComponents.getTranslateX() - increment);
@@ -29,7 +33,7 @@ public class GameMechanics {
 
 
 
-    public void checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2){
+    public boolean checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2){
 
         double stickLength = stickLine.getStartY() - stickLine.getEndY();
         double stickX = stickLength + stickLine.getStartX();
@@ -43,10 +47,11 @@ public class GameMechanics {
             //Calls Scenes Change
             System.out.println("Collision!! RUN");
             gamePlayController.playerMove(platform2.getMidX() - 125, true);
-            return;
+            return true;
         }
         System.out.println("NO Collision!! DONT RUN");
         gamePlayController.playerMove(stickX - 125, false);
+        return false;
     }
 
 

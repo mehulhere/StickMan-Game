@@ -94,7 +94,6 @@ public class GamePlayController extends SceneController{
     void stopExtendStick(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE) {
             extendStickButton.setDisable(true);
-            invertPlayerButton.setDisable(false);
             rotateStick(0);
         }
     }
@@ -107,7 +106,10 @@ public class GamePlayController extends SceneController{
     }
 
     void checkStickCollision() {
-        gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform());
+        if(gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform())) {
+            invertPlayerButton.setDisable(false);
+            invertPlayerButton.requestFocus();
+        }
     }
 
     void playerMove(double increment, boolean alive){
@@ -120,6 +122,7 @@ public class GamePlayController extends SceneController{
 
 
     void changeScene(){
+        invertPlayerButton.setDisable(true);
         int increment = getTargetPlatform().getMidX() - 125;
         totalIncrement += increment;
         System.out.println("Total Increment is" +totalIncrement);

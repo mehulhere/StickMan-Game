@@ -168,7 +168,7 @@ public class GamePlayController extends SceneController{
         platform3 = new Platform(3); // Initialize with appropriate parameters
         stick1 = new Stick(true); // Initialize with appropriate parameters
         stick2 = new Stick(false); // Initialize with appropriate parameters
-        player = new Player(); // Initialize with appropriate parameters
+        player = new Player(this,imgDefaultCharacter); // Initialize with appropriate parameters
         defaultCharacter = new DefaultCharacter(this, imgDefaultCharacter);
         gameMechanics = new GameMechanics(this);
 
@@ -193,9 +193,7 @@ public class GamePlayController extends SceneController{
 
         getStickLine().setStartX(stickStartX + totalIncrement);
         getStickLine().setEndX(stickStartX + 1 + totalIncrement);
-        System.out.println(stickLine2.getStartX());
 
-        System.out.println(stickLine1.getStartX());
     }
 
     @FXML
@@ -225,49 +223,38 @@ public class GamePlayController extends SceneController{
     }
 
     boolean checkStickCollision() {
-        return gameMechanics.checkCollision(getStickLine(), platformRectangle2, platform2);
+        return gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform());
     }
 
-    void playerMove(double increment){
-        defaultCharacter.move(increment, platform2, stickLine1);
+    void playerMove(double increment, boolean alive){
+        defaultCharacter.move(increment, getTargetPlatform(), getStickLine(), alive);
     }
 
 
-   // void changeScene(){
-      //  int increment = getTargetPlatform().getMidX() - 125;
-        //System.out.println("I AM MOVING"+ increment);
-        // Create a TranslateTransition for the AnchorPane
-        //TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
-        //translateTransition.setToX(movableComponents.getTranslateX() - increment);
-        //translateTransition.play();
-        //totalIncrement += increment;
 
-        //translateTransition.setOnFinished(event -> {
-          //  redefineVariables(increment);
-           // extendStickButton.setDisable(false);
-        //});
-        //}
     void playerFall(){
         defaultCharacter.fall();
     }
 
 
     void changeScene(){
-        gameMechanics.changeScene(platform2, movableComponents);
+        int increment = getTargetPlatform().getMidX() - 125;
+        totalIncrement += increment;
+        gameMechanics.changeScene(getTargetPlatform(), movableComponents, increment, extendStickButton);
     }
 
-    // private void invertStickConfiguration() {
-    //     if (stick1.isCurrentStick()){
-    //         stick1.setCurrentStick(false);
-    //         stick2.setCurrentStick(true);
-    //     }
-    //     else{
-    //         stick1.setCurrentStick(true);
-    //         stick2.setCurrentStick(false);
-    //     }
-    // }
+     private void invertStickConfiguration() {
+         if (stick1.isCurrentStick()){
+             stick1.setCurrentStick(false);
+             stick2.setCurrentStick(true);
+         }
+         else{
+             stick1.setCurrentStick(true);
+             stick2.setCurrentStick(false);
+         }
+     }
 
-    private void redefineVariables(int increment) {
+    void redefineVariables(int increment) {
         platform1.redefinePosition(increment);
         platform2.redefinePosition(increment);
         platform3.redefinePosition(increment);
@@ -290,8 +277,8 @@ public class GamePlayController extends SceneController{
     void rotateStick(int num) {
         Rotate rotate = new Rotate();
         extendStickButton.setDisable(true);
-        rotate.setPivotX(stickLine1.getStartX());
-        rotate.setPivotY(stickLine1.getStartY());
+        rotate.setPivotX(getStickLine().getStartX());
+        rotate.setPivotY(getStickLine().getStartY());
 
         getStickLine().getTransforms().add(rotate);
 

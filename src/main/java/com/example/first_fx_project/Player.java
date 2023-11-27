@@ -24,8 +24,8 @@ public class Player {
         this.image = image;
     }
 
-    public void move(double increment, Platform platform2, Line stickLine1) {
-        if(increment == platform2.getMidX() - 125){
+    public void move(double increment, Platform platform, Line stickLine, boolean alive) {
+        if(alive){
             // Create a TranslateTransition for the AnchorPane
             TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), image);
             translateTransition.setToX(image.getTranslateX() + increment);
@@ -35,12 +35,12 @@ public class Player {
                 gamePlayController.changeScene();
             });
         }
-
         else{
-
-            double increment2  = increment + (stickLine1.getStartX() - image.getX() - image.getFitWidth());
+            System.out.println("NEREWR");
             TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), image);
-            translateTransition.setToX(image.getTranslateX() + increment2);
+            System.out.println(image.getTranslateX());
+            System.out.println(platform.getMidX());
+            translateTransition.setToX(increment);
             translateTransition.play();
 
             translateTransition.setOnFinished(event -> {

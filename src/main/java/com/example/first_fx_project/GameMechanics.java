@@ -23,30 +23,30 @@ public class GameMechanics {
         translateTransition.setOnFinished(event -> {
             gamePlayController.redefineVariables(increment);
             extendStickButton.setDisable(false);
+            extendStickButton.requestFocus();
         });
     }
 
 
 
-    public boolean checkCollision(Line stickLine1, Rectangle platformRectangle2, Platform platform2){
+    public void checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2){
 
-        double stickLength = stickLine1.getStartY() - stickLine1.getEndY();
-        double stickX = stickLength + stickLine1.getStartX();
-        System.out.println(stickX);
-        System.out.println(platformRectangle2.getX());
-        System.out.println(platformRectangle2.getX() + platformRectangle2.getWidth());
-        if (stickX > platformRectangle2.getX() && stickX < (platformRectangle2.getX() + platformRectangle2.getWidth())) {
+        double stickLength = stickLine.getStartY() - stickLine.getEndY();
+        double stickX = stickLength + stickLine.getStartX();
+//        System.out.println(stickX);
+//        System.out.println(platformRectangle.getX());
+//        System.out.println(platformRectangle.getX() + platformRectangle.getWidth());
+        if (stickX > platformRectangle.getX() && stickX < (platformRectangle.getX() + platformRectangle.getWidth())) {
             //score ++
             //check collision with hitPoint
             //Player Moves
             //Calls Scenes Change
             System.out.println("Collision!! RUN");
             gamePlayController.playerMove(platform2.getMidX() - 125, true);
-            return true;
+            return;
         }
         System.out.println("NO Collision!! DONT RUN");
         gamePlayController.playerMove(stickX - 125, false);
-        return false;
     }
 
 

@@ -20,7 +20,6 @@ public class Player {
     Stick stick;
     GameMechanics gameMechanics;
     static private int length;
-    static private int width;
     static private int speed;
     public boolean isInverted = false;
     private boolean meterIsFull;
@@ -74,7 +73,7 @@ public class Player {
                     imgToken.setOpacity(0);
                 }
                 try {
-                    Thread.sleep(10); // Adjust sleep time as needed
+                    Thread.sleep(5); // Adjust sleep time as needed
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } // Player Crossed Stick

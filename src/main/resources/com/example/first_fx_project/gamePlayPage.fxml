@@ -20,8 +20,8 @@
     <!-- Rectangle for the player above the first pillar -->
 
     <!-- Stick between two pillars -->
-        <Line fx:id="stickLine1" endX="113.0" endY="500.0" startX="113.0" startY="500.0" stroke="Black" strokeWidth="3.0" />
-        <Line fx:id="stickLine2" endX="114.0" endY="500.0" startX="113.0" startY="500.0" stroke="Black" strokeWidth="3.0" />
+        <Line fx:id="stickLine1" endX="113.0" endY="500.0" startX="113.0" startY="500.0" stroke="Black" strokeWidth="3.0" opacity="0" />
+        <Line fx:id="stickLine2" endX="113.0" endY="500.0" startX="113.0" startY="500.0" stroke="Black" strokeWidth="3.0" opacity="0" />
         <!-- Invisible Platform-->
     <Rectangle fx:id="platformRectangle3" height="100.0" width="50.0" x="650.0" y="500.0" />
       <Rectangle fx:id="hitPointRectangle2" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" stroke="BLACK" strokeType="INSIDE" width="20.0" x="665.0" y="500.0" />

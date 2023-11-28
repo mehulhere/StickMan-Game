@@ -157,6 +157,7 @@ public class GamePlayController extends SceneController{
     @FXML
     void extendStick(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE) {
+            getStickLine().setOpacity(1);
             Timeline timeline = new Timeline();
             timeline.getKeyFrames().clear(); // Clear existing keyframes
             timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.03), new KeyValue(getStickLine().endYProperty(), getStickLine().getEndY() - 10)));
@@ -186,7 +187,7 @@ public class GamePlayController extends SceneController{
     }
 
     void checkStickCollision() {
-        gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform());
+        gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform(), imgDefaultCharacter);
     }
     void disableInvertButton(){
         invertPlayerButton.setDisable(false);

@@ -43,7 +43,9 @@ public class Player {
         }
     }
 
-    public void moveToPlatform(Platform platformCurrent,Platform platformTarget, double playerFinalX, double transitionRate, Token token, Button invertButton){
+
+  public void moveToPlatform(Platform platformCurrent,Platform platformTarget, double playerFinalX, double transitionRate, Token token, Button invertButton){
+        gamePlayController.getHitPointFront().isVisible(false);
         double platformMidLength = (double) platformTarget.getPlatformRectangle().getWidth() / 2;
         double playerCrashX =  (playerFinalX - platformMidLength - image.getFitWidth());
         double playerStartX = image.getX();

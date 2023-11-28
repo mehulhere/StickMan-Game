@@ -61,14 +61,10 @@ public class Player {
             boolean playerCrossedStick = playerCrashX - playerX > 0;
             double platformWidth = platformCurrent.getPlatformRectangle().getWidth();
             double playerCrossedPlatformX = platformCurrent.getPlatformRectangle().getX()+ platformWidth + image.getFitWidth();
-            boolean crossedCurrentPlatform = false;
             while (transitionRunning.get() && playerCrossedStick) {
                 playerX = image.getTranslateX() + image.getX();
-                System.out.println(playerX);
-                System.out.println(playerCrossedPlatformX);
-                if(!crossedCurrentPlatform && playerX>playerCrossedPlatformX) {
-                    crossedCurrentPlatform = true;
-                }
+//                System.out.println(playerX);
+//                System.out.println(playerCrossedPlatformX);
                 playerCrossedStick = playerCrashX - playerX > 0;
 //                System.out.println(playerCrashX);
 //                System.out.println(playerX);

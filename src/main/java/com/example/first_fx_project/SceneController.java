@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -63,13 +62,25 @@ public class SceneController {
         stage.show();
     }
 
-    public void switchToGameOverPage() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("themesPage.fxml"));
-        root = fxmlLoader.load(); // Set the loaded FXML as the root
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void switchToGameOverPage(Node currentNode, String score) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gameOverPage.fxml"));
+        Parent root = fxmlLoader.load(); // Set the loaded FXML as the root ------ error here
+        Scene newScene = new Scene(root);
+
+        GameOverController gameOverController = fxmlLoader.getController();
+        gameOverController.setGameOverScore(score);
+
+        // Get the current window (Stage) from the provided Node
+        Stage currentStage = (Stage) currentNode.getScene().getWindow();
+
+        // Set the new scene to the current stage
+        currentStage.setScene(newScene);
+        currentStage.show();
     }
+
+
+
+
 
     public void exitGame(ActionEvent event) throws IOException {
         System.exit(0);

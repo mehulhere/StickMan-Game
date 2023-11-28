@@ -2,14 +2,21 @@ package com.example.first_fx_project;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 public class GamePlayController extends SceneController{
 
@@ -40,18 +47,34 @@ public class GamePlayController extends SceneController{
     @FXML
     private Rectangle platformRectangle3;
 
+
+    @FXML
+    private Rectangle hitPointRectangle2;
+
+    @FXML
+    private Rectangle hitPointRectangle1;
+
+    @FXML
+    private Label score;
+
+    @FXML
+    private Label gameOverScore;
+
     private Platform platform1;
     private Platform platform2;
     private Platform platform3;
+    private HitPoint hitPointFront;
+    private HitPoint hitPointBack;
 
     private Stick stick1;
 
     private Stick stick2;
     private Player player;
     private GameMechanics gameMechanics;
+    private GameStatistics gameStatistics;
 
     private int totalIncrement;
-
+    private boolean hitsPoint = false;
 
     public Line getStickLine() {
         return getStick().getStickLine();
@@ -72,11 +95,14 @@ public class GamePlayController extends SceneController{
         platform1 = new Platform(1, platformRectangle1);
         platform2 = new Platform(2, platformRectangle2);
         platform3 = new Platform(3, platformRectangle3);
+        hitPointFront = new HitPoint(hitPointRectangle1, platform2.getMidX()-hitPointRectangle1.getWidth()/2);
+        hitPointBack = new HitPoint(hitPointRectangle2, hitPointFront.getHitPointPosition());
         stick1 = new Stick(true, stickLine1);
         stick2 = new Stick(false, stickLine2);
         player = new Player(this, imgDefaultCharacter);
         defaultCharacter = new DefaultCharacter(this, imgDefaultCharacter);
         gameMechanics = new GameMechanics(this);
+        gameStatistics = new GameStatistics();
         Stick.initializeStick(getCurrentPlatform(), getStickLine());
     }
 
@@ -120,7 +146,6 @@ public class GamePlayController extends SceneController{
         defaultCharacter.fall();
     }
 
-
     void changeScene(){
         invertPlayerButton.setDisable(true);
         int increment = getTargetPlatform().getMidX() - 125;
@@ -129,7 +154,9 @@ public class GamePlayController extends SceneController{
         gameMechanics.changeScene(getTargetPlatform(), movableComponents, increment, extendStickButton);
     }
 
-
+    void updateScore(){
+        gameStatistics.updateScore(score, hitsPoint);
+    }
 
     void redefineVariables(int increment) {
         platform1.redefinePosition(increment, totalIncrement);
@@ -141,14 +168,17 @@ public class GamePlayController extends SceneController{
 
     }
 
-
-
-
-    @FXML
     void rotateStick(int num) {
         getStick().rotateStick(extendStickButton, num, this);
     }
 
+    public void setHitPointPosition(HitPoint hitPoint, double x){
+        hitPoint.setHitPointPosition(x);
+    }
+
+    public void switchToGameOverPage() throws IOException {
+        super.switchToGameOverPage(movableComponents, score.getText());
+    }
 
     //Helpers
 
@@ -156,6 +186,7 @@ public class GamePlayController extends SceneController{
         return Platform.checkPlatformType(platform1, platform2, platform3, 3);
     }
     public Platform getTargetPlatform() {
+
         return Platform.checkPlatformType(platform1, platform2, platform3, 2);
     }
     public Platform getCurrentPlatform() {
@@ -174,5 +205,20 @@ public class GamePlayController extends SceneController{
         return getTargetPlatform().getPlatformRectangle();
     }
 
+    public int getTotalIncrement() {
+        return totalIncrement;
+    }
+
+    public HitPoint getHitPointFront() {
+        return hitPointFront;
+    }
+
+    public HitPoint getHitPointBack() {
+        return hitPointBack;
+    }
+
+    public void setHitsPoint(boolean hitsPoint) {
+        this.hitsPoint = hitsPoint;
+    }
 }
 

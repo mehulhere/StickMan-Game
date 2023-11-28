@@ -1,9 +1,13 @@
 package com.example.first_fx_project;
+
+import javafx.scene.control.Label;
+
 public class GameStatistics {
     private int currentScore;
     private int tokens;
     private int powerUpMeter;
     static private int bestScore = 0;
+    private GamePlayController gamePlayController;
 
     // Constructor
     public GameStatistics() {
@@ -20,8 +24,12 @@ public class GameStatistics {
     }
 
     // Method to update the current score
-    public void updateScore() {
-        //Implementation goes here
+    public void updateScore(Label score, boolean hitsPoint) {
+        int currentValue = Integer.parseInt(score.getText())+1;
+        if(hitsPoint){
+            currentValue ++;
+        }
+        score.setText(Integer.toString(currentValue));
     }
 
     // Getters and Setters (if needed)

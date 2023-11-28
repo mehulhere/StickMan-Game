@@ -31,7 +31,7 @@ public class Platform {
 
         width = random.nextInt(80,150);
         platformRectangle.setX(totalIncrement + midX- (double) width /2);
-        System.out.println("I am new Rectamgle: "+ (totalIncrement + midX- (double) width /2));
+        System.out.println("I am new Rectangle: "+ (totalIncrement + midX- (double) width /2));
         System.out.println("I am midX"+ midX);
         platformRectangle.setWidth(width);
     }
@@ -55,7 +55,6 @@ public class Platform {
     }
 
     // Getters and setters for the attributes
-
 
     public static Platform checkPlatformType(Platform platform1, Platform platform2, Platform platform3, int type) {
         if(platform1.getPlatformType() == type){

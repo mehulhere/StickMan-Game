@@ -26,12 +26,11 @@ public class GameMechanics {
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
             gamePlayController.redefineVariables(increment);
+//            gamePlayController.
             extendStickButton.setDisable(false);
             extendStickButton.requestFocus();
         });
     }
-
-
 
     public boolean checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2){
 
@@ -40,12 +39,15 @@ public class GameMechanics {
 //        System.out.println(stickX);
 //        System.out.println(platformRectangle.getX());
 //        System.out.println(platformRectangle.getX() + platformRectangle.getWidth());
-        if (stickX > platformRectangle.getX() && stickX < (platformRectangle.getX() + platformRectangle.getWidth())) {
+        if (stickX >= platformRectangle.getX()-1 && stickX <= (platformRectangle.getX() + platformRectangle.getWidth()+1)) {
             //score ++
             //check collision with hitPoint
             //Player Moves
             //Calls Scenes Change
             System.out.println("Collision!! RUN");
+            gamePlayController.setHitPointPosition(gamePlayController.getHitPointBack(), gamePlayController.getHitPointFront().getHitPointPosition());
+            gamePlayController.getHitPointBack().changeColor(checkHitPointCollision(stickX));
+            gamePlayController.setHitsPoint(checkHitPointCollision(stickX));
             gamePlayController.playerMove(platform2.getMidX() - 125, true);
             return true;
         }
@@ -54,6 +56,10 @@ public class GameMechanics {
         return false;
     }
 
+    public boolean checkHitPointCollision(double stickX){
+        double lowerLimit = gamePlayController.getHitPointBack().getHitPointPosition();
+        return stickX >= lowerLimit - 1 && stickX <= lowerLimit + HitPoint.getWidth() + 1;
+    }
 
     public boolean checkTokenCollision(Token token) {
         // Method to check collision between the player and a token
@@ -63,10 +69,6 @@ public class GameMechanics {
 
     public void destroyPlayerClass() {
         // Method to handle the destruction of the player class
-    }
-
-    public void playerDeath() {
-        // Method to handle player death event
     }
 
     public void resetMeter() {

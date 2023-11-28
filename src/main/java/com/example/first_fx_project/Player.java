@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
+import java.io.IOException;
+
 public class Player {
 
     Stick stick;
@@ -29,6 +31,8 @@ public class Player {
 
     public void move(double increment, Platform platform, Line stickLine, boolean alive) {
         if (alive) {
+            gamePlayController.setHitPointPosition(gamePlayController.getHitPointFront(),
+                    gamePlayController.getInvisiblePlatform().getMidX() - (double) HitPoint.getWidth() /2 + gamePlayController.getTotalIncrement());
             Timeline timeline = new Timeline();
             double seconds =  increment * 0.002;
             KeyFrame keyFrame = new KeyFrame(Duration.seconds(seconds), event -> {
@@ -42,11 +46,11 @@ public class Player {
                         }, new KeyValue(image.translateXProperty(), image.getTranslateX() + platform.getWidth()/2 ));
                         secondaryTimeline.getKeyFrames().add(keyFrame2);
                         secondaryTimeline.play();
+                        gamePlayController.updateScore();
                     }
-            }, new KeyValue(image.translateXProperty(), image.getTranslateX() + increment -platform.getWidth()/2));
+            },new KeyValue(image.translateXProperty(), image.getTranslateX() + increment -platform.getWidth()/2));
             timeline.getKeyFrames().add(keyFrame);
             timeline.play();
-
         }
         else{
             TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), image);
@@ -66,6 +70,14 @@ public class Player {
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), image);
         translateTransition.setToY(image.getTranslateY() + 150);
         translateTransition.play();
+
+        translateTransition.setOnFinished(event -> {
+            try {
+                gamePlayController.switchToGameOverPage();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void invert() {

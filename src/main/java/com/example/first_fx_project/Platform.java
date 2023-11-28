@@ -87,8 +87,6 @@ public class Platform {
     // Getters and setters for the attributes
     public static void animateTranslateInvisiblePlatform(Rectangle currentPlatform, Rectangle targetPlatform, double totalShiftDistance) {
         System.out.println("Translating Invisible Platform");
-        double currentPlatformEndX = currentPlatform.getX() + currentPlatform.getWidth();
-        System.out.println("CurrentPlatformEndX: "+ currentPlatformEndX);
         double targetPlatformStartX = getPlatform3X();
         System.out.println("TargetPlatformStartX: " + targetPlatformStartX);
         Timeline timeline= new Timeline();

@@ -8,11 +8,11 @@ public class HitPoint {
     private static double height = 500;
 
     private Rectangle hitPointRectangle;
-    public HitPoint(Rectangle hitPointRectangle, double hitPointStartX){
+    public HitPoint(Rectangle hitPointRectangle, double newHitPointStartX){
         this.hitPointRectangle = hitPointRectangle;
         hitPointRectangle.setWidth(width);
         hitPointRectangle.setY(height);
-        hitPointRectangle.setX(hitPointStartX);
+        hitPointRectangle.setX(newHitPointStartX);
     }
 
     public static int getWidth() {

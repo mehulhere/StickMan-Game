@@ -213,9 +213,10 @@ public class GamePlayController extends SceneController{
         gameMechanics.changeScene(getTargetPlatform(), movableComponents, shiftDistance, extendStickButton);
         midChangeSceneRedefineVariables();
         Platform.animateTranslateInvisiblePlatform(getTargetPlatformRectangle(), getInvisiblePlatformRectangle(), totalShiftDistance);
-        double platform3startX = getInvisiblePlatformRectangle().getX();
+        double platform3startX = Platform.getPlatform3X();
         double platform2HalfWidth = (double) getInvisiblePlatform().getWidth() /2;
         double hitPointInitialPosition = platform3startX + platform2HalfWidth - (double) HitPoint.getWidth() /2;
+        System.out.println("HitPoint Front NewX: "+hitPointInitialPosition);
         setHitPointPosition(getHitPointFront(), hitPointInitialPosition);
     }
 

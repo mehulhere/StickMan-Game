@@ -35,4 +35,8 @@ public class HitPoint {
             this.hitPointRectangle.setFill(Color.RED);
         }
     }
+
+    public void isVisible(boolean visible){
+        hitPointRectangle.setVisible(visible);
+    }
 }

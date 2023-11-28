@@ -43,6 +43,7 @@ public class Player {
     }
 
     public void moveToPlatform(Platform platform, double playerFinalX, double transitionRate, Token token){
+        gamePlayController.getHitPointFront().isVisible(false);
         double platformMidLength = (double) platform.getWidth() / 2;
         double playerCrashX =  (playerFinalX - platformMidLength - image.getFitWidth() - 2);
         double playerStartX = image.getX();

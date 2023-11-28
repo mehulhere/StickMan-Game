@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class Platform {
@@ -32,8 +33,6 @@ public class Platform {
     private static int minWidth= 80;
 
     private static int safetyDistance = 10;
-
-
 
     public Platform(int platformNumber, Rectangle platformRectangle) { // Width should be between some particular values
         this.platformType = platformNumber;
@@ -98,6 +97,13 @@ public class Platform {
         System.out.println( "Total Shift Distance: "+totalShiftDistance);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.4), new KeyValue(targetPlatform.xProperty(), targetPlatformStartX));
         timeline.getKeyFrames().add(keyFrame);
+
+        timeline.setOnFinished(event -> {
+            System.out.println("Animation finished");
+            // Execute the provided onFinish Runnable
+            GamePlayController.getHitPointFront().isVisible(true);
+        });
+
         timeline.play();
     }
 

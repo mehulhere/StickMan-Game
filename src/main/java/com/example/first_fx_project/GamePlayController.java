@@ -66,7 +66,7 @@ public class GamePlayController extends SceneController{
     private Platform platform1;
     private Platform platform2;
     private Platform platform3;
-    private HitPoint hitPointFront;
+    private static HitPoint hitPointFront;
     private HitPoint hitPointBack;
 
     private Stick stick1;
@@ -260,7 +260,7 @@ public class GamePlayController extends SceneController{
         return getTargetPlatform().getPlatformRectangle();
     }
 
-    public HitPoint getHitPointFront() {
+    public static HitPoint getHitPointFront() {
         return hitPointFront;
     }
 

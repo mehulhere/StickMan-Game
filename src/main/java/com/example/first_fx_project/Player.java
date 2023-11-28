@@ -5,8 +5,11 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Line;
 import javafx.util.Duration;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Player {
 
@@ -15,12 +18,11 @@ public class Player {
     static private int length;
     static private int width;
     static private int speed;
-    private boolean isInverted;
+    public boolean isInverted = false;
     private boolean meterIsFull;
     private Position position;
     GamePlayController gamePlayController;
     ImageView image;
-    boolean isFlipped = false;
 
     public Player(GamePlayController gamePlayController, ImageView image) {
         this.gamePlayController = gamePlayController;
@@ -30,39 +32,59 @@ public class Player {
     public void move(double playerFinalX, Platform platform, Token token, boolean alive) {
         double rate = 0.002;
         if (alive) {
-            moveToPlatformStart(platform, playerFinalX, rate);
+            moveToPlatform(platform, playerFinalX, rate, token);
         }
         else{
             moveToStickEnd(playerFinalX);
         }
     }
 
-    public void moveToPlatformStart(Platform platform, double playerFinalX, double transitionRate){
+    public void moveToPlatform(Platform platform, double playerFinalX, double transitionRate, Token token){
         double platformMidLength = (double) platform.getWidth() / 2;
-        double playerNewX =  (playerFinalX - platformMidLength - image.getFitWidth()) ;
+        double playerCrashX =  (playerFinalX - platformMidLength - image.getFitWidth() - 2);
+        double playerStartX = image.getX();
+        double transitionDistance = playerFinalX - playerStartX;
         Timeline timeline = new Timeline();
-        double transitionDistance = playerNewX - image.getX();
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(transitionDistance * transitionRate), event -> { //Reaches Platform Start
-            gamePlayController.stopInversion();  //Disable Inversion Button
-            if (image.getScaleY() == -1) { // Check If Inverted at this point
-                gamePlayController.playerFall();
-            } else { // Not Inverted
-                moveToPlatformMid(platform, transitionRate);
+        timeline.setCycleCount(1);
+        AtomicBoolean transitionRunning= new AtomicBoolean(true);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            ImageView imgToken = token.getImgToken();
+            while (transitionRunning.get()) {
+//                System.out.println("While loop running...");
+                double playerX = image.getTranslateX() + image.getX();
+                System.out.println(playerCrashX);
+                System.out.println(playerX);
+                System.out.println(isInverted);
+                if(playerCrashX - playerX < 0){
+                    gamePlayController.stopInversion();
+                    if(isInverted){
+                        gamePlayController.playerFall();
+                        System.exit(1);
+                        //Game Over
+                    }
+                }
+                if(imgToken.getX() - playerX < Math.abs(image.getFitWidth())&& isInverted){
+                    //Tokens ++
+                    imgToken.setOpacity(0);
+                }
+                try {
+                    Thread.sleep(10); // Adjust sleep time as needed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }, new KeyValue(image.xProperty(), playerNewX)); //Moves Till Pillar Start
+
+        });
+        // Adding KeyFrame to the timeline
+        Duration duration = Duration.seconds(transitionRate*transitionDistance); // Duration of animation (1 second)
+        KeyFrame keyFrame = new KeyFrame(duration, event -> {
+            gamePlayController.changeScene();
+            transitionRunning.set(false);
+        }, new KeyValue(image.xProperty(), playerFinalX));
+
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
-    }
-
-    public void moveToPlatformMid(Platform platform, double transitionRate){
-        double platformMidLength = (double) platform.getWidth() / 2;
-        Timeline secondaryTimeline = new Timeline();
-        double TransitionDistance =  platformMidLength +image.getFitWidth();
-        KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(transitionRate * TransitionDistance), event2 ->{
-            gamePlayController.changeScene();
-        }, new KeyValue(image.xProperty(), image.getX() + TransitionDistance));
-        secondaryTimeline.getKeyFrames().add(keyFrame2);
-        secondaryTimeline.play();
     }
 
     public void moveToStickEnd(double playerFinalX){

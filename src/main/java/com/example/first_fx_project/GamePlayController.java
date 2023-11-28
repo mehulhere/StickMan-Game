@@ -11,6 +11,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class GamePlayController extends SceneController{
     @FXML
     public ImageView imgToken;
@@ -57,7 +59,6 @@ public class GamePlayController extends SceneController{
 
     private double totalShiftDistance;
 
-
     public Line getStickLine() {
         return getStick().getStickLine();
     }
@@ -96,6 +97,13 @@ public class GamePlayController extends SceneController{
         Stick.initializeStick(getCurrentPlatform(), getStickLine()); //
     }
 
+
+
+
+
+    // Method to check the status of SPACE key
+
+
     void midChangeSceneRedefineVariables(){
         System.out.println("Mid Scene Variable Redefinition");
         Token.invertTokenConfiguration(token1, token2);
@@ -132,7 +140,13 @@ public class GamePlayController extends SceneController{
     void invertPlayer(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE) {
             defaultCharacter.invert();
+            flipInverted();
         }
+    }
+
+    void flipInverted(){
+        defaultCharacter.isInverted = !defaultCharacter.isInverted;
+        System.out.println("Flip");
     }
 
     void checkStickCollision() {

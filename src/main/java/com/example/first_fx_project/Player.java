@@ -27,41 +27,61 @@ public class Player {
         this.image = image;
     }
 
-    public void move(double increment, Platform platform, Line stickLine, boolean alive) {
+    public void move(double playerFinalX, Platform platform, Token token, boolean alive) {
+        double rate = 0.002;
         if (alive) {
-            Timeline timeline = new Timeline();
-            double seconds =  increment * 0.002;
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(seconds), event -> {
-                    if (image.getScaleY() == -1) { //Collision with Pillar Logic
-                        System.out.println("GAME OVER");
-                        fall();
-                    } else {
-                        Timeline secondaryTimeline = new Timeline();
-                        KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(0.001 * platform.getWidth()), event2 ->{
-                            gamePlayController.changeScene();
-                        }, new KeyValue(image.translateXProperty(), image.getTranslateX() + platform.getWidth()/2 ));
-                        secondaryTimeline.getKeyFrames().add(keyFrame2);
-                        secondaryTimeline.play();
-                    }
-            }, new KeyValue(image.translateXProperty(), image.getTranslateX() + increment -platform.getWidth()/2));
-            timeline.getKeyFrames().add(keyFrame);
-            timeline.play();
-
+            moveToPlatformStart(platform, playerFinalX, rate);
         }
         else{
-            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), image);
-            System.out.println(image.getTranslateX());
-            System.out.println(platform.getMidX());
-            translateTransition.setToX(increment);
-            translateTransition.play();
-
-            translateTransition.setOnFinished(event -> {
-                gamePlayController.rotateStick(1);
-                gamePlayController.playerFall();
-            });
+            moveToStickEnd(playerFinalX);
         }
     }
 
+    public void moveToPlatformStart(Platform platform, double playerFinalX, double transitionRate){
+        double platformMidLength = (double) platform.getWidth() / 2;
+        double playerNewX =  (playerFinalX - platformMidLength - image.getFitWidth()) ;
+        Timeline timeline = new Timeline();
+        double transitionDistance = playerNewX - image.getX();
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(transitionDistance * transitionRate), event -> { //Reaches Platform Start
+            gamePlayController.stopInversion();  //Disable Inversion Button
+            if (image.getScaleY() == -1) { // Check If Inverted at this point
+                gamePlayController.playerFall();
+            } else { // Not Inverted
+                moveToPlatformMid(platform, transitionRate);
+            }
+        }, new KeyValue(image.xProperty(), playerNewX)); //Moves Till Pillar Start
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+    }
+
+    public void moveToPlatformMid(Platform platform, double transitionRate){
+        double platformMidLength = (double) platform.getWidth() / 2;
+        Timeline secondaryTimeline = new Timeline();
+        double TransitionDistance =  platformMidLength +image.getFitWidth();
+        KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(transitionRate * TransitionDistance), event2 ->{
+            gamePlayController.changeScene();
+        }, new KeyValue(image.xProperty(), image.getX() + TransitionDistance));
+        secondaryTimeline.getKeyFrames().add(keyFrame2);
+        secondaryTimeline.play();
+    }
+
+    public void moveToStickEnd(double playerFinalX){
+        System.out.println("Player Falls");
+        System.out.println("PlayerFinalX: "+ playerFinalX);
+        Timeline timeline = new Timeline();
+        double durationInSeconds = 0.5;
+        Duration duration = Duration.seconds(durationInSeconds);
+        KeyFrame keyFrame = new KeyFrame(
+                duration,
+                event -> {
+                    gamePlayController.rotateStick(1);
+                    gamePlayController.playerFall();
+                },
+                new KeyValue(image.xProperty(), playerFinalX)
+        );
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+    }
     public void fall(){
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), image);
         translateTransition.setToY(image.getTranslateY() + 150);

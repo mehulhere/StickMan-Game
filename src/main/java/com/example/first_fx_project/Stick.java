@@ -24,7 +24,6 @@ public class Stick {
     }
 
     static void initializeStick(Platform platform, Line stick) {
-        System.out.println("I am width: "+platform.getWidth());
         int stickStartX = (int) ( platform.getPlatformRectangle().getX()+platform.getWidth() - 3);
         stick.getTransforms().clear();
         stick.setEndY(stick.getStartY());

@@ -14,18 +14,19 @@ public class GameMechanics {
         this.gamePlayController = gamePlayController;
     }
 
-    public void changeScene(Platform platform2, AnchorPane movableComponents, int increment, Button extendStickButton){
+    public void changeScene(Platform platform2, AnchorPane movableComponents, double shiftDistance, Button extendStickButton){
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         // Create a TranslateTransition for the AnchorPane
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), movableComponents);
-        translateTransition.setToX(movableComponents.getTranslateX() - increment);
+        System.out.println("Shifting Anchor Pane");
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), movableComponents);
+        translateTransition.setToX(movableComponents.getTranslateX() - shiftDistance);
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
-            gamePlayController.redefineVariables(increment);
+            gamePlayController.redefineVariables(shiftDistance);
             extendStickButton.setDisable(false);
             extendStickButton.requestFocus();
         });
@@ -36,21 +37,24 @@ public class GameMechanics {
     public boolean checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2){
 
         double stickLength = stickLine.getStartY() - stickLine.getEndY();
-        double stickX = stickLength + stickLine.getStartX();
-//        System.out.println(stickX);
-//        System.out.println(platformRectangle.getX());
-//        System.out.println(platformRectangle.getX() + platformRectangle.getWidth());
-        if (stickX > platformRectangle.getX() && stickX < (platformRectangle.getX() + platformRectangle.getWidth())) {
-            //score ++
-            //check collision with hitPoint
-            //Player Moves
-            //Calls Scenes Change
+        double stickEndX = stickLine.getStartX() + stickLength;
+        System.out.println("Running Collision Check");
+        System.out.println("Stick EndX: "+stickEndX);
+        double platformStartX = platformRectangle.getX();
+        double platformEndX = platformRectangle.getX() + platformRectangle.getWidth();
+        System.out.println("Platform StartX: "+platformStartX);
+        System.out.println("Platform EndX: "+platformEndX);
+
+        if (stickEndX > platformStartX && stickEndX < platformEndX) {
             System.out.println("Collision!! RUN");
-            gamePlayController.playerMove(platform2.getMidX() - 125, true);
+            double playerFinalX = platformRectangle.getX() + platformRectangle.getWidth()/2;
+            System.out.println("Player FinaLX: "+ playerFinalX);
+            gamePlayController.playerMove(playerFinalX, true);
             return true;
         }
         System.out.println("NO Collision!! DONT RUN");
-        gamePlayController.playerMove(stickX - 125, false);
+        gamePlayController.playerMove(stickEndX, false);
+        System.out.println("StickEndX: "+ stickEndX);
         return false;
     }
 

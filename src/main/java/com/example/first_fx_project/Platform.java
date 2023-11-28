@@ -12,7 +12,6 @@ import java.util.Random;
 public class Platform {
     static Random random = new Random();
     static private int height = 100;
-    private int width;
 
     private static int platform3Distance;
 
@@ -21,7 +20,7 @@ public class Platform {
     }
 
     public static double setPlatform3Distance(double currentPlatformEndX) {
-        platform3Distance = (int) (random.nextInt(0, 500) + (currentPlatformEndX + safetyDistance));
+        platform3Distance = (int) (random.nextInt(30, 500) + (currentPlatformEndX + safetyDistance));
         System.out.println("New PlatformX: "+platform3Distance);
         return platform3Distance;
     }
@@ -34,6 +33,8 @@ public class Platform {
 
     private static int safetyDistance = 10;
 
+    private GamePlayController gamePlayController;
+
     public Platform(int platformNumber, Rectangle platformRectangle) { // Width should be between some particular values
         this.platformType = platformNumber;
         this.platformRectangle = platformRectangle;
@@ -41,7 +42,8 @@ public class Platform {
     }
 
     public void platformDefine(int totalIncrement, int lastIncrement) {
-        width = random.nextInt(minWidth,maxWidth);
+        int width = random.nextInt(minWidth,maxWidth);
+        platformRectangle.setWidth(width);
         switch(platformType){
             case 1-> {
                 int midX = 125;
@@ -65,14 +67,11 @@ public class Platform {
                 System.out.println("Platform3 X:"+ absolutePosition);
             }
         }
-        platformRectangle.setWidth(width);
     }
 
-    public void redefinePosition(double increment, double totalIncrement) {
-        int newX = (int) (platformRectangle.getX() - increment);
+    public void redefinePlatform() {
         if (platformType == 1){
             platformType = 3;
-//            platformDefine(totalIncrement, increment);
         }
         else if(platformType == 2){
             platformType = 1;
@@ -86,6 +85,8 @@ public class Platform {
     // Getters and setters for the attributes
     public static void animateTranslateInvisiblePlatform(Rectangle currentPlatform, Rectangle targetPlatform, double totalShiftDistance) {
         System.out.println("Translating Invisible Platform");
+        int width = random.nextInt(minWidth,maxWidth);
+        targetPlatform.setWidth(width);
         double targetPlatformStartX = getPlatform3X();
         System.out.println("TargetPlatformStartX: " + targetPlatformStartX);
         Timeline timeline= new Timeline();
@@ -121,10 +122,6 @@ public class Platform {
         return null;
     }
     // Getters and setters for the attributes
-
-    public int getWidth() {
-        return width;
-    }
 
 
     public int getPlatformType() {

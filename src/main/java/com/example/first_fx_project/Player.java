@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
@@ -32,47 +33,47 @@ public class Player {
         this.image = image;
     }
 
-    public void move(double playerFinalX, Platform platform, Token token, boolean alive) {
+    public void move(double playerFinalX, Platform platformCurrent, Platform platformTarget, Token token, boolean alive, Button invertButton) {
         double rate = 0.002;
         if (alive) {
-            moveToPlatform(platform, playerFinalX, rate, token);
+            moveToPlatform(platformCurrent,platformTarget, playerFinalX, rate, token, invertButton);
         }
         else{
             moveToStickEnd(playerFinalX);
         }
     }
 
-    public void moveToPlatform(Platform platform, double playerFinalX, double transitionRate, Token token){
+
+  public void moveToPlatform(Platform platformCurrent,Platform platformTarget, double playerFinalX, double transitionRate, Token token, Button invertButton){
         gamePlayController.getHitPointFront().isVisible(false);
-        double platformMidLength = (double) platform.getWidth() / 2;
-        double playerCrashX =  (playerFinalX - platformMidLength - image.getFitWidth() - 2);
+        double platformMidLength = (double) platformTarget.getPlatformRectangle().getWidth() / 2;
+        double playerCrashX =  (playerFinalX - platformMidLength - image.getFitWidth());
         double playerStartX = image.getX();
         double transitionDistance = playerFinalX - playerStartX;
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
         AtomicBoolean transitionRunning= new AtomicBoolean(true);
+        gamePlayController.disableInvertButton();
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             ImageView imgToken = token.getImgToken();
-            while (transitionRunning.get()) {
-//                System.out.println("While loop running...");
-                double playerX = image.getTranslateX() + image.getX();
+            double playerX = image.getTranslateX() + image.getX();
+            boolean playerCrossedStick = playerCrashX - playerX > 0;
+            double platformWidth = platformCurrent.getPlatformRectangle().getWidth();
+            double playerCrossedPlatformX = platformCurrent.getPlatformRectangle().getX()+ platformWidth + image.getFitWidth();
+            boolean crossedCurrentPlatform = false;
+            while (transitionRunning.get() && playerCrossedStick) {
+                playerX = image.getTranslateX() + image.getX();
+                System.out.println(playerX);
+                System.out.println(playerCrossedPlatformX);
+                if(!crossedCurrentPlatform && playerX>playerCrossedPlatformX) {
+                    crossedCurrentPlatform = true;
+                }
+                playerCrossedStick = playerCrashX - playerX > 0;
 //                System.out.println(playerCrashX);
 //                System.out.println(playerX);
 //                System.out.println(isInverted);
-                if(playerCrashX - playerX < 0){
-                    gamePlayController.stopInversion();
-                    if(isInverted){
-                        gamePlayController.playerFall();
-                        try {
-                            gamePlayController.switchToGameOverPage();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        //Game Over
-                    }
-                }
-                if(imgToken.getX() - playerX < Math.abs(image.getFitWidth())&& isInverted){
+                if(Math.abs(imgToken.getX() - playerX) < image.getFitWidth() && isInverted){
                     //Tokens ++
                     imgToken.setOpacity(0);
                 }
@@ -80,9 +81,13 @@ public class Player {
                     Thread.sleep(10); // Adjust sleep time as needed
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                } // Player Crossed Stick
                 }
+            gamePlayController.stopInversion();
+            if(isInverted){
+                timeline.stop();
+                gamePlayController.playerFall();
             }
-
         });
         // Adding KeyFrame to the timeline
         Duration duration = Duration.seconds(transitionRate*transitionDistance); // Duration of animation (1 second)

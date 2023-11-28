@@ -97,7 +97,7 @@ public class Platform {
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
-
+        System.out.println( "Total Shift Distance: "+totalShiftDistance);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.4), new KeyValue(targetPlatform.xProperty(), targetPlatformStartX));
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();

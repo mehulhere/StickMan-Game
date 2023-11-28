@@ -47,8 +47,6 @@ public class Player {
         double playerCrashX =  (playerFinalX - platformMidLength - image.getFitWidth() - 2);
         double playerStartX = image.getX();
         double transitionDistance = playerFinalX - playerStartX;
-                  gamePlayController.setHitPointPosition(gamePlayController.getHitPointFront(),
-            gamePlayController.getInvisiblePlatform().getMidX() - (double) HitPoint.getWidth() /2 + gamePlayController.getTotalIncrement());
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
         AtomicBoolean transitionRunning= new AtomicBoolean(true);
@@ -58,14 +56,18 @@ public class Player {
             while (transitionRunning.get()) {
 //                System.out.println("While loop running...");
                 double playerX = image.getTranslateX() + image.getX();
-                System.out.println(playerCrashX);
-                System.out.println(playerX);
-                System.out.println(isInverted);
+//                System.out.println(playerCrashX);
+//                System.out.println(playerX);
+//                System.out.println(isInverted);
                 if(playerCrashX - playerX < 0){
                     gamePlayController.stopInversion();
                     if(isInverted){
                         gamePlayController.playerFall();
-                        System.exit(1);
+                        try {
+                            gamePlayController.switchToGameOverPage();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         //Game Over
                     }
                 }

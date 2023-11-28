@@ -29,8 +29,8 @@ public class Platform {
     private int platformType; // 1 for current. 2 for target. 3 for invisible.
     private Rectangle platformRectangle;
 
-    private static int maxWidth = 180;
-    private static int minWidth= 100;
+    private static int maxWidth = 250;
+    private static int minWidth= 70;
 
     private static int safetyDistance = 10;
 
@@ -87,6 +87,7 @@ public class Platform {
     public static void animateTranslateInvisiblePlatform(Rectangle currentPlatform, Rectangle targetPlatform, double totalShiftDistance) {
         System.out.println("Translating Invisible Platform");
         int width = random.nextInt(minWidth,maxWidth);
+        System.out.println("PlatformWidth: "+width);
         targetPlatform.setWidth(width);
         double targetPlatformStartX = getPlatform3X();
         System.out.println("TargetPlatformStartX: " + targetPlatformStartX);

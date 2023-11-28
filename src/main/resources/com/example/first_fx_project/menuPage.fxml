@@ -2,39 +2,41 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.SceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800" prefWidth="800" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.SceneController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="131.0" layoutY="37.0" prefHeight="105.0" prefWidth="326.0" text="STICK HERO">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="187.0" layoutY="104.0" prefHeight="192.0" prefWidth="426.0" text="STICK HERO">
          <font>
-            <Font name="System Bold" size="50.0" />
+            <Font name="System Bold" size="63.0" />
          </font>
       </Label>
-      <Circle fill="#dc5353" layoutX="294.0" layoutY="189.0" radius="47.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label layoutX="269.0" layoutY="173.0" text="PLAY" textFill="WHITE">
+      <Button alignment="CENTER" layoutX="734.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 1000; -fx-background-color: #dc5353;" text="Exit" textAlignment="CENTER">
          <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Ellipse id="characterbuttonshape" fill="#fff4f4" layoutX="294.0" layoutY="277.0" radiusX="60.0" radiusY="27.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label alignment="CENTER" layoutX="245.0" layoutY="262.0" text="Characters">
+            <Font name="System Bold" size="17.0" />
+         </font></Button>
+      <Button layoutX="504.0" layoutY="368.0" mnemonicParsing="false" onAction="#switchToGamePlayPage" prefHeight="120.0" prefWidth="277.0" style="-fx-background-radius: 200; -fx-background-color: #dc5353;" text="Play">
          <font>
-            <Font size="21.0" />
+            <Font name="Comic Sans MS Bold" size="58.0" />
          </font>
-      </Label>
-      <Ellipse id="themesbuttonshape" fill="#fff4f4" layoutX="294.0" layoutY="342.0" radiusX="60.0" radiusY="27.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label alignment="CENTER" layoutX="260.0" layoutY="327.0" text="Themes">
+      </Button>
+      <Button layoutX="426.0" layoutY="515.0" mnemonicParsing="false" onAction="#switchToCharacterPage" prefHeight="120.0" prefWidth="360.0" style="-fx-background-radius: 1000; -fx-background-color: rgba(255, 255, 255, 0.5);" text="Characters">
          <font>
-            <Font size="20.0" />
+            <Font name="Comic Sans MS" size="32.0" />
+         </font></Button>
+      <ImageView fx:id="imgPlayer" fitHeight="80.0" fitWidth="75.0" layoutX="33.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="509.0">
+         <Image url="@assets/stickHeroDefault.png" />
+      </ImageView>
+      <Button layoutX="421.0" layoutY="668.0" mnemonicParsing="false" onAction="#switchToThemesPage" prefHeight="110.0" prefWidth="360.0" style="-fx-background-radius: 1000; -fx-background-color: rgba(255, 255, 255, 0.5);" text="Themes">
+         <font>
+            <Font name="Comic Sans MS Italic" size="34.0" />
          </font>
-      </Label>
-      <Button layoutX="544.0" layoutY="10.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="40.0" prefWidth="52.0" text="Exit" />
-      <Button layoutX="241.0" layoutY="142.0" mnemonicParsing="false" onAction="#switchToGamePlayPage" opacity="0.0" prefHeight="94.0" prefWidth="104.0" text="Play" />
-      <Button layoutX="234.0" layoutY="251.0" mnemonicParsing="false" onAction="#switchToCharacterPage" opacity="0.0" prefHeight="54.0" prefWidth="120.0" text="chars" />
-      <Button layoutX="235.0" layoutY="314.0" mnemonicParsing="false" onAction="#switchToThemesPage" opacity="0.0" prefHeight="54.0" prefWidth="120.0" text="themes" />
+      </Button>
+      <ImageView fx:id="imgThemes" fitHeight="84.0" fitWidth="84.0" layoutX="43.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="509.0">
+         <Image url="@assets/themes.png" />
+      </ImageView>
    </children>
 </AnchorPane>

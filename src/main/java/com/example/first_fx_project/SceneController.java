@@ -5,7 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,15 +18,20 @@ public class SceneController {
     private Scene scene;
     private Parent root;
 
-    public void switchToPausePage(MouseEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pausePage.fxml"));
-        root = fxmlLoader.load(); // Set the loaded FXML as the root
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+    private Scene overlayScene;
 
+
+    public void closePopup(ActionEvent event) {
+            // Access the root of the current scene
+            Scene currentScene = ((Node) event.getSource()).getScene();
+            if (currentScene != null && currentScene.getRoot() instanceof StackPane) {
+                StackPane stackPane = (StackPane) currentScene.getRoot();
+                stackPane.getChildren().remove(stackPane.getChildren().size() - 1); // Remove the topmost child (assuming it's the overlay)
+//                extendButton.setDisable(false);
+//                extendButton.requestFocus();
+            }
+
+    }
     public void switchToMenuPage(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("menuPage.fxml"));
         root = fxmlLoader.load(); // Set the loaded FXML as the root
@@ -62,20 +70,62 @@ public class SceneController {
         stage.show();
     }
 
-    public void switchToGameOverPage(Node currentNode, String score) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gameOverPage.fxml"));
-        Parent root = fxmlLoader.load(); // Set the loaded FXML as the root ------ error here
-        Scene newScene = new Scene(root);
+    public void switchToGameOverPage(Node currentNode, String score, Button extendButton) throws IOException {
+        System.out.println("Game Over Page");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gameOverPage.fxml"));
+            Parent overlayRoot = fxmlLoader.load();
 
-        GameOverController gameOverController = fxmlLoader.getController();
-        gameOverController.setGameOverScore(score);
+            StackPane stackPane = new StackPane();
 
-        // Get the current window (Stage) from the provided Node
-        Stage currentStage = (Stage) currentNode.getScene().getWindow();
+            Scene currentScene = currentNode.getScene(); // Fetch scene from provided Node
 
-        // Set the new scene to the current stage
-        currentStage.setScene(newScene);
-        currentStage.show();
+            if (currentScene != null) {
+                stackPane.getChildren().addAll(
+                        currentScene.getRoot(),
+                        overlayRoot
+                );
+
+                overlayScene = new Scene(stackPane);
+
+                Stage currentStage = (Stage) currentScene.getWindow();
+                if (currentStage != null) {
+                    currentStage.setScene(overlayScene);
+                    System.out.println(1);
+                    System.out.println(2);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void switchToPausePage(MouseEvent event) throws IOException {
+        System.out.println("Paused");
+        try {
+//            extendButton.setDisable(true);
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pausePage.fxml"));
+            Parent overlayRoot = fxmlLoader.load();
+
+            StackPane stackPane = new StackPane();
+
+            Scene currentScene = ((Node) event.getSource()).getScene();
+
+            stackPane.getChildren().addAll(
+                    currentScene.getRoot(),
+                    overlayRoot
+            );
+
+            overlayScene = new Scene(stackPane);
+
+            Stage stage = (Stage) currentScene.getWindow();
+
+            stage.setScene(overlayScene);
+            System.out.println(1);
+            System.out.println(2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

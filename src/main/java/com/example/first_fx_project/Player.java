@@ -115,7 +115,7 @@ public class Player {
     }
     public void fall(){
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), image);
-        translateTransition.setToY(image.getTranslateY() + 150);
+        translateTransition.setToY(image.getTranslateY() + 350);
         translateTransition.play();
 
         translateTransition.setOnFinished(event -> {

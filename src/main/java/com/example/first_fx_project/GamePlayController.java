@@ -1,12 +1,14 @@
 package com.example.first_fx_project;
 
 import javafx.animation.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -119,7 +121,7 @@ public class GamePlayController extends SceneController{
         platform2.redefinePlatform();
         platform3.redefinePlatform();
         Stick.invertStickConfiguration(stick1, stick2); //Inverts currentStick Variable
-        Stick.initializeStick(getCurrentPlatform(), getStickLine()); //
+        Stick.initializeStick(getCurrentPlatform(), getStickLine());
     }
 
 
@@ -225,7 +227,19 @@ public class GamePlayController extends SceneController{
     }
 
     public void switchToGameOverPage() throws IOException {
-        super.switchToGameOverPage(movableComponents, score.getText());
+        super.switchToGameOverPage(movableComponents, score.getText(), extendStickButton);
+    }
+//    public void switchToPausePage(MouseEvent event) throws IOException{
+//        super.switchToPausePage(event);
+//    }
+
+//    public void closePopup(ActionEvent event) throws IOException{
+//        super.closePopup(event, extendStickButton);
+//    }
+
+    public void enableExtendButton(){
+        extendStickButton.setDisable(false);
+        extendStickButton.requestFocus();
     }
 
     //Helpers

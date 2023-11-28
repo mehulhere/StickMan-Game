@@ -18,7 +18,7 @@
             <Glow level="0.99" />
          </effect>
         </Text>
-        <Button graphicTextGap="5.0" layoutX="247.0" layoutY="99.0" mnemonicParsing="false" onAction="#switchToGamePlayPage" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #64E3FF; -fx-shape: &quot;M5,5 m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0&quot;;" text="RESUME" textOverrun="CLIP">
+        <Button graphicTextGap="5.0" layoutX="247.0" layoutY="99.0" mnemonicParsing="false" onAction="#closePopup" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #64E3FF; -fx-shape: &quot;M5,5 m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0&quot;;" text="RESUME" textOverrun="CLIP">
          <effect>
             <DropShadow blurType="GAUSSIAN" height="30.0" radius="14.5" width="30.0" />
          </effect>

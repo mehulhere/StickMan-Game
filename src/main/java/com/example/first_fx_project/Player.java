@@ -7,9 +7,12 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 
 public class Player {
 
@@ -44,6 +47,8 @@ public class Player {
         double playerCrashX =  (playerFinalX - platformMidLength - image.getFitWidth() - 2);
         double playerStartX = image.getX();
         double transitionDistance = playerFinalX - playerStartX;
+                  gamePlayController.setHitPointPosition(gamePlayController.getHitPointFront(),
+            gamePlayController.getInvisiblePlatform().getMidX() - (double) HitPoint.getWidth() /2 + gamePlayController.getTotalIncrement());
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
         AtomicBoolean transitionRunning= new AtomicBoolean(true);
@@ -79,6 +84,7 @@ public class Player {
         // Adding KeyFrame to the timeline
         Duration duration = Duration.seconds(transitionRate*transitionDistance); // Duration of animation (1 second)
         KeyFrame keyFrame = new KeyFrame(duration, event -> {
+            gamePlayController.updateScore();
             gamePlayController.changeScene();
             transitionRunning.set(false);
         }, new KeyValue(image.xProperty(), playerFinalX));
@@ -108,6 +114,14 @@ public class Player {
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), image);
         translateTransition.setToY(image.getTranslateY() + 150);
         translateTransition.play();
+
+        translateTransition.setOnFinished(event -> {
+            try {
+                gamePlayController.switchToGameOverPage();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void invert() {

@@ -83,6 +83,8 @@ public class Platform {
         }
     }
 
+
+    // Getters and setters for the attributes
     public static void animateTranslateInvisiblePlatform(Rectangle currentPlatform, Rectangle targetPlatform, double totalShiftDistance) {
         System.out.println("Translating Invisible Platform");
         double currentPlatformEndX = currentPlatform.getX() + currentPlatform.getWidth();
@@ -100,6 +102,7 @@ public class Platform {
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
     }
+
 
     public static Platform checkPlatformType(Platform platform1, Platform platform2, Platform platform3, int type) {
         if(platform1.getPlatformType() == type){

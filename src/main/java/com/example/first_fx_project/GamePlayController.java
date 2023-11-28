@@ -2,9 +2,6 @@ package com.example.first_fx_project;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -13,7 +10,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -49,7 +45,6 @@ public class GamePlayController extends SceneController{
 
     @FXML
     private Rectangle platformRectangle3;
-
 
     @FXML
     private Rectangle hitPointRectangle2;
@@ -96,6 +91,7 @@ public class GamePlayController extends SceneController{
     }
     public DefaultCharacter defaultCharacter;
 
+
     @FXML
     public void initialize() {
         platform1 = new Platform(1, platformRectangle1);
@@ -119,18 +115,13 @@ public class GamePlayController extends SceneController{
 
     void redefineVariables(double increment) {
         System.out.println("Redefining Variables");
-        platform1.redefinePosition(increment, totalShiftDistance);
-        platform2.redefinePosition(increment, totalShiftDistance);
-        platform3.redefinePosition(increment, totalShiftDistance);
+        platform1.redefinePlatform();
+        platform2.redefinePlatform();
+        platform3.redefinePlatform();
         Stick.invertStickConfiguration(stick1, stick2); //Inverts currentStick Variable
         Stick.initializeStick(getCurrentPlatform(), getStickLine()); //
     }
 
-
-
-
-
-    // Method to check the status of SPACE key
 
 
     void midChangeSceneRedefineVariables(){
@@ -143,8 +134,23 @@ public class GamePlayController extends SceneController{
         getInvisiblePlatformRectangle().setX(800 + totalShiftDistance);
     }
 
-    void notCurrentTokenMovementAnimation(){
 
+    void changeScene(){
+        System.out.println("Changing Scene Midway");
+        double shiftDistance = getTargetPlatformRectangle().getX()-getCurrentPlatformRectangle().getX();
+        totalShiftDistance += shiftDistance;
+        System.out.println("LastShiftDistance: "+shiftDistance);
+        System.out.println("TotalShiftDistance: " +totalShiftDistance);
+        gameMechanics.changeScene(getTargetPlatform(), movableComponents, shiftDistance, extendStickButton);
+        midChangeSceneRedefineVariables();
+        Platform.animateTranslateInvisiblePlatform(getTargetPlatformRectangle(), getInvisiblePlatformRectangle(), totalShiftDistance);
+        double platform3startX = Platform.getPlatform3X();
+        double platform3HalfWidth = (double) getInvisiblePlatformRectangle().getWidth() / 2;
+        double hitPointInitialPosition = platform3startX + platform3HalfWidth - (double) HitPoint.getWidth() /2;
+        System.out.println("HitPoint Front NewX: "+hitPointInitialPosition);
+        setHitPointPosition(getHitPointFront(), hitPointInitialPosition);
+        System.out.println("Mid Scene Ended");
+        //Variables redefined Beyond
     }
 
 
@@ -180,14 +186,16 @@ public class GamePlayController extends SceneController{
     }
 
     void checkStickCollision() {
-        if(gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform())) {
-            invertPlayerButton.setDisable(false);
-            invertPlayerButton.requestFocus();
-        }
+        gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform());
+    }
+    void disableInvertButton(){
+        invertPlayerButton.setDisable(false);
+        invertPlayerButton.requestFocus();
     }
 
+
     void playerMove(double playerFinalX, boolean alive){
-        defaultCharacter.move(playerFinalX, getTargetPlatform(), Token.getCurrentToken(token1, token2), alive);
+        defaultCharacter.move(playerFinalX,getCurrentPlatform(), getTargetPlatform(), Token.getCurrentToken(token1, token2), alive, invertPlayerButton);
     }
 
     void playerFall(){
@@ -204,21 +212,6 @@ public class GamePlayController extends SceneController{
         gameStatistics.updateScore(score, hitsPoint);
     }
 
-    void changeScene(){
-        System.out.println("Changing Scene");
-        double shiftDistance = getTargetPlatformRectangle().getX()-getCurrentPlatformRectangle().getX();
-        totalShiftDistance += shiftDistance;
-        System.out.println("LastShiftDistance: "+shiftDistance);
-        System.out.println("TotalShiftDistance: " +totalShiftDistance);
-        gameMechanics.changeScene(getTargetPlatform(), movableComponents, shiftDistance, extendStickButton);
-        midChangeSceneRedefineVariables();
-        Platform.animateTranslateInvisiblePlatform(getTargetPlatformRectangle(), getInvisiblePlatformRectangle(), totalShiftDistance);
-        double platform3startX = Platform.getPlatform3X();
-        double platform2HalfWidth = (double) getInvisiblePlatform().getWidth() /2;
-        double hitPointInitialPosition = platform3startX + platform2HalfWidth - (double) HitPoint.getWidth() /2;
-        System.out.println("HitPoint Front NewX: "+hitPointInitialPosition);
-        setHitPointPosition(getHitPointFront(), hitPointInitialPosition);
-    }
 
 
     @FXML

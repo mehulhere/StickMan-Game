@@ -33,7 +33,7 @@ public class GameMechanics {
         });
     }
 
-    public boolean checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2){
+    public void checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2){
         double stickLength = stickLine.getStartY() - stickLine.getEndY();
         double stickEndX = stickLine.getStartX() + stickLength;
         System.out.println("Running Collision Check");
@@ -52,12 +52,11 @@ public class GameMechanics {
             System.out.println("Player FinaLX: "+ playerFinalX);
             gamePlayController.playerMove(playerFinalX, true);
 
-            return true;
+            return;
         }
         System.out.println("NO Collision!! DONT RUN");
         gamePlayController.playerMove(stickEndX, false);
         System.out.println("StickEndX: "+ stickEndX);
-        return false;
     }
 
     public boolean checkHitPointCollision(double stickX){

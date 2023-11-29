@@ -54,7 +54,7 @@
     <!-- Other UI Components-->
     <Button fx:id="extendStickButton" layoutX="35.0" layoutY="65.0" mnemonicParsing="false" onKeyPressed="#extendStick" onKeyReleased="#stopExtendStick" prefHeight="10.0" prefWidth="20.0" text="extend stick" />
     <Button fx:id="invertPlayerButton" disable="true" layoutX="35.0" layoutY="110.0" mnemonicParsing="false" onKeyPressed="#invertPlayer" prefHeight="25.0" prefWidth="20.0" text="invert player" />
-   <Label fx:id="highScoreText" layoutX="300.0" layoutY="175.0" prefHeight="100.0" prefWidth="212.0" text="HIGH SCORE!" textAlignment="CENTER" textFill="#ffd900">
+   <Label fx:id="highScoreText" layoutX="300.0" layoutY="175.0" opacity="0.0" prefHeight="100.0" prefWidth="212.0" text="HIGH SCORE!" textAlignment="CENTER" textFill="#ffd900">
       <font>
          <Font name="Cooper Black" size="30.0" />
       </font>

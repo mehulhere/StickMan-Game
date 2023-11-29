@@ -43,6 +43,10 @@ public class GameStatistics {
         currentScore = score;
     }
 
+    public static int getCurrentScore() {
+        return currentScore;
+    }
+
     public static void setBestScore(){
         if(currentScore > bestScore){
             bestScore = currentScore;

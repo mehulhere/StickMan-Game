@@ -38,12 +38,12 @@ public class SceneController {
     public void closePopupRevive(ActionEvent event) throws IOException {
         System.out.println("Revive Button Clicked");
         System.out.println(GameStatistics.getTokens());
+        System.out.println(GameStatistics.getRevivals());
+        System.out.println(GameStatistics.getTokens());
         int finalTokens = GameStatistics.getTokens()-GameStatistics.getRevivals()-1;
         if (finalTokens >= 0) {
             GameStatistics.setTokens(finalTokens);
         }
-        System.out.println(GameStatistics.getRevivals());
-        System.out.println(GameStatistics.getTokens());
         // Access the root of the current scene
         Scene currentScene = ((Node) event.getSource()).getScene();
 //        gamePlayController.enableExtendButton();
@@ -72,8 +72,14 @@ public class SceneController {
             GameOverController gameOverController = fxmlLoader.getController();
             System.out.println(score);
             System.out.println(tokens);
-//            gameOverController.setGameOverScore(score);
-//            gameOverController.setGameOverTokens(tokens);
+
+            int finalTokens = GameStatistics.getTokens()-GameStatistics.getRevivals()-1;
+            if (finalTokens >= 0) {
+                GameStatistics.setTokens(finalTokens);
+            }
+            else{
+                gameOverController.setDisableReviveButton(true);
+            }
             StackPane stackPane = new StackPane();
 
             Scene currentScene = currentNode.getScene(); // Fetch scene from provided Node

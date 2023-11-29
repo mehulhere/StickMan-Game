@@ -8,8 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #530289;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.SceneController">
-    <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #530289;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.pausePageController">
         <Text fill="WHITE" layoutX="231.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pause Menu">
             <font>
                 <Font name="System Bold" size="24.0" />
@@ -18,7 +17,7 @@
             <Glow level="0.99" />
          </effect>
         </Text>
-        <Button graphicTextGap="5.0" layoutX="247.0" layoutY="99.0" mnemonicParsing="false" onAction="#switchToGamePlayPage" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #64E3FF; -fx-shape: &quot;M5,5 m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0&quot;;" text="RESUME" textOverrun="CLIP">
+        <Button fx:id = "resumeButton" graphicTextGap="5.0" layoutX="247.0" layoutY="99.0" mnemonicParsing="false" onAction="#closePopup" prefHeight="110.0" prefWidth="110.0" style="-fx-background-color: #64E3FF; -fx-shape: &quot;M5,5 m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0&quot;;" text="RESUME" textOverrun="CLIP">
          <effect>
             <DropShadow blurType="GAUSSIAN" height="30.0" radius="14.5" width="30.0" />
          </effect>
@@ -32,7 +31,6 @@
          <effect>
             <DropShadow blurType="GAUSSIAN" height="30.0" radius="14.5" width="30.0" />
          </effect></Button>
-    </children>
    <effect>
       <ColorAdjust />
    </effect>

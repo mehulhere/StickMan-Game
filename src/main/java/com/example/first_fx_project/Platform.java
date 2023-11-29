@@ -8,9 +8,10 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Platform {
-    static Random random = new Random();
+    static Random random = ThreadLocalRandom.current(); //Generate Better Quality Random
     static private int height = 100;
 
     private static int platform3Distance;
@@ -20,7 +21,7 @@ public class Platform {
     }
 
     public static double setPlatform3Distance(double currentPlatformEndX) {
-        platform3Distance = (int) (random.nextInt(30, 500) + (currentPlatformEndX + safetyDistance));
+        platform3Distance = (int) (random.nextInt(100, 400) + (currentPlatformEndX + safetyDistance));
         System.out.println("New PlatformX: "+platform3Distance);
         return platform3Distance;
     }
@@ -28,8 +29,8 @@ public class Platform {
     private int platformType; // 1 for current. 2 for target. 3 for invisible.
     private Rectangle platformRectangle;
 
-    private static int maxWidth = 160;
-    private static int minWidth= 80;
+    private static int maxWidth = 250;
+    private static int minWidth= 70;
 
     private static int safetyDistance = 10;
 
@@ -86,6 +87,7 @@ public class Platform {
     public static void animateTranslateInvisiblePlatform(Rectangle currentPlatform, Rectangle targetPlatform, double totalShiftDistance) {
         System.out.println("Translating Invisible Platform");
         int width = random.nextInt(minWidth,maxWidth);
+        System.out.println("PlatformWidth: "+width);
         targetPlatform.setWidth(width);
         double targetPlatformStartX = getPlatform3X();
         System.out.println("TargetPlatformStartX: " + targetPlatformStartX);

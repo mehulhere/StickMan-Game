@@ -24,11 +24,14 @@ public class Stick {
     }
 
     static void initializeStick(Platform platform, Line stick) {
-        int stickStartX = (int) (platform.getPlatformRectangle().getX()+platform.getPlatformRectangle().getWidth() - 3);
+        int stickStartX = (int) (platform.getPlatformRectangle().getX()+platform.getPlatformRectangle().getWidth());
         stick.getTransforms().clear();
+        stick.setStartX(stick.getEndX());
         stick.setEndY(stick.getStartY());
+        stick.setOpacity(0);
+        int aestheticMargin = 5;
         stick.setStartX(stickStartX );
-        stick.setEndX(stickStartX + 1 );
+        stick.setEndX(stickStartX);
     }
 
     public void rotateStick(Button extendStickButton, int num, GamePlayController gamePlayController) {

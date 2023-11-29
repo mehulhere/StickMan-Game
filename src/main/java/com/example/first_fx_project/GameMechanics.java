@@ -2,6 +2,7 @@ package com.example.first_fx_project;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -33,7 +34,7 @@ public class GameMechanics {
         });
     }
 
-    public void checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2){
+    public void checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2, ImageView playerImage){
         double stickLength = stickLine.getStartY() - stickLine.getEndY();
         double stickEndX = stickLine.getStartX() + stickLength;
         System.out.println("Running Collision Check");
@@ -48,7 +49,8 @@ public class GameMechanics {
             gamePlayController.setHitPointPosition(GamePlayController.getHitPointBack(), GamePlayController.getHitPointFront().getHitPointPosition());
             GamePlayController.getHitPointBack().changeColor(checkHitPointCollision(stickEndX));
             gamePlayController.setHitsPoint(checkHitPointCollision(stickEndX));
-            double playerFinalX = platformRectangle.getX() + platformRectangle.getWidth()/2;
+            int aestheticMargin = 2;
+            double playerFinalX = platformEndX - playerImage.getFitWidth() - aestheticMargin;
             System.out.println("Player FinaLX: "+ playerFinalX);
             gamePlayController.playerMove(playerFinalX, true);
 

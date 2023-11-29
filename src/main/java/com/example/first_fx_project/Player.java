@@ -188,7 +188,6 @@ public class Player {
             System.out.println("I am revived");
             GameStatistics.setRevivals(GameStatistics.getRevivals()+1);
             fallInverse();
-
         });
         Future<?> future = executor2.submit(() -> {
             // Your task logic here

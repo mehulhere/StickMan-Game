@@ -68,5 +68,9 @@ public class GameStatistics {
     public static void setTokens(int tokens) {
         GameStatistics.tokens = tokens;
     }
+
+    public static int getCurrentScore() {
+        return currentScore;
+    }
 }
 

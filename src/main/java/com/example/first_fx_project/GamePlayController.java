@@ -3,6 +3,10 @@ package com.example.first_fx_project;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -10,8 +14,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -21,6 +27,7 @@ public class GamePlayController extends SceneController{
     public ImageView imgToken;
     @FXML
     public ImageView imgToken2;
+    public Button pauseButton;
     @FXML
     private ImageView imgDefaultCharacter;
 
@@ -35,6 +42,9 @@ public class GamePlayController extends SceneController{
 
     @FXML
     private AnchorPane movableComponents;
+
+    @FXML
+    private AnchorPane firstController;
 
     @FXML
     private Button invertPlayerButton;
@@ -93,9 +103,20 @@ public class GamePlayController extends SceneController{
     }
     public DefaultCharacter defaultCharacter;
 
+//    public void onPauseButtonPress(){
+//        pauseButton.set
+//        extendStickButton.setDisable(true);
+//        invertPlayerButton.setDisable(true);
+//    }
+//    public void enablePauseButton(){
+//        pauseButton.setDisable(false);
+//        pauseButton.
+//    }
+
 
     @FXML
     public void initialize() {
+        System.out.println("HDAIDAIDIDDI");
         platform1 = new Platform(1, platformRectangle1);
         platform2 = new Platform(2, platformRectangle2);
         platform3 = new Platform(3, platformRectangle3);
@@ -123,6 +144,7 @@ public class GamePlayController extends SceneController{
         Stick.invertStickConfiguration(stick1, stick2); //Inverts currentStick Variable
         Stick.initializeStick(getCurrentPlatform(), getStickLine());
     }
+
 
 
 
@@ -226,20 +248,23 @@ public class GamePlayController extends SceneController{
         hitPoint.setHitPointPosition(x);
     }
 
-    public void switchToGameOverPage() throws IOException {
-        super.switchToGameOverPage(movableComponents, score.getText(), extendStickButton);
-    }
-//    public void switchToPausePage(MouseEvent event) throws IOException{
-//        super.switchToPausePage(event);
-//    }
 
-//    public void closePopup(ActionEvent event) throws IOException{
-//        super.closePopup(event, extendStickButton);
-//    }
+    private Scene overlayScene;
+
+    public void switchToGameOverPage() throws IOException {
+        super.switchToGameOverPage(firstController, score.getText(), extendStickButton);
+    }
+
 
     public void enableExtendButton(){
         extendStickButton.setDisable(false);
         extendStickButton.requestFocus();
+    }
+
+    public void disableExtendButton(){
+        extendStickButton.setDisable(true);
+        System.out.println("Extend Button is Disabled");
+        System.out.println(extendStickButton.toString());
     }
 
     //Helpers

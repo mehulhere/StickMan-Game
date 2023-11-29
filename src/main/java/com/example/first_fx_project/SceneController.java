@@ -39,7 +39,7 @@ public class SceneController {
         System.out.println("Revive Button Clicked");
         System.out.println(GameStatistics.getTokens());
         int finalTokens = GameStatistics.getTokens()-GameStatistics.getRevivals()-1;
-        if (finalTokens > 0) {
+        if (finalTokens >= 0) {
             GameStatistics.setTokens(finalTokens);
         }
         System.out.println(GameStatistics.getRevivals());

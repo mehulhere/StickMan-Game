@@ -138,6 +138,7 @@ public class GamePlayController extends SceneController{
         tokenLabel.setText(Integer.toString(GameStatistics.getTokens()));
         GameStatistics.setCurrentScore(0);
         GameStatistics.setHighScoreChecked(false);
+        GameStatistics.setRevivals(0);
     }
 
     void redefineVariables(double increment) {

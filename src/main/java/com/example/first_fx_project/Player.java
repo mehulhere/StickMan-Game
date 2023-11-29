@@ -46,8 +46,8 @@ public class Player {
 
     public void moveToPlatform(Platform platformCurrent,Platform platformTarget, double playerFinalX, double transitionRate, Token token, Button invertButton){
         GamePlayController.getHitPointFront().isVisible(false);
-        double platformMidLength = (double) platformTarget.getPlatformRectangle().getWidth() / 2;
-        double playerCrashX =  (playerFinalX - platformMidLength - image.getFitWidth());
+        double platformWidth = (double) platformTarget.getPlatformRectangle().getWidth();
+        double playerCrashX =  (playerFinalX - platformWidth);
         double playerStartX = image.getX();
         double transitionDistance = playerFinalX - playerStartX;
         Timeline timeline = new Timeline();
@@ -60,8 +60,6 @@ public class Player {
             ImageView imgToken = token.getImgToken();
             double playerX = image.getTranslateX() + image.getX();
             boolean playerCrossedStick = playerCrashX - playerX > 0;
-            double platformWidth = platformCurrent.getPlatformRectangle().getWidth();
-            double playerCrossedPlatformX = platformCurrent.getPlatformRectangle().getX() + platformWidth + image.getFitWidth();
             while (transitionRunning.get() && playerCrossedStick) {
                 playerX = image.getTranslateX() + image.getX();
 //                System.out.println(playerX);
@@ -84,6 +82,9 @@ public class Player {
             if(isInverted){
                 timeline.stop();
                 gamePlayController.playerFall();
+                //Proper Logic
+                //On Revive
+//                timeline.play();
             }
         });
 
@@ -130,7 +131,14 @@ public class Player {
 
         translateTransition.setOnFinished(event -> {
             try {
+                //New Thread
+                //this inside thread for 10s
                 gamePlayController.switchToGameOverPage(collectedToken.get());
+                //Input
+                // Or ask GPT
+                //Back to This Instance
+                //Inverse Fall Animation
+                // Fall finishes goes to transition
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

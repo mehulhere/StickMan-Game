@@ -5,7 +5,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -54,10 +53,13 @@
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7c7c7c" height="68.0" layoutX="318.0" layoutY="29.0" opacity="0.32" stroke="BLACK" strokeType="INSIDE" width="165.0" />
 
     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="32.0" layoutX="15.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="71.0" />
-
-    <Circle centerX="400.0" centerY="520.0" fill="Red" layoutX="-335.0" layoutY="-489.0" radius="10.0" />
    <Label fx:id="scoreLabel" layoutX="401.0" layoutY="43.0" prefHeight="40.0" prefWidth="58.0" text="0" />
 
     <Label fx:id="tokenLabel" layoutX="26.0" layoutY="21.0" prefHeight="21.0" prefWidth="39.0" text="0" />
     <Label layoutX="338.0" layoutY="29.0" prefHeight="68.0" prefWidth="58.0" text="SCORE: " />
+   <ImageView fx:id="imgToken1" fitHeight="25.0" fitWidth="28.0" layoutX="-347.0" layoutY="-492.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="509.0">
+      <image>
+         <Image url="@assets/cherries.png" />
+      </image>
+   </ImageView>
 </AnchorPane>

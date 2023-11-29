@@ -272,12 +272,12 @@ public class GamePlayController extends SceneController{
 
  
     public void switchToGameOverPage(boolean collectedToken) throws IOException {
-        if(collectedToken){
+        if (collectedToken) {
             updateTokenCount();
         }
         System.out.println(tokenLabel.getText());
         super.switchToGameOverPage(movableComponents, scoreLabel.getText(), tokenLabel.getText());
-
+    }
 
     private Scene overlayScene;
 

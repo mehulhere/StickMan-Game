@@ -1,16 +1,12 @@
 package com.example.first_fx_project;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -47,14 +43,15 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
-    public void switchToGameOverPage(Node currentNode, String score, Button extendButton) throws IOException {
+    public void switchToGameOverPage(Node currentNode, String score, String tokens) throws IOException {
         System.out.println("Game Over Page");
         try {
-            extendButton.setDisable(true);
             //Also disable invert Button
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gameOverPage.fxml"));
             Parent overlayRoot = fxmlLoader.load();
-
+            GameOverController gameOverController = fxmlLoader.getController();
+            gameOverController.setGameOverScore(score);
+            gameOverController.setGameOverTokens(tokens);
             StackPane stackPane = new StackPane();
 
             Scene currentScene = currentNode.getScene(); // Fetch scene from provided Node
@@ -113,16 +110,6 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
-
-
-    public void switchToGameOverPage(Node currentNode, String score, String tokens) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gameOverPage.fxml"));
-        Parent root = fxmlLoader.load(); // Set the loaded FXML as the root ------ error here
-        Scene newScene = new Scene(root);
-
-        GameOverController gameOverController = fxmlLoader.getController();
-        gameOverController.setGameOverScore(score);
-        gameOverController.setGameOverTokens(tokens);
 
 
 

@@ -28,12 +28,14 @@ public class GameOverController extends SceneController{
         gameOverTokens.setText(Integer.toString(GameStatistics.getTokens()));
         System.out.println("Inside GameOver Page: "+GameStatistics.getTokens());
         System.out.println(gameOverTokens.getText());
-
     }
 
     @FXML
     private Button reviveButton;
 
+    public void setDisableReviveButton(boolean disableReviveButton) {
+        reviveButton.setDisable(disableReviveButton);
+    }
 
     public void setGameOverScore(String score){
         gameOverScore.setText(score);

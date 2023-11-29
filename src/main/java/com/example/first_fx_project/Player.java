@@ -42,9 +42,10 @@ public class Player {
         }
     }
 
+    AtomicBoolean collectedToken = new AtomicBoolean(false);
 
-  public void moveToPlatform(Platform platformCurrent,Platform platformTarget, double playerFinalX, double transitionRate, Token token, Button invertButton){
-        gamePlayController.getHitPointFront().isVisible(false);
+    public void moveToPlatform(Platform platformCurrent,Platform platformTarget, double playerFinalX, double transitionRate, Token token, Button invertButton){
+        GamePlayController.getHitPointFront().isVisible(false);
         double platformMidLength = (double) platformTarget.getPlatformRectangle().getWidth() / 2;
         double playerCrashX =  (playerFinalX - platformMidLength - image.getFitWidth());
         double playerStartX = image.getX();
@@ -52,6 +53,7 @@ public class Player {
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
         AtomicBoolean transitionRunning= new AtomicBoolean(true);
+        AtomicBoolean playerFalls = new AtomicBoolean(false);
         gamePlayController.disableInvertButton();
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
@@ -59,7 +61,7 @@ public class Player {
             double playerX = image.getTranslateX() + image.getX();
             boolean playerCrossedStick = playerCrashX - playerX > 0;
             double platformWidth = platformCurrent.getPlatformRectangle().getWidth();
-            double playerCrossedPlatformX = platformCurrent.getPlatformRectangle().getX()+ platformWidth + image.getFitWidth();
+            double playerCrossedPlatformX = platformCurrent.getPlatformRectangle().getX() + platformWidth + image.getFitWidth();
             while (transitionRunning.get() && playerCrossedStick) {
                 playerX = image.getTranslateX() + image.getX();
 //                System.out.println(playerX);
@@ -69,7 +71,7 @@ public class Player {
 //                System.out.println(playerX);
 //                System.out.println(isInverted);
                 if(Math.abs(imgToken.getX() - playerX) < image.getFitWidth() && isInverted){
-                    //Tokens ++
+                    collectedToken.set(true);
                     imgToken.setOpacity(0);
                 }
                 try {
@@ -84,10 +86,16 @@ public class Player {
                 gamePlayController.playerFall();
             }
         });
+
         // Adding KeyFrame to the timeline
         Duration duration = Duration.seconds(transitionRate*transitionDistance); // Duration of animation (1 second)
         KeyFrame keyFrame = new KeyFrame(duration, event -> {
             gamePlayController.updateScore();
+            gamePlayController.checkHighScore();
+            if(collectedToken.get()){
+                gamePlayController.updateTokenCount();
+                collectedToken.set(false);
+            }
             gamePlayController.changeScene();
             transitionRunning.set(false);
         }, new KeyValue(image.xProperty(), playerFinalX));
@@ -113,14 +121,16 @@ public class Player {
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
     }
+
     public void fall(){
+
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), image);
         translateTransition.setToY(image.getTranslateY() + 350);
         translateTransition.play();
 
         translateTransition.setOnFinished(event -> {
             try {
-                gamePlayController.switchToGameOverPage();
+                gamePlayController.switchToGameOverPage(collectedToken.get());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

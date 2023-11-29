@@ -9,9 +9,35 @@
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #530289;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.GameOverController">
 
     <!-- Game Over Label -->
-    <Label layoutX="281.0" layoutY="150.0" style="-fx-font-size: 48px; -fx-text-fill: red;" text="Game Over" />
+    <Label layoutX="266.0" layoutY="35.0" style="-fx-font-size: 48px; -fx-text-fill: red;" text="Game Over" />
 
     <!-- Score Label -->
+
+    <Label layoutX="284.0" layoutY="131.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Your Score:" />
+   <Label fx:id="gameOverScore" layoutX="420.0" layoutY="124.0" prefHeight="50.0" prefWidth="74.0" text="1000">
+      <font>
+         <Font size="30.0" />
+      </font></Label>
+   <Label layoutX="275.0" layoutY="307.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Total cheries: " />
+   <Label fx:id="gameOverTokens" layoutX="421.0" layoutY="300.0" prefHeight="50.0" prefWidth="74.0" text="100">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </Label>
+   <Label layoutX="283.0" layoutY="219.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Best Score: " />
+   <Label fx:id="gameOverBestScore" layoutX="420.0" layoutY="212.0" prefHeight="50.0" prefWidth="100.0" text="10000">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </Label>
+   <Circle fill="#4CAF50" layoutX="472.0" layoutY="473.0" radius="56.0" style="-fx-fill: red;" /> <!-- Replace with your score -->
+
+          <!-- Restart Button -->
+    <Circle fill="#4CAF50" layoutX="329.0" layoutY="473.0" radius="56.0" />
+    <Button accessibleText="Restart" layoutX="284.0" layoutY="453.0" mnemonicParsing="false" onAction="#switchToGamePlayPage" prefHeight="40.0" prefWidth="90.0" style="-fx-font-size: 18px; -fx-text-fill: white; -fx-background-color: #4CAF50;" text="Restart" />
+
+    <!-- Exit Button -->
+    <Button accessibleText="Exit" layoutX="422.0" layoutY="453.0" mnemonicParsing="false" onAction="#switchToMenuPage" prefHeight="40.0" prefWidth="100.0" style="-fx-font-size: 18px; -fx-text-fill: white; -fx-background-color: red;" text="Home" />
     <Label layoutX="309.0" layoutY="256.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Your Score:" />
    <Circle fill="#4CAF50" layoutX="400.0" layoutY="449.0" radius="56.0" style="-fx-fill: red;" /> <!-- Replace with your score -->
 

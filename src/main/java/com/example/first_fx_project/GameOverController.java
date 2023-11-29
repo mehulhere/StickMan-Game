@@ -15,10 +15,28 @@ public class GameOverController extends SceneController{
     private Label gameOverScore;
 
     @FXML
+
+    private Label gameOverTokens;
+
+    @FXML
+    private Label gameOverBestScore;
+
+    @FXML
+    public void initialize(){
+        GameStatistics.setBestScore();
+        gameOverBestScore.setText(Integer.toString(GameStatistics.getBestScore()));
+    }
+
     private Button reviveButton;
+
 
     public void setGameOverScore(String score){
         gameOverScore.setText(score);
+    }
+
+
+    public void setGameOverTokens(String tokens){
+        gameOverTokens.setText(tokens);
     }
 
     public void closePopup(ActionEvent event) {
@@ -29,5 +47,6 @@ public class GameOverController extends SceneController{
             stackPane.getChildren().remove(stackPane.getChildren().size() - 1); // Remove the topmost child (assuming it's the overlay)
         }
     }
+
 
 }

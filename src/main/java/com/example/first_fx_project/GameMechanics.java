@@ -43,21 +43,23 @@ public class GameMechanics {
         double platformEndX = platformRectangle.getX() + platformRectangle.getWidth();
         System.out.println("Platform StartX: "+platformStartX);
         System.out.println("Platform EndX: "+platformEndX);
-
+        int aestheticMargin = 2;
+        double playerFinalX = platformEndX - playerImage.getFitWidth() - aestheticMargin;
         if (stickEndX > platformStartX && stickEndX < platformEndX) {
             System.out.println("Collision!! RUN");
             gamePlayController.setHitPointPosition(GamePlayController.getHitPointBack(), GamePlayController.getHitPointFront().getHitPointPosition());
             GamePlayController.getHitPointBack().changeColor(checkHitPointCollision(stickEndX));
             gamePlayController.setHitsPoint(checkHitPointCollision(stickEndX));
-            int aestheticMargin = 2;
-            double playerFinalX = platformEndX - playerImage.getFitWidth() - aestheticMargin;
-            System.out.println("Player FinaLX: "+ playerFinalX);
-            gamePlayController.playerMove(playerFinalX, true);
 
+
+            System.out.println("Player FinaLX: "+ playerFinalX);
+            gamePlayController.playerMove(playerFinalX, stickEndX, true);
+            System.out.println("Application Thread Finished check collision");
             return;
         }
         System.out.println("NO Collision!! DONT RUN");
-        gamePlayController.playerMove(stickEndX, false);
+        gamePlayController.playerMove(playerFinalX, stickEndX, false);
+        System.out.println("Application Thread Finished check collision");
         System.out.println("StickEndX: "+ stickEndX);
     }
 

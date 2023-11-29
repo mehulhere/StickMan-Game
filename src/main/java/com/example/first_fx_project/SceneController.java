@@ -35,6 +35,26 @@ public class SceneController {
         }
     }
 
+    public void closePopupRevive(ActionEvent event) throws IOException {
+        System.out.println("Revive Button Clicked");
+        System.out.println(GameStatistics.getTokens());
+        int finalTokens = GameStatistics.getTokens()-GameStatistics.getRevivals()-1;
+        if (finalTokens > 0) {
+            GameStatistics.setTokens(finalTokens);
+        }
+        System.out.println(GameStatistics.getRevivals());
+        System.out.println(GameStatistics.getTokens());
+        // Access the root of the current scene
+        Scene currentScene = ((Node) event.getSource()).getScene();
+//        gamePlayController.enableExtendButton();
+        if (currentScene != null && currentScene.getRoot() instanceof StackPane) {
+            StackPane stackPane = (StackPane) currentScene.getRoot();
+            stackPane.getChildren().remove(stackPane.getChildren().size() - 1); // Remove the topmost child (assuming it's the overlay)
+//                extendButton.setDisable(false);
+//                extendButton.requestFocus();
+        }
+    }
+
     public void switchToMenuPage(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("menuPage.fxml"));
         root = fxmlLoader.load(); // Set the loaded FXML as the root
@@ -50,8 +70,10 @@ public class SceneController {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gameOverPage.fxml"));
             Parent overlayRoot = fxmlLoader.load();
             GameOverController gameOverController = fxmlLoader.getController();
-            gameOverController.setGameOverScore(score);
-            gameOverController.setGameOverTokens(tokens);
+            System.out.println(score);
+            System.out.println(tokens);
+//            gameOverController.setGameOverScore(score);
+//            gameOverController.setGameOverTokens(tokens);
             StackPane stackPane = new StackPane();
 
             Scene currentScene = currentNode.getScene(); // Fetch scene from provided Node
@@ -68,8 +90,6 @@ public class SceneController {
                 if (currentStage != null) {
                     currentStage.setScene(overlayScene);
                     currentStage.requestFocus();
-                    System.out.println(1);
-                    System.out.println(2);
                 }
             }
         } catch (IOException e) {

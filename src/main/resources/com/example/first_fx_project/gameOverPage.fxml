@@ -38,7 +38,7 @@
 
     <!-- Exit Button -->
     <Button accessibleText="Exit" layoutX="350.0" layoutY="429.0" mnemonicParsing="false" onAction="#switchToMenuPage" prefHeight="40.0" prefWidth="100.0" style="-fx-font-size: 18px; -fx-text-fill: white; -fx-background-color: red;" text="Home" />
-   <Button fx:id="reviveButton" layoutX="573.0" layoutY="398.0" mnemonicParsing="false" onAction="#closePopup" prefHeight="103.0" prefWidth="120.0" text="Revive">
+   <Button fx:id="reviveButton" layoutX="573.0" layoutY="398.0" mnemonicParsing="false" onAction="#closePopupRevive" prefHeight="103.0" prefWidth="120.0" text="Revive">
       <font>
          <Font size="23.0" />
       </font>

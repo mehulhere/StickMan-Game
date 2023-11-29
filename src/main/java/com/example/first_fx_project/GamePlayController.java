@@ -223,12 +223,13 @@ public class GamePlayController extends SceneController{
     }
 
 
-    void playerMove(double playerFinalX, boolean alive){
-        defaultCharacter.move(playerFinalX,getCurrentPlatform(), getTargetPlatform(), Token.getCurrentToken(token1, token2), alive, invertPlayerButton);
+    void playerMove(double playerFinalX, double stickEndX , boolean alive){
+        defaultCharacter.move(playerFinalX,getCurrentPlatform(), getTargetPlatform(), Token.getCurrentToken(token1, token2), alive, stickEndX);
     }
 
     void playerFall(){
         defaultCharacter.fall();
+        System.out.println("Fall finished");
     }
 
     void stopInversion(){
@@ -258,8 +259,10 @@ public class GamePlayController extends SceneController{
     }
 
     public void updateTokenCount(){
-        GameStatistics.updateTokenCount(tokenLabel);
+        tokenLabel.setText(String.valueOf(GameStatistics.getTokens()));
+        System.out.println("Number of Tokens"+GameStatistics.getTokens());
     }
+
 
     @FXML
     void rotateStick(int num) {
@@ -271,12 +274,12 @@ public class GamePlayController extends SceneController{
     }
 
  
-    public void switchToGameOverPage(boolean collectedToken) throws IOException {
-        if (collectedToken) {
-            updateTokenCount();
-        }
+    public void switchToGameOverPage() throws IOException {
         System.out.println(tokenLabel.getText());
-        super.switchToGameOverPage(movableComponents, scoreLabel.getText(), tokenLabel.getText());
+        System.out.println("Hello");
+        System.out.println(GameStatistics.getTokens());
+        System.out.println(scoreLabel.getText());
+        super.switchToGameOverPage(movableComponents, scoreLabel.getText(), String.valueOf("ada"));
     }
 
     private Scene overlayScene;

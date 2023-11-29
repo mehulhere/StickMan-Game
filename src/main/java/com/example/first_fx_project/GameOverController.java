@@ -11,11 +11,10 @@ import javafx.scene.layout.StackPane;
 
 public class GameOverController extends SceneController{
 
-    @FXML
+
     private Label gameOverScore;
 
     @FXML
-
     private Label gameOverTokens;
 
     @FXML
@@ -25,6 +24,11 @@ public class GameOverController extends SceneController{
     public void initialize(){
         GameStatistics.setBestScore();
         gameOverBestScore.setText(Integer.toString(GameStatistics.getBestScore()));
+        System.out.println("Best Score: "+GameStatistics.getBestScore());
+        gameOverTokens.setText(Integer.toString(GameStatistics.getTokens()));
+        System.out.println("Inside GameOver Page: "+GameStatistics.getTokens());
+        System.out.println(gameOverTokens.getText());
+
     }
 
     @FXML

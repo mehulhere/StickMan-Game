@@ -8,6 +8,16 @@ public class GameStatistics {
     private static int bestScore;
     private static boolean highScoreChecked;
 
+    private static int Revivals;
+
+    public static int getRevivals() {
+        return Revivals;
+    }
+
+    public static void setRevivals(int revivals) {
+        Revivals = revivals;
+    }
+
     // Constructor
     public GameStatistics() {
         currentScore = 0;
@@ -23,10 +33,6 @@ public class GameStatistics {
             currentScore++;
         }
         score.setText(Integer.toString(currentScore));
-    }
-
-    public static void updateTokenCount(Label tokenLabel){
-        tokenLabel.setText(Integer.toString(++tokens));
     }
 
     public static int getTokens() {
@@ -57,6 +63,10 @@ public class GameStatistics {
 
     public static boolean checkHighScore(){
         return (currentScore > bestScore);
+    }
+
+    public static void setTokens(int tokens) {
+        GameStatistics.tokens = tokens;
     }
 }
 

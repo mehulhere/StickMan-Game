@@ -72,8 +72,7 @@ public class SceneController {
             GameOverController gameOverController = fxmlLoader.getController();
             System.out.println(score);
             System.out.println(tokens);
-//            gameOverController.setGameOverScore(score);
-//            gameOverController.setGameOverTokens(tokens);
+
             int finalTokens = GameStatistics.getTokens()-GameStatistics.getRevivals()-1;
             if (finalTokens >= 0) {
                 GameStatistics.setTokens(finalTokens);

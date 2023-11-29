@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 
 public class GameOverController extends SceneController{
 
-
+    @FXML
     private Label gameOverScore;
 
     @FXML
@@ -28,6 +28,7 @@ public class GameOverController extends SceneController{
         gameOverTokens.setText(Integer.toString(GameStatistics.getTokens()));
         System.out.println("Inside GameOver Page: "+GameStatistics.getTokens());
         System.out.println(gameOverTokens.getText());
+        gameOverScore.setText(Integer.toString(GameStatistics.getCurrentScore()));
     }
 
     @FXML
@@ -36,16 +37,4 @@ public class GameOverController extends SceneController{
     public void setDisableReviveButton(boolean disableReviveButton) {
         reviveButton.setDisable(disableReviveButton);
     }
-
-    public void setGameOverScore(String score){
-        gameOverScore.setText(score);
-    }
-
-
-    public void setGameOverTokens(String tokens){
-        gameOverTokens.setText(tokens);
-    }
-
-
-
 }

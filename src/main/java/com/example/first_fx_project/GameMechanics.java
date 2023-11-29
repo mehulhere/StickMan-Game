@@ -45,8 +45,8 @@ public class GameMechanics {
 
         if (stickEndX > platformStartX && stickEndX < platformEndX) {
             System.out.println("Collision!! RUN");
-            gamePlayController.setHitPointPosition(gamePlayController.getHitPointBack(), gamePlayController.getHitPointFront().getHitPointPosition());
-            gamePlayController.getHitPointBack().changeColor(checkHitPointCollision(stickEndX));
+            gamePlayController.setHitPointPosition(GamePlayController.getHitPointBack(), GamePlayController.getHitPointFront().getHitPointPosition());
+            GamePlayController.getHitPointBack().changeColor(checkHitPointCollision(stickEndX));
             gamePlayController.setHitsPoint(checkHitPointCollision(stickEndX));
             double playerFinalX = platformRectangle.getX() + platformRectangle.getWidth()/2;
             System.out.println("Player FinaLX: "+ playerFinalX);
@@ -60,7 +60,7 @@ public class GameMechanics {
     }
 
     public boolean checkHitPointCollision(double stickX){
-        double lowerLimit = gamePlayController.getHitPointBack().getHitPointPosition();
+        double lowerLimit = GamePlayController.getHitPointBack().getHitPointPosition();
         return stickX >= lowerLimit - 1 && stickX <= lowerLimit + HitPoint.getWidth() + 1;
     }
 

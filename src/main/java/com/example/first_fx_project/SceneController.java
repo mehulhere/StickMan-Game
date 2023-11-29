@@ -62,13 +62,14 @@ public class SceneController {
         stage.show();
     }
 
-    public void switchToGameOverPage(Node currentNode, String score) throws IOException {
+    public void switchToGameOverPage(Node currentNode, String score, String tokens) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gameOverPage.fxml"));
         Parent root = fxmlLoader.load(); // Set the loaded FXML as the root ------ error here
         Scene newScene = new Scene(root);
 
         GameOverController gameOverController = fxmlLoader.getController();
         gameOverController.setGameOverScore(score);
+        gameOverController.setGameOverTokens(tokens);
 
         // Get the current window (Stage) from the provided Node
         Stage currentStage = (Stage) currentNode.getScene().getWindow();

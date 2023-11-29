@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GamePlayController extends SceneController{
     @FXML
@@ -53,16 +54,19 @@ public class GamePlayController extends SceneController{
     private Rectangle hitPointRectangle1;
 
     @FXML
-    private Label score;
+    private Label scoreLabel;
 
     @FXML
-    private Label gameOverScore;
+    private Label tokenLabel;
+
+    @FXML
+    private Label highScoreText;
 
     private Platform platform1;
     private Platform platform2;
     private Platform platform3;
     private static HitPoint hitPointFront;
-    private HitPoint hitPointBack;
+    private static HitPoint hitPointBack;
 
     private Stick stick1;
 
@@ -71,8 +75,6 @@ public class GamePlayController extends SceneController{
     private Token token1;
     private Token token2;
     private GameMechanics gameMechanics;
-    private GameStatistics gameStatistics;
-
 
     private boolean hitsPoint = false;
     private double totalShiftDistance;
@@ -109,8 +111,10 @@ public class GamePlayController extends SceneController{
         token2 = new Token(this, imgToken2, getTargetPlatformRectangle(), getInvisiblePlatformRectangle(), false);
         defaultCharacter = new DefaultCharacter(this, imgDefaultCharacter);
         gameMechanics = new GameMechanics(this);
-        gameStatistics = new GameStatistics();
         Stick.initializeStick(getCurrentPlatform(), getStickLine());
+        tokenLabel.setText(Integer.toString(GameStatistics.getTokens()));
+        GameStatistics.setCurrentScore(0);
+        GameStatistics.setHighScoreChecked(false);
     }
 
     void redefineVariables(double increment) {
@@ -202,17 +206,35 @@ public class GamePlayController extends SceneController{
         defaultCharacter.fall();
     }
 
-
-
     void stopInversion(){
         invertPlayerButton.setDisable(true);
     }
 
-    void updateScore(){
-        gameStatistics.updateScore(score, hitsPoint);
+    public void updateScore(){
+        GameStatistics.updateScore(scoreLabel, hitsPoint);
     }
 
+    public void checkHighScore(){
+        if(GameStatistics.checkHighScore() && !GameStatistics.isHighScoreChecked()){
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(2000), highScoreText);
+            fadeIn.setFromValue(0.0);
+            fadeIn.setToValue(1.0);
 
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(2000), highScoreText);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+
+            fadeIn.setOnFinished(event -> {
+                fadeOut.play();
+                GameStatistics.setHighScoreChecked(true);
+            });
+            fadeIn.play();
+        };
+    }
+
+    public void updateTokenCount(){
+        GameStatistics.updateTokenCount(tokenLabel);
+    }
 
     @FXML
     void rotateStick(int num) {
@@ -223,8 +245,12 @@ public class GamePlayController extends SceneController{
         hitPoint.setHitPointPosition(x);
     }
 
-    public void switchToGameOverPage() throws IOException {
-        super.switchToGameOverPage(movableComponents, score.getText());
+    public void switchToGameOverPage(boolean collectedToken) throws IOException {
+        if(collectedToken){
+            updateTokenCount();
+        }
+        System.out.println(tokenLabel.getText());
+        super.switchToGameOverPage(movableComponents, scoreLabel.getText(), tokenLabel.getText());
     }
 
     //Helpers
@@ -257,7 +283,7 @@ public class GamePlayController extends SceneController{
         return hitPointFront;
     }
 
-    public HitPoint getHitPointBack() {
+    public static HitPoint getHitPointBack() {
         return hitPointBack;
     }
 

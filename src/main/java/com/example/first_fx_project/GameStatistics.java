@@ -3,66 +3,60 @@ package com.example.first_fx_project;
 import javafx.scene.control.Label;
 
 public class GameStatistics {
-    private int currentScore;
-    private int tokens;
-    private int powerUpMeter;
-    static private int bestScore = 0;
-    private GamePlayController gamePlayController;
+    private static int currentScore;
+    private static int tokens;
+    private static int bestScore;
+    private static boolean highScoreChecked;
 
     // Constructor
     public GameStatistics() {
-        this.currentScore = 0;
-        this.tokens = 0;
-        this.powerUpMeter = 0;
-    }
-
-    // Method to reset all stats to default values
-    public void resetStats() {
-        this.currentScore = 0;
-        this.tokens = 0;
-        this.powerUpMeter = 0;
+        currentScore = 0;
+        tokens = 0;
+        bestScore = 0;
+        highScoreChecked = false;
     }
 
     // Method to update the current score
-    public void updateScore(Label score, boolean hitsPoint) {
-        int currentValue = Integer.parseInt(score.getText())+1;
+    public static void updateScore(Label score, boolean hitsPoint) {
+        int value = ++currentScore;
         if(hitsPoint){
-            currentValue ++;
+            currentScore++;
         }
-        score.setText(Integer.toString(currentValue));
+        score.setText(Integer.toString(currentScore));
     }
 
-    // Getters and Setters (if needed)
-    public int getCurrentScore() {
-        return currentScore;
+    public static void updateTokenCount(Label tokenLabel){
+        tokenLabel.setText(Integer.toString(++tokens));
     }
 
-    public void setCurrentScore(int currentScore) {
-        this.currentScore = currentScore;
-    }
-
-    public int getTokens() {
+    public static int getTokens() {
         return tokens;
     }
 
-    public void setTokens(int tokens) {
-        this.tokens = tokens;
+    public static void setCurrentScore(int score){
+        currentScore = score;
     }
 
-    public int getPowerUpMeter() {
-        return powerUpMeter;
+    public static void setBestScore(){
+        if(currentScore > bestScore){
+            bestScore = currentScore;
+        }
     }
 
-    public void setPowerUpMeter(int powerUpMeter) {
-        this.powerUpMeter = powerUpMeter;
+    public static void setHighScoreChecked(boolean highScoreChecked) {
+        GameStatistics.highScoreChecked = highScoreChecked;
     }
 
-    static public int getBestScore() {
+    public static boolean isHighScoreChecked() {
+        return highScoreChecked;
+    }
+
+    public static int getBestScore() {
         return bestScore;
     }
 
-    static public void setBestScore(int bestScore) {
-        GameStatistics.bestScore = bestScore;
+    public static boolean checkHighScore(){
+        return (currentScore > bestScore);
     }
 }
 

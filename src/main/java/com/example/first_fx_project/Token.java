@@ -56,14 +56,8 @@ public class Token { //In our game, instead of berries we have token class
         }
 
     public static void invertTokenConfiguration(Token token1, Token token2) {
-        if (token1.isCurrentToken()){
-            token1.setCurrentToken(false);
-            token2.setCurrentToken(true);
-        }
-        else{
-            token1.setCurrentToken(true);
-            token2.setCurrentToken(false);
-        }
+        token1.setCurrentToken(!token1.isCurrentToken());
+        token2.setCurrentToken(!token1.isCurrentToken()); //! because token1 has changed its boolean value
     }
 
     public static Token getCurrentToken(Token token1, Token token2){

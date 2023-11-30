@@ -41,7 +41,7 @@ public class Stick {
         stickLine.getTransforms().add(rotate);
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(rotate.angleProperty(), 0)),
-                new KeyFrame(Duration.seconds(1), new KeyValue(rotate.angleProperty(), 90))
+                new KeyFrame(Duration.seconds(0.3), new KeyValue(rotate.angleProperty(), 90))
         );
         timeline.setCycleCount(1);
         if(num == 0){

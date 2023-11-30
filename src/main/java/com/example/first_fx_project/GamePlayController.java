@@ -74,6 +74,12 @@ public class GamePlayController extends SceneController{
     @FXML
     private Label highScoreText;
 
+    @FXML
+    private ImageView bgImg1;
+
+    @FXML
+    private ImageView bgImg2;
+
     private Platform platform1;
     private Platform platform2;
     private Platform platform3;
@@ -91,18 +97,6 @@ public class GamePlayController extends SceneController{
     private boolean hitsPoint = false;
     private double totalShiftDistance;
 
-    public Line getStickLine() {
-        return getStick().getStickLine();
-    }
-
-    public Stick getStick() {
-        if (stick1.isCurrentStick()) {
-            return stick1;
-        }
-        else{
-            return stick2;
-        }
-    }
     public DefaultCharacter defaultCharacter;
 
 //    public void onPauseButtonPress(){
@@ -118,7 +112,6 @@ public class GamePlayController extends SceneController{
 
     @FXML
     public void initialize() {
-        System.out.println("HDAIDAIDIDDI");
         platform1 = new Platform(1, platformRectangle1);
         platform2 = new Platform(2, platformRectangle2);
         platform3 = new Platform(3, platformRectangle3);
@@ -139,6 +132,10 @@ public class GamePlayController extends SceneController{
         GameStatistics.setCurrentScore(0);
         GameStatistics.setHighScoreChecked(false);
         GameStatistics.setRevivals(0);
+        bgImg1.setVisible(true);
+        bgImg2.setVisible(true);
+        bgImg1.setX(0);
+        bgImg2.setX(bgImg1.getX() + bgImg1.getFitWidth());
     }
 
     void redefineVariables(double increment) {
@@ -189,7 +186,7 @@ public class GamePlayController extends SceneController{
             getStickLine().setOpacity(1);
             Timeline timeline = new Timeline();
             timeline.getKeyFrames().clear(); // Clear existing keyframes
-            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.03), new KeyValue(getStickLine().endYProperty(), getStickLine().getEndY() - 10)));
+            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.03), new KeyValue(getStickLine().endYProperty(), getStickLine().getEndY() - 20)));
             timeline.play();
         }
     }
@@ -283,6 +280,19 @@ public class GamePlayController extends SceneController{
         super.switchToGameOverPage(movableComponents, scoreLabel.getText(), String.valueOf("ada"));
     }
 
+    public void rotateBackground(double shiftDistance){
+        int den = (int) bgImg1.getFitWidth();
+        int val2 = (int) totalShiftDistance/den;
+        int val1 = (int) (totalShiftDistance-shiftDistance)/den;
+        if(val2-val1 > 0 && bgImg1.getX() < bgImg2.getX()){
+            bgImg1.setX(bgImg2.getX() + bgImg2.getFitWidth());
+        }
+
+        else if(val2-val1 > 0 && bgImg1.getX() > bgImg2.getX()){
+            bgImg2.setX(bgImg1.getX() + bgImg1.getFitWidth());
+        }
+    }
+
     private Scene overlayScene;
 
     public void enableExtendButton(){
@@ -293,8 +303,6 @@ public class GamePlayController extends SceneController{
     public void disableExtendButton(){
         extendStickButton.setDisable(true);
         System.out.println("Extend Button is Disabled");
-
-
     }
 
     //Helpers
@@ -333,6 +341,27 @@ public class GamePlayController extends SceneController{
 
     public void setHitsPoint(boolean hitsPoint) {
         this.hitsPoint = hitsPoint;
+    }
+
+    public Line getStickLine() {
+        return getStick().getStickLine();
+    }
+
+    public ImageView getBgImg1() {
+        return bgImg1;
+    }
+
+    public ImageView getBgImg2() {
+        return bgImg2;
+    }
+
+    public Stick getStick() {
+        if (stick1.isCurrentStick()) {
+            return stick1;
+        }
+        else{
+            return stick2;
+        }
     }
 }
 

@@ -31,6 +31,8 @@ public class GameMechanics {
             gamePlayController.redefineVariables(shiftDistance);
             extendStickButton.setDisable(false);
             extendStickButton.requestFocus();
+
+            gamePlayController.rotateBackground(shiftDistance);
         });
     }
 

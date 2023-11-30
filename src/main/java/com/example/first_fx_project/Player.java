@@ -139,6 +139,7 @@ public class Player {
         KeyFrame keyFrame = new KeyFrame(duration, event -> {
             gamePlayController.updateScore();
             gamePlayController.checkHighScore();
+            System.out.println("Changing SCENE");
             gamePlayController.changeScene();
             transitionRunning.set(false);
         }, new KeyValue(image.xProperty(), playerFinalX));

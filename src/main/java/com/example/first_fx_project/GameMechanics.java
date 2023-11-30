@@ -51,7 +51,6 @@ public class GameMechanics {
             GamePlayController.getHitPointBack().changeColor(checkHitPointCollision(stickEndX));
             gamePlayController.setHitsPoint(checkHitPointCollision(stickEndX));
 
-
             System.out.println("Player FinaLX: "+ playerFinalX);
             gamePlayController.playerMove(playerFinalX, stickEndX, true);
             System.out.println("Application Thread Finished check collision");

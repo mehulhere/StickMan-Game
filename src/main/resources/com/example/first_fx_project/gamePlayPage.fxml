@@ -14,17 +14,17 @@
     <AnchorPane fx:id="movableComponents">
       <ImageView fx:id="bgImg1" fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@assets/background_City.png" />
+            <Image url="@assets/background_Dungeon.png" />
          </image>
       </ImageView>
       <ImageView fx:id="bgImg2" fitHeight="800.0" fitWidth="1600.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@assets/background_City.png" />
+            <Image url="@assets/background_Dungeon.png" />
          </image>
       </ImageView>
 
     <!-- Pillars at the bottom -->
-    <Rectangle fx:id="platformRectangle1" height="299.0" width="50.0" x="100.0" y="500.0" />
+    <Rectangle fx:id="platformRectangle1" height="300.0" width="50.0" x="100.0" y="500.0" />
     <Rectangle fx:id="platformRectangle2" height="299.0" width="50.0" x="650.0" y="500.0" />
 
 
@@ -41,14 +41,14 @@
        <Rectangle fx:id="hitPointRectangle1" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" stroke="BLACK" strokeType="INSIDE" width="20.0" x="665.0" y="500.0" />
         <!-- Cherry below the stick -->
         <ImageView fx:id="imgToken" fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="509.0">
-            <Image url="@assets/cherries.png" />
+            <Image url="@assets/heart.png" />
         </ImageView>
         <!-- Cherry 2 below the stick (invisible) -->
         <ImageView fx:id="imgToken2" fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" x="1200" y="509.0">
-            <Image url="@assets/cherries.png" />
+            <Image url="@assets/heart.png" />
         </ImageView>
-      <ImageView fx:id="imgDefaultCharacter" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="100.0" y="460.0">
-            <Image url="@assets/stickHeroDefault.png" />
+      <ImageView fx:id="imgCharacter" fitHeight="60.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="100.0" y="460.0">
+            <Image url="@assets/stickHero0.png" />
       </ImageView>
     </AnchorPane>
     <!-- Other UI Components-->

@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,6 +22,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GamePlayController extends SceneController{
@@ -28,9 +31,12 @@ public class GamePlayController extends SceneController{
     public ImageView imgToken;
     @FXML
     public ImageView imgToken2;
-    public Button pauseButton;
+
     @FXML
-    private ImageView imgDefaultCharacter;
+    public Button pauseButton;
+
+    @FXML
+    private ImageView imgCharacter;
 
     @FXML
     private Line stickLine1;
@@ -97,19 +103,9 @@ public class GamePlayController extends SceneController{
     private boolean hitsPoint = false;
     private double totalShiftDistance;
 
-    public DefaultCharacter defaultCharacter;
+    private DefaultCharacter defaultCharacter;
 
-//    public void onPauseButtonPress(){
-//        pauseButton.set
-//        extendStickButton.setDisable(true);
-//        invertPlayerButton.setDisable(true);
-//    }
-//    public void enablePauseButton(){
-//        pauseButton.setDisable(false);
-//        pauseButton.
-//    }
-
-
+    private ArrayList<Image> backgroundList = new ArrayList<>();
     @FXML
     public void initialize() {
         platform1 = new Platform(1, platformRectangle1);
@@ -120,22 +116,45 @@ public class GamePlayController extends SceneController{
         double hitPointInitialPosition = platform2startX + platform2HalfWidth - (double) HitPoint.getWidth() /2;
         hitPointFront = new HitPoint(hitPointRectangle1, hitPointInitialPosition);
         hitPointBack = new HitPoint(hitPointRectangle2, hitPointFront.getHitPointPosition());
+        stickLine1.setStrokeWidth(5);
+        stickLine2.setStrokeWidth(5);
         stick1 = new Stick(true, stickLine1);
         stick2 = new Stick(false, stickLine2);
-        player = new Player(this, imgDefaultCharacter);
+        player = new Player(this, imgCharacter);
         token1 = new Token(this, imgToken, getCurrentPlatformRectangle(), getTargetPlatformRectangle(), true);
         token2 = new Token(this, imgToken2, getTargetPlatformRectangle(), getInvisiblePlatformRectangle(), false);
-        defaultCharacter = new DefaultCharacter(this, imgDefaultCharacter);
+        defaultCharacter = new DefaultCharacter(this, imgCharacter);
         gameMechanics = new GameMechanics(this);
         Stick.initializeStick(getCurrentPlatform(), getStickLine());
         tokenLabel.setText(Integer.toString(GameStatistics.getTokens()));
         GameStatistics.setCurrentScore(0);
         GameStatistics.setHighScoreChecked(false);
         GameStatistics.setRevivals(0);
-        bgImg1.setVisible(true);
-        bgImg2.setVisible(true);
         bgImg1.setX(0);
         bgImg2.setX(bgImg1.getX() + bgImg1.getFitWidth());
+
+        loadThemes();
+
+        bgImg1.setImage(backgroundList.get(ThemesController.getThemeIndex()));
+        bgImg2.setImage(bgImg1.getImage());
+
+        Image selectedImage = new Image(Objects.requireNonNull(getClass().getResource("assets/stickHero" + CharacterController.getCharacterIndex() + ".png")).toExternalForm());
+        setCharacterPosition(selectedImage);
+    }
+
+    public void loadThemes(){
+        backgroundList.add(new Image(Objects.requireNonNull(getClass().getResource("assets/background_City.png")).toExternalForm()));
+        backgroundList.add(new Image(Objects.requireNonNull(getClass().getResource("assets/background_Mountains.png")).toExternalForm()));
+        backgroundList.add(new Image(Objects.requireNonNull(getClass().getResource("assets/background_Dungeon.png")).toExternalForm()));
+    }
+
+    public void setCharacterPosition(Image selectedImage) {
+        imgCharacter.setImage(selectedImage);
+        double preserveRatio = selectedImage.getWidth()/40;
+        imgCharacter.setFitHeight(selectedImage.getHeight()/preserveRatio);
+        imgCharacter.setFitWidth(40);
+        double pillarY = 500;
+        imgCharacter.setY(pillarY - imgCharacter.getFitHeight());
     }
 
     void redefineVariables(double increment) {
@@ -171,7 +190,7 @@ public class GamePlayController extends SceneController{
         midChangeSceneRedefineVariables();
         Platform.animateTranslateInvisiblePlatform(getTargetPlatformRectangle(), getInvisiblePlatformRectangle(), totalShiftDistance);
         double platform3startX = Platform.getPlatform3X();
-        double platform3HalfWidth = (double) getInvisiblePlatformRectangle().getWidth() / 2;
+        double platform3HalfWidth = getInvisiblePlatformRectangle().getWidth() / 2;
         double hitPointInitialPosition = platform3startX + platform3HalfWidth - (double) HitPoint.getWidth() /2;
         System.out.println("HitPoint Front NewX: "+hitPointInitialPosition);
         setHitPointPosition(getHitPointFront(), hitPointInitialPosition);
@@ -213,7 +232,7 @@ public class GamePlayController extends SceneController{
     }
 
     void checkStickCollision() {
-        gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform(), imgDefaultCharacter);
+        gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform(), imgCharacter);
     }
     void disableInvertButton(){
         invertPlayerButton.setDisable(false);

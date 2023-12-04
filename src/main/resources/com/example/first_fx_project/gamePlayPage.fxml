@@ -68,7 +68,7 @@
             <Glow level="1.0" />
         </effect>
     </Label>
-    <Rectangle arcHeight="5.0" arcWidth="5.0" height="810.0" layoutX="1262.0" stroke="BLACK" strokeType="INSIDE" width="182.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" height="810.0" layoutX="1262.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />
     <Button fx:id="extendStickButton" layoutX="245.0" layoutY="65.0" mnemonicParsing="false" onKeyPressed="#extendStick" onKeyReleased="#stopExtendStick" prefHeight="10.0" prefWidth="20.0" text="extend stick" />
     <Button fx:id="invertPlayerButton" disable="true" layoutX="245.0" layoutY="110.0" mnemonicParsing="false" onKeyPressed="#invertPlayer" prefHeight="25.0" prefWidth="20.0" text="invert player" />
     <Button fx:id="pauseButton" layoutX="1112.0" layoutY="22.0" minWidth="32.0" mnemonicParsing="false" onMouseClicked="#switchToPausePage" prefHeight="50.0" prefWidth="107.0" text="Pause" />
@@ -81,5 +81,5 @@
             <Image url="@assets/cherries.png" />
         </image>
     </ImageView>
-   <Rectangle height="812.0" layoutX="-2.0" stroke="BLACK" strokeType="INSIDE" width="182.0" />
+   <Rectangle height="2164.0" layoutX="-305.0" layoutY="-676.0" stroke="BLACK" strokeType="INSIDE" width="485.0" />
 </AnchorPane>

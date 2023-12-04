@@ -29,25 +29,26 @@
     <Rectangle fx:id="platformRectangle2" height="257.0" width="50.0" x="650.0" y="555.0" />
 
 
+
     <!-- Rectangle for the player above the first pillar -->
 
     <!-- Stick between two pillars -->
-        <Line fx:id="stickLine1" endX="250" endY="555.0" opacity="0" startY="555.0" stroke="Black" strokeWidth="5.0" />
+        <Line fx:id="stickLine1" endX="250" endY="555.0" opacity="0" startY="555.0" stroke="Black" strokeWidth="4.0" />
         <!-- Invisible Platform-->
         <Rectangle fx:id="platformRectangle3" height="257.0" width="50.0" x="1400.0" y="555.0" />
-        <Line fx:id="stickLine2" endX="250" endY="555.0" opacity="0" startY="555.0" stroke="Black" strokeWidth="5.0" />
+        <Line fx:id="stickLine2" endX="250" endY="555.0" opacity="0" startY="555.0" stroke="Black" strokeWidth="4.0" />
       <Rectangle fx:id="hitPointRectangle2" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" stroke="BLACK" strokeType="INSIDE" width="20.0" x="665.0" y="555.0" />
         <Rectangle fx:id="hitPointRectangle1" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" stroke="BLACK" strokeType="INSIDE" width="20.0" x="665.0" y="555.0" />
         <!-- Cherry below the stick -->
         <ImageView fx:id="imgToken" fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" x="550.0" y="562.0">
-            <Image url="@assets/cherries.png" />
+            <Image url="@assets/heart.png" />
         </ImageView>
         <!-- Cherry 2 below the stick (invisible) -->
         <ImageView fx:id="imgToken2" fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" x="1200" y="562.0">
-            <Image url="@assets/cherries.png" />
+            <Image url="@assets/heart.png" />
         </ImageView>
-      <ImageView fx:id="imgDefaultCharacter" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="515.0">
-            <Image url="@assets/stickHeroDefault.png" />
+      <ImageView fx:id="imgCharacter" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="515.0">
+            <Image url="@assets/stickHero0.png" />
       </ImageView>
 
     </AnchorPane>

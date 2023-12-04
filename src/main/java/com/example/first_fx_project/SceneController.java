@@ -34,6 +34,8 @@ public class SceneController {
             stackPane.getChildren().remove(stackPane.getChildren().size() - 1); // Remove the topmost child (assuming it's the overlay)
 //                extendButton.setDisable(false);
 //                extendButton.requestFocus();
+            stage.setMaximized(true);
+            stage.setFullScreen(true);
         }
     }
 
@@ -54,6 +56,7 @@ public class SceneController {
             stackPane.getChildren().remove(stackPane.getChildren().size() - 1); // Remove the topmost child (assuming it's the overlay)
 //                extendButton.setDisable(false);
 //                extendButton.requestFocus();
+            stage.setFullScreen(true);
         }
     }
 
@@ -94,11 +97,13 @@ public class SceneController {
                 if (currentStage != null) {
                     currentStage.setScene(overlayScene);
                     currentStage.requestFocus();
+                    currentStage.setFullScreen(true);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
 

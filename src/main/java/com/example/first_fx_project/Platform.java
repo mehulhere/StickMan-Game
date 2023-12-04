@@ -21,6 +21,7 @@ public class Platform {
     }
 
     public static double setPlatform3Distance(double currentPlatformEndX) {
+        System.out.println(currentPlatformEndX);
         platform3Distance = (int) (random.nextInt(200, 500) + (currentPlatformEndX + safetyDistance));
         System.out.println("New PlatformX: "+platform3Distance);
         return platform3Distance;
@@ -54,14 +55,14 @@ public class Platform {
                 System.out.println("Platform1 X:"+ absolutePosition);
             }
             case 2-> {
-                int midX = random.nextInt(400,1000);
+                int midX = random.nextInt(600,1000);
                 double relativePosition = midX - (double) width /2;
                 double absolutePosition = totalIncrement + relativePosition;
                 platformRectangle.setX(absolutePosition);
                 System.out.println("Platform2 X:"+ absolutePosition);
             }
             case 3-> {
-                int midX = random.nextInt(2000,2100);
+                int midX = random.nextInt(1500,1600);
                 double relativePosition =  midX - (double) width /2;
                 double absolutePosition = totalIncrement + relativePosition;
                 platformRectangle.setX(absolutePosition);

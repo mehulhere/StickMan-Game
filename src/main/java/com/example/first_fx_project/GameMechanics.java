@@ -23,7 +23,7 @@ public class GameMechanics {
         }
         // Create a TranslateTransition for the AnchorPane
         System.out.println("Shifting Anchor Pane");
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), movableComponents);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.3), movableComponents);
         translateTransition.setToX(movableComponents.getTranslateX() - shiftDistance);
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
@@ -40,12 +40,14 @@ public class GameMechanics {
         double stickLength = stickLine.getStartY() - stickLine.getEndY();
         double stickEndX = stickLine.getStartX() + stickLength;
         System.out.println("Running Collision Check");
+        System.out.println("Stick StartX: "+stickLine.getStartX());
+        System.out.println("Stick Length: "+stickLength);
         System.out.println("Stick EndX: "+stickEndX);
         double platformStartX = platformRectangle.getX();
         double platformEndX = platformRectangle.getX() + platformRectangle.getWidth();
         System.out.println("Platform StartX: "+platformStartX);
         System.out.println("Platform EndX: "+platformEndX);
-        int aestheticMargin = 2;
+        int aestheticMargin = 4;
         double playerFinalX = platformEndX - playerImage.getFitWidth() - aestheticMargin;
         if (stickEndX > platformStartX && stickEndX < platformEndX) {
             System.out.println("Collision!! RUN");

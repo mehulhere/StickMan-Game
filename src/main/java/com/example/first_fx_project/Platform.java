@@ -21,7 +21,7 @@ public class Platform {
     }
 
     public static double setPlatform3Distance(double currentPlatformEndX) {
-        platform3Distance = (int) (random.nextInt(100, 400) + (currentPlatformEndX + safetyDistance));
+        platform3Distance = (int) (random.nextInt(200, 500) + (currentPlatformEndX + safetyDistance));
         System.out.println("New PlatformX: "+platform3Distance);
         return platform3Distance;
     }
@@ -30,7 +30,7 @@ public class Platform {
     private Rectangle platformRectangle;
 
     private static int maxWidth = 250;
-    private static int minWidth= 70;
+    private static int minWidth= 90;
 
     private static int safetyDistance = 10;
 
@@ -47,21 +47,21 @@ public class Platform {
         platformRectangle.setWidth(width);
         switch(platformType){
             case 1-> {
-                int midX = 125;
+                int midX = 400;
                 double relativePosition = midX - (double) width /2;
                 double absolutePosition = totalIncrement + relativePosition;
                 platformRectangle.setX(absolutePosition);
                 System.out.println("Platform1 X:"+ absolutePosition);
             }
             case 2-> {
-                int midX = random.nextInt(400,600);
+                int midX = random.nextInt(400,1000);
                 double relativePosition = midX - (double) width /2;
                 double absolutePosition = totalIncrement + relativePosition;
                 platformRectangle.setX(absolutePosition);
                 System.out.println("Platform2 X:"+ absolutePosition);
             }
             case 3-> {
-                int midX = random.nextInt(900,1000);
+                int midX = random.nextInt(2000,2100);
                 double relativePosition =  midX - (double) width /2;
                 double absolutePosition = totalIncrement + relativePosition;
                 platformRectangle.setX(absolutePosition);
@@ -98,7 +98,7 @@ public class Platform {
 //            throw new RuntimeException(e);
 //        }
         System.out.println( "Total Shift Distance: "+totalShiftDistance);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.4), new KeyValue(targetPlatform.xProperty(), targetPlatformStartX));
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), new KeyValue(targetPlatform.xProperty(), targetPlatformStartX));
         timeline.getKeyFrames().add(keyFrame);
 
         timeline.setOnFinished(event -> {

@@ -1,27 +1,19 @@
 package com.example.first_fx_project;
 
 import javafx.animation.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GamePlayController extends SceneController{
     @FXML
@@ -126,6 +118,7 @@ public class GamePlayController extends SceneController{
         token1 = new Token(this, imgToken, getCurrentPlatformRectangle(), getTargetPlatformRectangle(), true);
         token2 = new Token(this, imgToken2, getTargetPlatformRectangle(), getInvisiblePlatformRectangle(), false);
         defaultCharacter = new DefaultCharacter(this, imgDefaultCharacter);
+        System.out.println("Player Height is: "+imgDefaultCharacter.getY());
         gameMechanics = new GameMechanics(this);
         Stick.initializeStick(getCurrentPlatform(), getStickLine());
         tokenLabel.setText(Integer.toString(GameStatistics.getTokens()));
@@ -145,6 +138,7 @@ public class GamePlayController extends SceneController{
         platform3.redefinePlatform();
         Stick.invertStickConfiguration(stick1, stick2); //Inverts currentStick Variable
         Stick.initializeStick(getCurrentPlatform(), getStickLine());
+
     }
 
 
@@ -157,7 +151,7 @@ public class GamePlayController extends SceneController{
 
         System.out.println("Platform2X: "+ getTargetPlatformRectangle().getX());
         System.out.println("Platform3X: "+ Platform.getPlatform3X());
-        getInvisiblePlatformRectangle().setX(800 + totalShiftDistance);
+        getInvisiblePlatformRectangle().setX(1100 + totalShiftDistance);
     }
 
 
@@ -186,7 +180,7 @@ public class GamePlayController extends SceneController{
             getStickLine().setOpacity(1);
             Timeline timeline = new Timeline();
             timeline.getKeyFrames().clear(); // Clear existing keyframes
-            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.03), new KeyValue(getStickLine().endYProperty(), getStickLine().getEndY() - 20)));
+            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.03), new KeyValue(getStickLine().endYProperty(), getStickLine().getEndY() - 25)));
             timeline.play();
         }
     }
@@ -215,7 +209,7 @@ public class GamePlayController extends SceneController{
     void checkStickCollision() {
         gameMechanics.checkCollision(getStickLine(), getTargetPlatformRectangle(), getTargetPlatform(), imgDefaultCharacter);
     }
-    void disableInvertButton(){
+    void enableInvertButton(){
         invertPlayerButton.setDisable(false);
         invertPlayerButton.requestFocus();
     }
@@ -230,7 +224,7 @@ public class GamePlayController extends SceneController{
         System.out.println("Fall finished");
     }
 
-    void stopInversion(){
+    void disableInvertButton(){
         invertPlayerButton.setDisable(true);
     }
 
@@ -271,7 +265,7 @@ public class GamePlayController extends SceneController{
         hitPoint.setHitPointPosition(x);
     }
 
- 
+
     public void switchToGameOverPage() throws IOException {
         System.out.println(tokenLabel.getText());
         System.out.println("Hello");

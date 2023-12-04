@@ -8,7 +8,6 @@ public class DefaultCharacter extends Player{
 
     public DefaultCharacter(GamePlayController gamePlayController, ImageView imgDefaultCharacter) {
         super(gamePlayController, imgDefaultCharacter);
-        setPosition(100, 460);
     }
 
     public void setPosition(double x, double y){

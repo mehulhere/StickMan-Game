@@ -31,7 +31,7 @@ public class Player {
     }
 
     public void move(double playerFinalX, Platform platformCurrent, Platform platformTarget, Token token, boolean alive, double stickEndX) {
-        double rate = 0.002;
+        double rate = 0.0016;
         moveToPlatform(platformCurrent,platformTarget, playerFinalX, rate, token, alive, stickEndX);
     }
 
@@ -54,7 +54,7 @@ public class Player {
         timeline.setCycleCount(1);
         AtomicBoolean tokenCollected = new AtomicBoolean(false);
         AtomicBoolean transitionRunning= new AtomicBoolean(true);
-        gamePlayController.disableInvertButton();
+        gamePlayController.enableInvertButton();
         ExecutorService collisionThread = Executors.newSingleThreadExecutor();
         ExecutorService tokenThread = Executors.newSingleThreadExecutor();
         ImageView imgToken = token.getImgToken();
@@ -99,7 +99,7 @@ public class Player {
 //                System.out.println(playerCrossedPlatformX);
                 playerCrossedStick = playerCrashX - playerX > 0;
                 try {
-                    Thread.sleep(5); // Adjust sleep time as needed
+                    Thread.sleep(2); // Adjust sleep time as needed
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } // Player Crossed Stick
@@ -107,7 +107,7 @@ public class Player {
 //                System.out.println(playerX);
 //                System.out.println(isInverted);
             }
-            gamePlayController.stopInversion();
+            gamePlayController.disableInvertButton();
             if(isInverted){
                 System.out.println("Collision with platform");
                 timeline.stop();

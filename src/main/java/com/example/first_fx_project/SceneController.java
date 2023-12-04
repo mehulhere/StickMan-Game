@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Paint;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -61,6 +63,8 @@ public class SceneController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+//        stage.setMaximized(true);
+        stage.setFullScreen(true);
         stage.show();
     }
     public void switchToGameOverPage(Node currentNode, String score, String tokens) throws IOException {
@@ -101,15 +105,22 @@ public class SceneController {
     public void switchToGamePlayPage(ActionEvent event) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("gamePlayPage.fxml"));
         Parent root = fxmlLoader.load();
-        gamePlayController =  fxmlLoader.getController();
-        System.out.println(gamePlayController);
-        if(gamePlayController==null){
-            System.out.println("I AM NULL");
-        }
-        // Set the loaded FXML as the root
+        root.setStyle("-fx-background-color: black;");
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+
+
+        scene = new Scene(root,1440, 810);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        double centerX = (screenWidth - scene.getWidth()) / 2;
+        double centerY = (screenHeight - scene.getHeight()) / 2;
+        root.setLayoutX(centerX);
+        root.setLayoutY(centerY);
+        scene.setFill(Paint.valueOf("Black"));
+
         stage.setScene(scene);
+//        stage.setMaximized(true);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -117,8 +128,11 @@ public class SceneController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("characterPage.fxml"));
         root = fxmlLoader.load(); // Set the loaded FXML as the root
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.centerOnScreen();
         scene = new Scene(root);
         stage.setScene(scene);
+//        stage.setMaximized(true);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -128,6 +142,8 @@ public class SceneController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -141,23 +157,35 @@ public class SceneController {
             Parent overlayRoot = fxmlLoader.load();
 //            gamePlayController.disableExtendButton();
 //            gamePlayController.disableInvertButton();
+//            overlayRoot.setStyle("-fx-background-color: black;");
+            double screenWidth = Screen.getPrimary().getBounds().getWidth();
+            double screenHeight = Screen.getPrimary().getBounds().getHeight();
+
+
+            scene = new Scene(overlayRoot,1440, 810);
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            double centerX = (screenWidth - scene.getWidth()) / 2;
+            double centerY = (screenHeight - scene.getHeight()) / 2;
+            overlayRoot.setLayoutX(centerX);
+            overlayRoot.setLayoutY(centerY);
+            scene.setFill(Paint.valueOf("Black"));
 
             StackPane stackPane = new StackPane();
 
             Scene currentScene = ((Node) event.getSource()).getScene();
-
+            currentScene.getRoot().setStyle("-fx-background-color: black;");
             stackPane.getChildren().addAll(
                     currentScene.getRoot(),
                     overlayRoot
             );
 
             overlayScene = new Scene(stackPane);
-
+            overlayScene.setFill(Paint.valueOf("Black"));
             Stage stage = (Stage) currentScene.getWindow();
             stage.setScene(overlayScene);
             overlayRoot.requestFocus();
-            System.out.println(1);
-            System.out.println(2);
+//            stage.setMaximized(true);
+            stage.setFullScreen(true);
         } catch (IOException e) {
             e.printStackTrace();
         }

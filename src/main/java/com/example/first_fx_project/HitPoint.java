@@ -5,7 +5,7 @@ import javafx.scene.shape.Rectangle;
 
 public class HitPoint {
     private static int width = 20;
-    private static double height = 500;
+    private static double height = 555;
 
     private Rectangle hitPointRectangle;
     public HitPoint(Rectangle hitPointRectangle, double newHitPointStartX){

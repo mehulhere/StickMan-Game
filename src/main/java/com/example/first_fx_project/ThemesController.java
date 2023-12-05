@@ -21,7 +21,7 @@ public class ThemesController extends SceneController{
 
     private ArrayList<Image> themeList = new ArrayList<Image>();
 
-    private static int themeIndex = 1;
+    private static int themeIndex = 0;
 
     public void initialize(){
         themeList.add(new Image(Objects.requireNonNull(getClass().getResource("assets/theme_City.png")).toExternalForm()));

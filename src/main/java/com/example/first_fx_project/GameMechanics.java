@@ -27,12 +27,12 @@ public class GameMechanics {
         translateTransition.setToX(movableComponents.getTranslateX() - shiftDistance);
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
-
             gamePlayController.redefineVariables(shiftDistance);
+            gamePlayController.rotateBackground(shiftDistance);
             extendStickButton.setDisable(false);
             extendStickButton.requestFocus();
 
-            gamePlayController.rotateBackground(shiftDistance);
+
         });
     }
 

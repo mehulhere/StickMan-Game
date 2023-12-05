@@ -79,6 +79,9 @@ public class GamePlayController extends SceneController{
     @FXML
     private ImageView bgImg2;
 
+    @FXML
+    private ImageView bgImg3;
+
     private Platform platform1;
     private Platform platform2;
     private Platform platform3;
@@ -123,11 +126,12 @@ public class GamePlayController extends SceneController{
         GameStatistics.setRevivals(0);
         bgImg1.setX(0);
         bgImg2.setX(bgImg1.getX() + bgImg1.getFitWidth());
-
+        bgImg3.setX(bgImg2.getX() + bgImg1.getFitWidth());
         loadThemes();
 
         bgImg1.setImage(backgroundList.get(ThemesController.getThemeIndex()));
         bgImg2.setImage(bgImg1.getImage());
+        bgImg3.setImage(bgImg1.getImage());
 
         Image selectedImage = new Image(Objects.requireNonNull(getClass().getResource("assets/stickHero" + CharacterController.getCharacterIndex() + ".png")).toExternalForm());
         setCharacterPosition(selectedImage);
@@ -157,8 +161,6 @@ public class GamePlayController extends SceneController{
         Stick.initializeStick(getCurrentPlatform(), getStickLine());
 
     }
-
-
 
 
     void midChangeSceneRedefineVariables(){
@@ -291,16 +293,27 @@ public class GamePlayController extends SceneController{
         super.switchToGameOverPage(movableComponents, scoreLabel.getText(), String.valueOf("ada"));
     }
 
-    public void rotateBackground(double shiftDistance){
-        int den = (int) bgImg1.getFitWidth();
-        int val2 = (int) totalShiftDistance/den;
-        int val1 = (int) (totalShiftDistance-shiftDistance)/den;
-        if(val2-val1 > 0 && bgImg1.getX() < bgImg2.getX()){
-            bgImg1.setX(bgImg2.getX() + bgImg2.getFitWidth());
-        }
+    public void rotateBackground(double shiftDistance) {
+        System.out.println("Rotating Background");
+        double imgWidth = bgImg1.getFitWidth();
 
-        else if(val2-val1 > 0 && bgImg1.getX() > bgImg2.getX()){
-            bgImg2.setX(bgImg1.getX() + bgImg1.getFitWidth());
+        double img1LagDistance = totalShiftDistance- bgImg1.getX();
+        double img2LagDistance = totalShiftDistance- bgImg2.getX();
+        double img3LagDistance = totalShiftDistance- bgImg3.getX();
+        boolean img1PassedFrame = img1LagDistance > 1440 + shiftDistance;
+        boolean img2PassedFrame = img2LagDistance > 1440 + shiftDistance;
+        boolean img3PassedFrame = img3LagDistance > 1440 + shiftDistance;
+        if(img1PassedFrame) {
+            bgImg1.setX(bgImg3.getX()+imgWidth);
+            System.out.println("Image 1 shifted\n\n");
+        }
+        if(img2PassedFrame){
+            bgImg2.setX(bgImg1.getX()+imgWidth);
+            System.out.println("Image 2 shifted\n\n");
+        }
+        if(img3PassedFrame) {
+            bgImg3.setX(bgImg2.getX()+imgWidth);
+            System.out.println("Image 3 shifted\n\n");
         }
     }
 

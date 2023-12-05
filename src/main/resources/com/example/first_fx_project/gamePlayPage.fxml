@@ -18,12 +18,16 @@
                 <Image url="@assets/background_Dungeon.png" />
             </image>
         </ImageView>
-      <ImageView fx:id="bgImg2" fitHeight="900.0" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="bgImg2" fitHeight="810" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/background_Dungeon.png" />
          </image>
       </ImageView>
-
+        <ImageView fx:id="bgImg3" fitHeight="810" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@assets/background_Dungeon.png" />
+            </image>
+        </ImageView>
     <!-- Pillars at the bottom -->
     <Rectangle fx:id="platformRectangle1" height="257.0" width="50.0" x="400.0" y="555.0" />
     <Rectangle fx:id="platformRectangle2" height="257.0" width="50.0" x="650.0" y="555.0" />

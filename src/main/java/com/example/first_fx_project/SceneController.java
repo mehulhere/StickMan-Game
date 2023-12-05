@@ -34,8 +34,8 @@ public class SceneController {
             stackPane.getChildren().remove(stackPane.getChildren().size() - 1); // Remove the topmost child (assuming it's the overlay)
 //                extendButton.setDisable(false);
 //                extendButton.requestFocus();
-            stage.setMaximized(true);
-            stage.setFullScreen(true);
+//            stage.setMaximized(true);
+//            stage.setFullScreen(true);
         }
     }
 
@@ -173,23 +173,24 @@ public class SceneController {
             double centerY = (screenHeight - scene.getHeight()) / 2;
             overlayRoot.setLayoutX(centerX);
             overlayRoot.setLayoutY(centerY);
-            scene.setFill(Paint.valueOf("Black"));
+//            scene.setFill(Paint.valueOf("Black"));
 
             StackPane stackPane = new StackPane();
-
+            stackPane.setStyle("-fx-background-color: black;");
             Scene currentScene = ((Node) event.getSource()).getScene();
-            currentScene.getRoot().setStyle("-fx-background-color: black;");
+//            currentScene.getRoot().setStyle("-fx-background-color: black;");
+//            currentScene.setFill(Paint.valueOf("Black"));
             stackPane.getChildren().addAll(
                     currentScene.getRoot(),
                     overlayRoot
             );
 
             overlayScene = new Scene(stackPane);
-            overlayScene.setFill(Paint.valueOf("Black"));
+//            overlayScene.setFill(Paint.valueOf("Black"));
             Stage stage = (Stage) currentScene.getWindow();
             stage.setScene(overlayScene);
             overlayRoot.requestFocus();
-//            stage.setMaximized(true);
+            stage.setMaximized(true);
             stage.setFullScreen(true);
         } catch (IOException e) {
             e.printStackTrace();

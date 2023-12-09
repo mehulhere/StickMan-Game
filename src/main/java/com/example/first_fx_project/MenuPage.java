@@ -11,8 +11,6 @@ import java.util.Objects;
 public class MenuPage extends Application {
     private GraphicsContext g;
 
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("menuPage.fxml")));

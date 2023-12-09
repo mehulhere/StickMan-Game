@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Player {
 
     Stick stick;
-    GameMechanics gameMechanics;
     static private int length;
     static private int speed;
     public boolean isInverted = false;
@@ -216,7 +215,6 @@ public class Player {
     }
 
     public void fall(){
-
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), image);
         translateTransition.setToY(image.getTranslateY() + 350);
         translateTransition.play();

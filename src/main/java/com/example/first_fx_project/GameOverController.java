@@ -33,22 +33,16 @@ public class GameOverController extends SceneController{
         if (finalTokens < 0) {
             reviveButton.setDisable(true);
         }
-
     }
 
     @FXML
     private Button reviveButton;
 
-
     public void setGameOverScore(String score){
         gameOverScore.setText(score);
     }
 
-
     public void setGameOverTokens(String tokens){
         gameOverTokens.setText(tokens);
     }
-
-
-
 }

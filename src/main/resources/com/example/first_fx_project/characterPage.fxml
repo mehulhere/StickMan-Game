@@ -7,10 +7,44 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.CharacterController">
-   <ToggleButton fx:id="characterTB0" layoutX="123.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="179.0" selected="true" text="Max">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.CharacterController">
+   <ImageView fitHeight="810.0" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/selectPage.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="108.0" fitWidth="385.0" layoutX="513.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/characterSelectButton.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="75.0" fitWidth="150.0" layoutX="1018.0" layoutY="700.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/playButton.png" />
+      </image>
+   </ImageView>
+   <Button layoutX="1018.0" layoutY="700.0" mnemonicParsing="false" onAction="#switchToGamePlayPage" opacity="0.0" prefHeight="75.0" prefWidth="133.0" text="play">
+      <font>
+         <Font size="30.0" />
+      </font></Button>
+   <ImageView fitHeight="75.0" fitWidth="130.0" layoutX="270.0" layoutY="700.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/menuButton.png" />
+      </image>
+   </ImageView>
+   <Button layoutX="270.0" layoutY="700.0" mnemonicParsing="false" onAction="#switchToMenuPage" opacity="0.0" prefHeight="75.0" prefWidth="133.0" text="menu">
+      <font>
+         <Font size="30.0" />
+      </font></Button>
+   <ImageView fitHeight="210.0" fitWidth="185.0" layoutX="427.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/photoTemplate.png" />
+      </image>
+   </ImageView>
+   <ToggleButton fx:id="characterTB0" layoutX="438.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="164.0" selected="true">
       <graphic>
          <ImageView fitHeight="128.0" fitWidth="126.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@assets/stickHero0.png" />
@@ -20,25 +54,17 @@
          <ToggleGroup fx:id="characterToggleGroup" />
       </toggleGroup>
    </ToggleButton>
-   <ToggleButton fx:id="characterTB1" layoutX="308.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="185.0" text="Greg" toggleGroup="$characterToggleGroup">
-      <graphic>
-         <ImageView fitHeight="110.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@assets/stickHero1.png" />
-            </image>
-         </ImageView>
-      </graphic>
-   </ToggleButton>
-   <ToggleButton fx:id="characterTB2" layoutX="495.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="195.0" text="Sid" toggleGroup="$characterToggleGroup">
-      <graphic>
-         <ImageView fitHeight="150.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@assets/stickHero2.png" />
-            </image>
-         </ImageView>
-      </graphic>
-   </ToggleButton>
-   <ToggleButton fx:id="characterTB3" layoutX="123.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleToggle" text="Charles" toggleGroup="$characterToggleGroup">
+   <Label layoutX="461.0" layoutY="307.0" prefHeight="66.0" prefWidth="83.0" text="Max">
+      <font>
+         <Font name="Brush Script MT Italic" size="45.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="210.0" fitWidth="185.0" layoutX="427.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/photoTemplate.png" />
+      </image>
+   </ImageView>
+   <ToggleButton fx:id="characterTB3" layoutX="438.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="164.0" toggleGroup="$characterToggleGroup">
       <graphic>
          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -47,38 +73,17 @@
          </ImageView>
       </graphic>
    </ToggleButton>
-   <ToggleButton fx:id="characterTB4" layoutX="311.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleToggle" text="Mike" toggleGroup="$characterToggleGroup">
-      <graphic>
-         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@assets/stickHero4.png" />
-            </image>
-         </ImageView>
-      </graphic>
-   </ToggleButton>
-   <ToggleButton fx:id="characterTB5" layoutX="495.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleToggle" text="Santa" toggleGroup="$characterToggleGroup">
-      <graphic>
-         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@assets/stickHero5.png" />
-            </image>
-         </ImageView>
-      </graphic>
-   </ToggleButton>
-   <Label layoutX="328.0" layoutY="52.0" prefHeight="76.0" prefWidth="145.0" text="Characters">
+   <Label layoutX="453.0" layoutY="516.0" prefHeight="66.0" prefWidth="118.0" text="Charles">
       <font>
-         <Font size="30.0" />
+         <Font name="Brush Script MT Italic" size="45.0" />
       </font>
    </Label>
-   <Button layoutX="592.0" layoutY="701.0" mnemonicParsing="false" onAction="#switchToGamePlayPage" prefHeight="66.0" prefWidth="118.0" text="play">
-      <font>
-         <Font size="30.0" />
-      </font></Button>
-   <Button layoutX="116.0" layoutY="701.0" mnemonicParsing="false" onAction="#switchToMenuPage" prefHeight="66.0" prefWidth="118.0" text="menu">
-      <font>
-         <Font size="30.0" />
-      </font></Button>
-   <ToggleButton fx:id="characterTB6" layoutX="123.0" layoutY="496.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="185.0" text="Lee">
+   <ImageView fitHeight="210.0" fitWidth="185.0" layoutX="427.0" layoutY="579.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/photoTemplate.png" />
+      </image>
+   </ImageView>
+   <ToggleButton fx:id="characterTB6" layoutX="438.0" layoutY="589.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="164.0">
       <graphic>
          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -90,7 +95,55 @@
          <ToggleGroup fx:id="characterToggleGroup1" />
       </toggleGroup>
    </ToggleButton>
-   <ToggleButton fx:id="characterTB7" layoutX="311.0" layoutY="496.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="185.0" text="Kakashi">
+   <Label layoutX="478.0" layoutY="725.0" prefHeight="66.0" prefWidth="62.0" text="Lee">
+      <font>
+         <Font name="Brush Script MT Italic" size="45.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="210.0" fitWidth="185.0" layoutX="615.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/photoTemplate.png" />
+      </image>
+   </ImageView>
+   <ToggleButton fx:id="characterTB1" layoutX="627.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="164.0" toggleGroup="$characterToggleGroup">
+      <graphic>
+         <ImageView fitHeight="110.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@assets/stickHero1.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </ToggleButton>
+   <Label layoutX="646.0" layoutY="307.0" prefHeight="66.0" prefWidth="83.0" text="Greg">
+      <font>
+         <Font name="Brush Script MT Italic" size="45.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="210.0" fitWidth="185.0" layoutX="615.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/photoTemplate.png" />
+      </image>
+   </ImageView>
+   <ToggleButton fx:id="characterTB4" layoutX="627.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="164.0" toggleGroup="$characterToggleGroup">
+      <graphic>
+         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@assets/stickHero4.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </ToggleButton>
+   <Label layoutX="629.0" layoutY="516.0" prefHeight="66.0" prefWidth="118.0" text="Mike">
+      <font>
+         <Font name="Brush Script MT Italic" size="45.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="210.0" fitWidth="185.0" layoutX="615.0" layoutY="579.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/photoTemplate.png" />
+      </image>
+   </ImageView>
+   <ToggleButton fx:id="characterTB7" layoutX="627.0" layoutY="589.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="164.0">
       <graphic>
          <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -102,4 +155,71 @@
          <ToggleGroup fx:id="characterToggleGroup11" />
       </toggleGroup>
    </ToggleButton>
+   <Label layoutX="627.0" layoutY="725.0" prefHeight="66.0" prefWidth="133.0" text="Kakashi">
+      <font>
+         <Font name="Brush Script MT Italic" size="45.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="210.0" fitWidth="185.0" layoutX="802.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/photoTemplate.png" />
+      </image>
+   </ImageView>
+   <ToggleButton fx:id="characterTB2" layoutX="814.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="164.0" toggleGroup="$characterToggleGroup">
+      <graphic>
+         <ImageView fitHeight="150.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@assets/stickHero2.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </ToggleButton>
+   <Label layoutX="824.0" layoutY="317.0" prefHeight="66.0" prefWidth="83.0" text="Sid">
+      <font>
+         <Font name="Brush Script MT Italic" size="45.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="210.0" fitWidth="185.0" layoutX="802.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/photoTemplate.png" />
+      </image>
+   </ImageView>
+   <ToggleButton fx:id="characterTB5" layoutX="814.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="164.0" toggleGroup="$characterToggleGroup">
+      <graphic>
+         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@assets/stickHero5.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </ToggleButton>
+   <Label layoutX="824.0" layoutY="516.0" prefHeight="66.0" prefWidth="118.0" text="Sid">
+      <font>
+         <Font name="Brush Script MT Italic" size="45.0" />
+      </font>
+   </Label>
+   <ImageView fitHeight="210.0" fitWidth="185.0" layoutX="802.0" layoutY="579.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/photoTemplate.png" />
+      </image>
+   </ImageView>
+   <ToggleButton fx:id="characterTB8" layoutX="814.0" layoutY="589.0" mnemonicParsing="false" onAction="#handleToggle" prefHeight="160.0" prefWidth="164.0">
+      <graphic>
+         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@assets/stickHero8.png" />
+            </image>
+         </ImageView>
+      </graphic>
+      <toggleGroup>
+         <ToggleGroup fx:id="characterToggleGroup111" />
+      </toggleGroup>
+   </ToggleButton>
+   <Label layoutX="817.0" layoutY="716.0" prefHeight="66.0" prefWidth="133.0" text="Lily">
+      <font>
+         <Font name="Brush Script MT Italic" size="45.0" />
+      </font>
+   </Label>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" height="810.0" layoutX="1262.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />
+   <Rectangle arcHeight="5.0" arcWidth="5.0" height="810.0" layoutX="-305.0" stroke="BLACK" strokeType="INSIDE" width="485.0" />
 </AnchorPane>

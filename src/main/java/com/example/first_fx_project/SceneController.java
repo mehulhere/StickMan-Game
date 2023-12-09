@@ -152,9 +152,6 @@ public class SceneController {
         stage.show();
     }
 
-
-
-
     public void switchToPausePage(MouseEvent event) throws IOException {
         System.out.println("Paused");
         try {
@@ -199,7 +196,6 @@ public class SceneController {
     public void exitGame(ActionEvent event) throws IOException {
         System.exit(0);
     }
-
 
     public void directionButtonClick(ActionEvent actionEvent) {
     }

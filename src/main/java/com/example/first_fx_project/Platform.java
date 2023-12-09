@@ -45,7 +45,7 @@ public class Platform {
     private static int maxWidth = 250;
     private static int minWidth= 90;
 
-    private static int safetyDistance = 10;
+    private static int safetyDistance = 40;
 
     private GamePlayController gamePlayController;
 
@@ -66,7 +66,7 @@ public class Platform {
                 System.out.println("Platform1 X:"+ absolutePosition);
             }
             case 2-> {
-                int midX = random.nextInt(600,1000);
+                int midX = random.nextInt(700,1000);
                 double relativePosition = midX - (double) width /2;
                 double absolutePosition = totalIncrement + relativePosition;
                 platformRectangle.setX(absolutePosition);

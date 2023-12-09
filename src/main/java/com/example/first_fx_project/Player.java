@@ -94,14 +94,6 @@ public abstract class Player {
                 timeline.play();
             }
 //
-            if (!alive) {
-                System.out.println("Stick Small");
-                timeline.stop();
-                gamePlayController.rotateStick(1);
-                gamePlayController.playerFall();
-                revival();
-                timeline.play();
-            }
 
             javafx.application.Platform.runLater(() -> {
                 gamePlayController.updateTokenCount();
@@ -205,6 +197,7 @@ public abstract class Player {
             playerFallX = stickEndX;
             double transitionDistance = stickEndX - playerStartX;
             Timeline timeline = playerMovementAnimationTimeline(transitionRate, transitionDistance, stickEndX,false);
+//            AnimationThread(image, transitionRunning, playerFallX, gamePlayController, timeline, alive);
             animationWaitingThread(image, transitionRunning, playerFallX, timeline, transitionRate, targetPlatformEndX, stickEndX);
             System.out.println("TargetPlatformENDZ: "+targetPlatformEndX);
 

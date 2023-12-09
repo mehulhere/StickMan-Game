@@ -24,9 +24,10 @@ public class Token { //In our game, instead of berries we have token class
         public void generateToken(Rectangle platformCurrent, double platformTargetX){
             Random random = new Random();
             System.out.println("Generating Token");
-            double platformCurrentEndX = platformCurrent.getX()+platformCurrent.getWidth()+2;
-            double platformTargetStartX = platformTargetX-2;
+            double platformCurrentEndX = platformCurrent.getX()+platformCurrent.getWidth();
+            double platformTargetStartX = platformTargetX;
             double imageWidth = imgToken.getFitWidth();
+            System.out.println("platformCurrentStartX: "+platformCurrent.getX());
             System.out.println("platformCurrentEndX: "+ platformCurrentEndX);
             System.out.println("platformTargetStartX: "+ platformTargetStartX);
             double tokenStartX =random.nextDouble(platformCurrentEndX, platformTargetStartX- imageWidth);

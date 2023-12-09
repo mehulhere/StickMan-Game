@@ -94,6 +94,7 @@ public class SceneController {
                 );
 
                 overlayScene = new Scene(stackPane);
+                overlayScene.setFill(Paint.valueOf("Black"));
 
                 Stage currentStage = (Stage) currentScene.getWindow();
                 if (currentStage != null) {

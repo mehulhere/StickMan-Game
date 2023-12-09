@@ -137,7 +137,15 @@ public class SceneController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.centerOnScreen();
         scene = new Scene(root);
+        scene.setFill(Paint.valueOf("Black"));
         stage.setScene(scene);
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+        double centerX = (screenWidth - scene.getWidth()) / 2;
+        double centerY = (screenHeight - scene.getHeight()) / 2;
+        root.setLayoutX(centerX);
+        root.setLayoutY(centerY);
+        root.setStyle("-fx-background-color: black;");
 //        stage.setMaximized(true);
         stage.setFullScreen(true);
         stage.show();
@@ -148,7 +156,15 @@ public class SceneController {
         root = fxmlLoader.load(); // Set the loaded FXML as the root
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.setFill(Paint.valueOf("Black"));
         stage.setScene(scene);
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+        double centerX = (screenWidth - scene.getWidth()) / 2;
+        double centerY = (screenHeight - scene.getHeight()) / 2;
+        root.setLayoutX(centerX);
+        root.setLayoutY(centerY);
+        root.setStyle("-fx-background-color: black;");
         stage.setMaximized(true);
         stage.setFullScreen(true);
         stage.show();
@@ -162,14 +178,12 @@ public class SceneController {
 //            gamePlayController.disableExtendButton();
 //            gamePlayController.disableInvertButton();
 //            overlayRoot.setStyle("-fx-background-color: black;");
-            double screenWidth = Screen.getPrimary().getBounds().getWidth();
-            double screenHeight = Screen.getPrimary().getBounds().getHeight();
-
-
             scene = new Scene(overlayRoot,1440, 810);
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setMaximized(true);
             stage.setFullScreen(true);
+            double screenWidth = Screen.getPrimary().getBounds().getWidth();
+            double screenHeight = Screen.getPrimary().getBounds().getHeight();
             double centerX = (screenWidth - scene.getWidth()) / 2;
             double centerY = (screenHeight - scene.getHeight()) / 2;
             overlayRoot.setLayoutX(centerX);

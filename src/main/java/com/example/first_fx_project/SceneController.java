@@ -11,7 +11,9 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class SceneController {
 
@@ -20,8 +22,8 @@ public class SceneController {
     private Parent root;
 
     private Scene overlayScene;
-    GamePlayController gamePlayController;
 
+    GameStatistics gameStatistics = GameStatistics.getInstance();
 
 
     public void closePopup(ActionEvent event) throws IOException {
@@ -41,13 +43,13 @@ public class SceneController {
 
     public void closePopupRevive(ActionEvent event) throws IOException {
         System.out.println("Revive Button Clicked");
-        System.out.println(GameStatistics.getTokens());
-        int finalTokens = GameStatistics.getTokens()-GameStatistics.getRevivals()-1;
+        System.out.println(gameStatistics.getTokens());
+        int finalTokens = gameStatistics.getTokens()-GameStatistics.getRevivals()-1;
         if (finalTokens >= 0) {
-            GameStatistics.setTokens(finalTokens);
+            gameStatistics.setTokens(finalTokens);
         }
         System.out.println(GameStatistics.getRevivals());
-        System.out.println(GameStatistics.getTokens());
+        System.out.println(gameStatistics.getTokens());
         // Access the root of the current scene
         Scene currentScene = ((Node) event.getSource()).getScene();
 //        gamePlayController.enableExtendButton();
@@ -56,7 +58,7 @@ public class SceneController {
             stackPane.getChildren().remove(stackPane.getChildren().size() - 1); // Remove the topmost child (assuming it's the overlay)
 //                extendButton.setDisable(false);
 //                extendButton.requestFocus();
-            stage.setFullScreen(true);
+//            stage.setFullScreen(true);
         }
     }
 
@@ -124,7 +126,7 @@ public class SceneController {
         scene.setFill(Paint.valueOf("Black"));
 
         stage.setScene(scene);
-//        stage.setMaximized(true);
+        stage.setMaximized(true);
         stage.setFullScreen(true);
         stage.show();
     }
@@ -169,15 +171,17 @@ public class SceneController {
 
             scene = new Scene(overlayRoot,1440, 810);
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setMaximized(true);
+            stage.setFullScreen(true);
             double centerX = (screenWidth - scene.getWidth()) / 2;
             double centerY = (screenHeight - scene.getHeight()) / 2;
             overlayRoot.setLayoutX(centerX);
             overlayRoot.setLayoutY(centerY);
 //            scene.setFill(Paint.valueOf("Black"));
-
             StackPane stackPane = new StackPane();
             stackPane.setStyle("-fx-background-color: black;");
             Scene currentScene = ((Node) event.getSource()).getScene();
+
 //            currentScene.getRoot().setStyle("-fx-background-color: black;");
 //            currentScene.setFill(Paint.valueOf("Black"));
             stackPane.getChildren().addAll(
@@ -197,7 +201,23 @@ public class SceneController {
         }
     }
 
+    public static void serialize() throws IOException {
+        GameStatistics gameStatistics = GameStatistics.getInstance();
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(
+                    new FileOutputStream("GameProgress.txt"));
+            out.writeObject(gameStatistics);
+        }
+            finally{
+            if (out != null) {
+                out.close();
+            }
+            }
+        }
+
     public void exitGame(ActionEvent event) throws IOException {
+        serialize();
         System.exit(0);
     }
 

@@ -1,13 +1,9 @@
 package com.example.first_fx_project;
 
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 
 public class GameOverController extends SceneController{
 
@@ -22,14 +18,14 @@ public class GameOverController extends SceneController{
 
     @FXML
     public void initialize(){
-        GameStatistics.setBestScore();
-        gameOverBestScore.setText(Integer.toString(GameStatistics.getBestScore()));
-        System.out.println("Best Score: "+GameStatistics.getBestScore());
-        gameOverTokens.setText(Integer.toString(GameStatistics.getTokens()));
+        gameStatistics.checkBestScore();
+        gameOverBestScore.setText(Integer.toString(gameStatistics.getBestScore()));
+        System.out.println("Best Score: "+gameStatistics.getBestScore());
+        gameOverTokens.setText(Integer.toString(gameStatistics.getTokens()));
         gameOverScore.setText(Integer.toString(GameStatistics.getCurrentScore()));
-        System.out.println("Inside GameOver Page: "+GameStatistics.getTokens());
+        System.out.println("Inside GameOver Page: "+gameStatistics.getTokens());
         System.out.println(gameOverTokens.getText());
-        int finalTokens = GameStatistics.getTokens()-GameStatistics.getRevivals()-1;
+        int finalTokens = gameStatistics.getTokens()-GameStatistics.getRevivals()-1;
         if (finalTokens < 0) {
             reviveButton.setDisable(true);
         }

@@ -13,7 +13,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-public class Player {
+public abstract class Player {
 
     Stick stick;
     GameMechanics gameMechanics;
@@ -23,7 +23,12 @@ public class Player {
     private boolean meterIsFull;
     private Position position;
     GamePlayController gamePlayController;
+
+    private AtomicBoolean tokenCollected = new AtomicBoolean(false);
+    private AtomicBoolean transitionRunning;
     ImageView image;
+
+    GameStatistics gameStatistics = GameStatistics.getInstance();
 
     public Player(GamePlayController gamePlayController, ImageView image) {
         this.gamePlayController = gamePlayController;
@@ -35,91 +40,62 @@ public class Player {
         moveToPlatform(platformCurrent,platformTarget, playerFinalX, rate, token, alive, stickEndX);
     }
 
-    AtomicBoolean collectedToken = new AtomicBoolean(false);
 
-    public void moveToPlatform(Platform platformCurrent,Platform platformTarget, double playerFinalX, double transitionRate, Token token, boolean alive, double stickEndX){
-//        transitionRate = 0.05;
-        GamePlayController.getHitPointFront().isVisible(false);
-        double platformWidth = platformTarget.getPlatformRectangle().getWidth();
-        double playerCrashX;
-        if(alive) {
-            playerCrashX = (playerFinalX - platformWidth);
-        }
-        else{
-            playerCrashX = stickEndX;
-        }
-        double playerStartX = image.getX();
-        double transitionDistance = playerFinalX - playerStartX;
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(1);
-        AtomicBoolean tokenCollected = new AtomicBoolean(false);
-        AtomicBoolean transitionRunning= new AtomicBoolean(true);
-        gamePlayController.enableInvertButton();
-        ExecutorService collisionThread = Executors.newSingleThreadExecutor();
-        ExecutorService tokenThread = Executors.newSingleThreadExecutor();
-        ImageView imgToken = token.getImgToken();
-
-        tokenThread.execute(()->{
+    public void animationWaitingThread(ImageView image, AtomicBoolean transitionRunning, double playerFallX, Timeline timeline, double transitionRate, double targetPlatformEndX, double stickEndX) {
+        Thread waitingThread = new Thread(() -> {
             double playerX = image.getTranslateX() + image.getX();
-            double tokenEndX = token.getImgToken().getX()+token.getImgToken().getFitWidth();
-            boolean playerCrossedToken = tokenEndX < playerX;
-            while (transitionRunning.get() && !playerCrossedToken ) {
-                playerX = image.getTranslateX() + image.getX();
-//                System.out.println(playerCrossedToken);
-//                System.out.println("2: "+playerX);
-                playerCrossedToken = tokenEndX < playerX;
-                if (Math.abs(imgToken.getX() - playerX) < image.getFitWidth() && isInverted) {
-                    tokenCollected.set(true);
-                    imgToken.setOpacity(0);
+            boolean playerCrossedStick = playerFallX - playerX >-5;
 
-                    javafx.application.Platform.runLater(()-> {
-                        gamePlayController.updateTokenCount();
-                    });
-                    break;
-                }
+            while (transitionRunning.get() && playerCrossedStick) {
+                playerX = image.getTranslateX() + image.getX();
+                playerCrossedStick = playerFallX - playerX > 0;
+//
                 try {
-                    Thread.sleep(5); // Adjust sleep time as needed
+                    Thread.sleep(2);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                } // Player Crossed Token
                 }
-        if(tokenCollected.get()) {
-            GameStatistics.setTokens(GameStatistics.getTokens() + 1);
-            tokenCollected.set(false);
-        }
-        });
-
-        collisionThread.execute(() -> {
-            double playerX = image.getTranslateX() + image.getX();
-            boolean playerCrossedStick = playerCrashX - playerX > 0;
-            while (transitionRunning.get() && playerCrossedStick ) {
-//                System.out.println("1:"+playerX);
-                playerX = image.getTranslateX() + image.getX();
-//                System.out.println(playerX);
-//                System.out.println(playerCrossedPlatformX);
-                playerCrossedStick = playerCrashX - playerX > 0;
-                try {
-                    Thread.sleep(2); // Adjust sleep time as needed
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } // Player Crossed Stick
-//                System.out.println(playerCrashX);
-//                System.out.println(playerX);
-//                System.out.println(isInverted);
             }
+            gamePlayController.rotateStick(1);
+            gamePlayController.playerFall();
+            revival();
+            double remainingDistance = Math.abs(targetPlatformEndX - stickEndX);
+            System.out.println(remainingDistance);
+            System.out.println(remainingDistance);
+            Timeline timeline1 = playerMovementAnimationTimeline(transitionRate, remainingDistance, targetPlatformEndX, true);
+        });
+//        timeline.stop();
+        waitingThread.start();
+    }
+
+    public void AnimationThread(ImageView image, AtomicBoolean transitionRunning, double playerFallX, GamePlayController gamePlayController, Timeline timeline, boolean alive) {
+        Thread collisionThread = new Thread(() -> {
+            double playerX = image.getTranslateX() + image.getX();
+            boolean playerCrossedStick = playerFallX - playerX > 0;
+
+            while (transitionRunning.get() && playerCrossedStick) {
+                playerX = image.getTranslateX() + image.getX();
+                playerCrossedStick = playerFallX - playerX > 0;
+//
+                try {
+                    Thread.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             gamePlayController.disableInvertButton();
-            if(isInverted){
+
+            if (isInverted) {
                 System.out.println("Collision with platform");
                 timeline.stop();
                 gamePlayController.playerFall();
-                revival();//Blocking Command
+                revival(); // Blocking Command
                 System.out.println("Player Moves forward");
                 timeline.play();
-                //Proper Logic
-                //On Revive
-//                timeline.play();
             }
-            if(!alive){
+//
+            if (!alive) {
                 System.out.println("Stick Small");
                 timeline.stop();
                 gamePlayController.rotateStick(1);
@@ -127,56 +103,127 @@ public class Player {
                 revival();
                 timeline.play();
             }
-            javafx.application.Platform.runLater(()-> {
+
+            javafx.application.Platform.runLater(() -> {
                 gamePlayController.updateTokenCount();
             });
+//            timeline.play();
+        });
+        collisionThread.start();
+    }
+
+
+    public void checkTokenCollisionThread(ImageView image, Token token, AtomicBoolean transitionRunning, AtomicBoolean tokenCollected, GamePlayController gamePlayController) {
+        Thread tokenThread = new Thread(() -> {
+            double playerX = image.getTranslateX() + image.getX();
+            double tokenEndX = token.getImgToken().getX() + token.getImgToken().getFitWidth();
+            boolean playerCrossedToken = tokenEndX < playerX;
+
+            while (transitionRunning.get() && !playerCrossedToken) {
+                playerX = image.getTranslateX() + image.getX();
+                playerCrossedToken = tokenEndX < playerX;
+
+                if (Math.abs(token.getImgToken().getX() - playerX) < image.getFitWidth() && isInverted) {
+                    tokenCollected.set(true);
+                    token.getImgToken().setOpacity(0);
+
+                    javafx.application.Platform.runLater(() -> {
+                        gamePlayController.updateTokenCount();
+                    });
+                    break;
+                }
+
+                try {
+                    Thread.sleep(5); //
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (tokenCollected.get()) {
+                gameStatistics.setTokens(gameStatistics.getTokens() + 1);
+                tokenCollected.set(false);
+            }
         });
 
-        System.out.println("Hee");
+        tokenThread.start();
+    }
 
-        // Adding KeyFrame to the timeline
+    public Timeline playerMovementAnimationTimeline(double transitionRate, double transitionDistance, double playerFinalX, boolean changeSceneNeeded) {
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        tokenCollected = new AtomicBoolean(false);
+        transitionRunning = new AtomicBoolean(true);
+        System.out.println(transitionRate*transitionDistance);
         Duration duration = Duration.seconds(transitionRate*transitionDistance); // Duration of animation (1 second)
         KeyFrame keyFrame = new KeyFrame(duration, event -> {
             gamePlayController.updateScore();
             gamePlayController.checkHighScore();
-            System.out.println("Changing SCENE");
-            gamePlayController.changeScene();
             transitionRunning.set(false);
+            if(changeSceneNeeded){
+                System.out.println("Changing SCENE");
+                gamePlayController.changeScene();
+            }
         }, new KeyValue(image.xProperty(), playerFinalX));
 
 
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
-        Future<?> future = tokenThread.submit(() -> {
-            if(tokenCollected.get()){
-                GameStatistics.setTokens(GameStatistics.getTokens()+1);
-                gamePlayController.updateTokenCount();
-                tokenCollected.set(false);
-            }
-        });
+        System.out.println("I am running");
+        // Perform any further operations needed within this function
 
-//        try {
-//            // Wait for the task to complete
-//            future.get(); // This blocks until the task is done
-//        } catch (InterruptedException | ExecutionException e) {
-//            e.printStackTrace();
-//        }
-//
-//        tokenThread.shutdown();
+        return timeline;
+    }
+
+
+    AtomicBoolean collectedToken = new AtomicBoolean(false);
+
+    public void moveToPlatform(Platform platformCurrent,Platform platformTarget, double playerFinalX, double transitionRate, Token token, boolean alive, double stickEndX){
+//        transitionRate = 0.05;
+
+        double platformWidth = platformTarget.getPlatformRectangle().getWidth();
+        double playerFallX;
+        int aestheticMargin=5;
+        double targetPlatformEndX = platformTarget.getPlatformRectangle().getX() + platformWidth - image.getFitHeight() - aestheticMargin;
+        GamePlayController.getHitPointFront().isVisible(false); //Front hitpoint is disabled
+        double playerStartX = image.getX();
+        System.out.println(targetPlatformEndX);
+        System.out.println(stickEndX);
+        System.out.println("+");
+        if(alive){
+            //Player moves to next Platform
+            gamePlayController.enableInvertButton();
+            double transitionDistance = playerFinalX - playerStartX;
+            Timeline timeline = playerMovementAnimationTimeline(transitionRate, transitionDistance, playerFinalX, true);
+            checkTokenCollisionThread(image, token, transitionRunning, tokenCollected, gamePlayController);
+            playerFallX = (playerFinalX - platformWidth);
+            AnimationThread(image, transitionRunning, playerFallX, gamePlayController, timeline, alive);
+
+        }
+
+        else{
+            //Player Falls, after the target platform
+            playerFallX = stickEndX;
+            double transitionDistance = stickEndX - playerStartX;
+            Timeline timeline = playerMovementAnimationTimeline(transitionRate, transitionDistance, stickEndX,false);
+            animationWaitingThread(image, transitionRunning, playerFallX, timeline, transitionRate, targetPlatformEndX, stickEndX);
+            System.out.println("TargetPlatformENDZ: "+targetPlatformEndX);
+
+        }
 
 
     }
 
     public void revival(){
         System.out.println("Revival Called");
-        System.out.println(GameStatistics.getTokens());
+        System.out.println(gameStatistics.getTokens());
         ExecutorService executor2 = Executors.newSingleThreadExecutor();
         executor2.execute(() -> {
-            int tokensAtStart = GameStatistics.getTokens();
+            int tokensAtStart = gameStatistics.getTokens();
             boolean tokensUsed = false;
             while (!tokensUsed) {
                 try {
-                    int tokensNow = GameStatistics.getTokens();
+                    int tokensNow = gameStatistics.getTokens();
 //                    System.out.println(tokensNow);
                     tokensUsed = tokensAtStart>tokensNow;
 //                    System.out.println(tokensNow);
@@ -262,6 +309,9 @@ public class Player {
         }
     }
 
+    public abstract void characterDescription();
+
     // Getters and setters can be added for the private fields
+
 }
 

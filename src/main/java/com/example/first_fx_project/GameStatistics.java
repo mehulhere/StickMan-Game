@@ -2,28 +2,41 @@ package com.example.first_fx_project;
 
 import javafx.scene.control.Label;
 
-public class GameStatistics {
+import java.io.Serializable;
+
+public class GameStatistics implements Serializable {
+
     private static int currentScore;
-    private static int tokens;
-    private static int bestScore;
+    private static GameStatistics instance = null;
+    private  int tokens;
+    private int bestScore;
     private static boolean highScoreChecked;
 
-    private static int Revivals;
+    private static int revivals;
 
     public static int getRevivals() {
-        return Revivals;
+        return revivals;
     }
 
     public static void setRevivals(int revivals) {
-        Revivals = revivals;
+        GameStatistics.revivals = revivals;
     }
 
     // Constructor
-    public GameStatistics() {
+    private GameStatistics() {
         currentScore = 0;
         tokens = 0;
         bestScore = 0;
         highScoreChecked = false;
+        revivals = 0;
+    }
+
+    // Method to get the singleton instance
+    public static GameStatistics getInstance() {
+        if (instance == null) {
+            instance = new GameStatistics();
+        }
+        return instance;
     }
 
     // Method to update the current score
@@ -35,7 +48,7 @@ public class GameStatistics {
         score.setText(Integer.toString(currentScore));
     }
 
-    public static int getTokens() {
+    public int getTokens() {
         return tokens;
     }
 
@@ -43,9 +56,9 @@ public class GameStatistics {
         currentScore = score;
     }
 
-    public static void setBestScore(){
+    public void checkBestScore(){
         if(currentScore > bestScore){
-            bestScore = currentScore;
+            this.bestScore = currentScore;
         }
     }
 
@@ -57,20 +70,24 @@ public class GameStatistics {
         return highScoreChecked;
     }
 
-    public static int getBestScore() {
+    public int getBestScore() {
         return bestScore;
     }
 
-    public static boolean checkHighScore(){
+    public  boolean checkHighScore(){
         return (currentScore > bestScore);
     }
 
-    public static void setTokens(int tokens) {
-        GameStatistics.tokens = tokens;
+    public void setTokens(int tokens) {
+        this.tokens = tokens;
     }
 
     public static int getCurrentScore() {
         return currentScore;
+    }
+
+    public void setBestScore(int bestScore) {
+        this.bestScore = bestScore;
     }
 }
 

@@ -15,4 +15,8 @@ public class DefaultCharacter extends Player{
         image.setY(y);
 
     }
+    @Override
+    public void characterDescription(){
+        System.out.println("I am Default Character, I don't have any special powers");
+    }
 }

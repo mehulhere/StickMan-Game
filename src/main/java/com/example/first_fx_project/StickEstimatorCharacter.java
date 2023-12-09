@@ -8,4 +8,9 @@ public class StickEstimatorCharacter extends Player{
     public StickEstimatorCharacter(GamePlayController gamePlayController, ImageView imgDefaultCharacter) {
         super(gamePlayController, imgDefaultCharacter);
     }
+
+    @Override
+    public void characterDescription() {
+
+    }
 }

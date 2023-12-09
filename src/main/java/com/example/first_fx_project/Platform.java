@@ -7,6 +7,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,6 +17,9 @@ public class Platform {
     static private int height = 100;
 
     private static int platform3Distance;
+
+    private static Map<Integer, Platform> PlatformInstances =
+            new HashMap<Integer, Platform>(); //Flyweight Design Pattern Implemented
 
     public static int getPlatform3X() {
         return platform3Distance;
@@ -27,6 +32,13 @@ public class Platform {
         return platform3Distance;
     }
 
+    public static Platform getInstance(int platformType) {
+        if (!PlatformInstances.containsKey(platformType)) {
+            PlatformInstances.put(platformType, new Platform(platformType));
+        }
+        return PlatformInstances.get(platformType);
+    }
+
     private int platformType; // 1 for current. 2 for target. 3 for invisible.
     private Rectangle platformRectangle;
 
@@ -37,10 +49,9 @@ public class Platform {
 
     private GamePlayController gamePlayController;
 
-    public Platform(int platformNumber, Rectangle platformRectangle) { // Width should be between some particular values
+    private Platform(int platformNumber) { // Width should be between some particular values
         this.platformType = platformNumber;
-        this.platformRectangle = platformRectangle;
-        platformDefine( 0, 0);
+//        this.platformRectangle = platformRectangle;
     }
 
     public void platformDefine(int totalIncrement, int lastIncrement) {
@@ -139,6 +150,9 @@ public class Platform {
         return platformRectangle;
     }
 
-
+    public void setPlatformRectangle(Rectangle platformRectangle) {
+        this.platformRectangle = platformRectangle;
+        platformDefine( 0, 0);
+    }
 }
 

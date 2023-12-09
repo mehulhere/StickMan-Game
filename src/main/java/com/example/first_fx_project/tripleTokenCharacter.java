@@ -9,4 +9,9 @@ public class tripleTokenCharacter extends Player{
         super(gamePlayController, imgDefaultCharacter);
     }
 
+    @Override
+    public void characterDescription() {
+
+    }
+
 }

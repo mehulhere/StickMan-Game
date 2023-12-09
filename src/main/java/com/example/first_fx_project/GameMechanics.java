@@ -10,9 +10,16 @@ import javafx.util.Duration;
 
 public class GameMechanics {
     private GamePlayController gamePlayController;
+    private static GameMechanics gameMechanics = null;
+    public static GameMechanics getInstance()
+    {
+        if (gameMechanics == null) {
+            gameMechanics = new GameMechanics();
+        }
+        return gameMechanics;
+    }
 
-    public GameMechanics(GamePlayController gamePlayController) {
-        this.gamePlayController = gamePlayController;
+    private GameMechanics() {
     }
 
     public void changeScene(Platform platform2, AnchorPane movableComponents, double shiftDistance, Button extendStickButton){
@@ -36,6 +43,10 @@ public class GameMechanics {
         });
     }
 
+    public boolean collisionCalculator(double stickEndX, double platformStartX, double platformEndX){
+        return stickEndX >= platformStartX && stickEndX <= platformEndX;
+    }
+
     public void checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2, ImageView playerImage){
         double stickLength = stickLine.getStartY() - stickLine.getEndY();
         double stickEndX = stickLine.getStartX() + stickLength;
@@ -49,7 +60,7 @@ public class GameMechanics {
         System.out.println("Platform EndX: "+platformEndX);
         int aestheticMargin = 4;
         double playerFinalX = platformEndX - playerImage.getFitWidth() - aestheticMargin;
-        if (stickEndX > platformStartX && stickEndX < platformEndX) {
+        if (collisionCalculator(stickEndX, platformStartX, platformEndX)) {
             System.out.println("Collision!! RUN");
             gamePlayController.setHitPointPosition(GamePlayController.getHitPointBack(), GamePlayController.getHitPointFront().getHitPointPosition());
             GamePlayController.getHitPointBack().changeColor(checkHitPointCollision(stickEndX));
@@ -66,9 +77,13 @@ public class GameMechanics {
         System.out.println("StickEndX: "+ stickEndX);
     }
 
+    public boolean hitPointCollisionCalculator(double lowerLimit, double stickX){
+        return stickX >= lowerLimit - 1 && stickX <= lowerLimit + HitPoint.getWidth() + 1;
+    }
+
     public boolean checkHitPointCollision(double stickX){
         double lowerLimit = GamePlayController.getHitPointBack().getHitPointPosition();
-        return stickX >= lowerLimit - 1 && stickX <= lowerLimit + HitPoint.getWidth() + 1;
+        return hitPointCollisionCalculator(lowerLimit, stickX);
     }
 
     public boolean checkTokenCollision(Token token) {
@@ -83,5 +98,13 @@ public class GameMechanics {
 
     public void resetMeter() {
         // Method to reset powerMeter
+    }
+
+    public GamePlayController getGamePlayController() {
+        return gamePlayController;
+    }
+
+    public void setGamePlayController(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
     }
 }

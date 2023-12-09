@@ -63,6 +63,10 @@ public class Stick {
         }
     }
 
+    public void setOpacity(int opacity){
+        stickLine.setOpacity(opacity);
+    }
+
     // Getters and setters for the class properties (width, length, startPosition, maxLength)
     public boolean isCurrentStick() {
         return currentStick;

@@ -101,12 +101,17 @@ public class GamePlayController extends SceneController{
 
     private DefaultCharacter defaultCharacter;
 
+    private GameStatistics gameStatistics = GameStatistics.getInstance();
+
     private ArrayList<Image> backgroundList = new ArrayList<>();
     @FXML
     public void initialize() {
-        platform1 = new Platform(1, platformRectangle1);
-        platform2 = new Platform(2, platformRectangle2);
-        platform3 = new Platform(3, platformRectangle3);
+        platform1 = Platform.getInstance(1); //Using Flyweight Design Pattern
+        platform2 = Platform.getInstance(2);
+        platform3 = Platform.getInstance(3);
+        platform1.setPlatformRectangle(platformRectangle1);
+        platform2.setPlatformRectangle(platformRectangle2);
+        platform3.setPlatformRectangle(platformRectangle3);
         double platform2startX = platform2.getPlatformRectangle().getX();
         double platform2HalfWidth = platform2.getPlatformRectangle().getWidth()/2;
         double hitPointInitialPosition = platform2startX + platform2HalfWidth - (double) HitPoint.getWidth() /2;
@@ -114,13 +119,13 @@ public class GamePlayController extends SceneController{
         hitPointBack = new HitPoint(hitPointRectangle2, hitPointFront.getHitPointPosition());
         stick1 = new Stick(true, stickLine1);
         stick2 = new Stick(false, stickLine2);
-        player = new Player(this, imgCharacter);
         token1 = new Token(this, imgToken, getCurrentPlatformRectangle(), getTargetPlatformRectangle(), true);
         token2 = new Token(this, imgToken2, getTargetPlatformRectangle(), getInvisiblePlatformRectangle(), false);
         defaultCharacter = new DefaultCharacter(this, imgCharacter);
-        gameMechanics = new GameMechanics(this);
+        gameMechanics = GameMechanics.getInstance(); //Design Pattern: Singleton Used here
+        gameMechanics.setGamePlayController(this);
         Stick.initializeStick(getCurrentPlatform(), getStickLine());
-        tokenLabel.setText(Integer.toString(GameStatistics.getTokens()));
+        tokenLabel.setText(Integer.toString(gameStatistics.getTokens()));
         GameStatistics.setCurrentScore(0);
         GameStatistics.setHighScoreChecked(false);
         GameStatistics.setRevivals(0);
@@ -252,7 +257,7 @@ public class GamePlayController extends SceneController{
     }
 
     public void checkHighScore(){
-        if(GameStatistics.checkHighScore() && !GameStatistics.isHighScoreChecked()){
+        if(gameStatistics.checkHighScore() && !GameStatistics.isHighScoreChecked()){
             FadeTransition fadeIn = new FadeTransition(Duration.millis(2000), highScoreText);
             fadeIn.setFromValue(0.0);
             fadeIn.setToValue(1.0);
@@ -270,8 +275,8 @@ public class GamePlayController extends SceneController{
     }
 
     public void updateTokenCount(){
-        tokenLabel.setText(String.valueOf(GameStatistics.getTokens()));
-        System.out.println("Number of Tokens"+GameStatistics.getTokens());
+        tokenLabel.setText(String.valueOf(gameStatistics.getTokens()));
+        System.out.println("Number of Tokens"+gameStatistics.getTokens());
     }
 
 
@@ -288,7 +293,7 @@ public class GamePlayController extends SceneController{
     public void switchToGameOverPage() throws IOException {
         System.out.println(tokenLabel.getText());
         System.out.println("Hello");
-        System.out.println(GameStatistics.getTokens());
+        System.out.println(gameStatistics.getTokens());
         System.out.println(scoreLabel.getText());
         super.switchToGameOverPage(movableComponents, scoreLabel.getText(), String.valueOf("ada"));
     }

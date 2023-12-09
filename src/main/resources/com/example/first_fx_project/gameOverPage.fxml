@@ -6,39 +6,39 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.GameOverController">
+<AnchorPane prefHeight="810.0" prefWidth="1440.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.GameOverController">
 
     <!-- Game Over Label -->
-    <Label layoutX="266.0" layoutY="35.0" style="-fx-font-size: 48px; -fx-text-fill: red;" text="Game Over" />
+    <Label layoutX="536.0" layoutY="113.0" style="-fx-font-size: 48px; -fx-text-fill: red;" text="Game Over" />
 
     <!-- Score Label -->
 
-    <Label layoutX="284.0" layoutY="131.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Your Score:" />
-   <Label fx:id="gameOverScore" layoutX="420.0" layoutY="124.0" prefHeight="50.0" prefWidth="74.0" text="1000">
+    <Label layoutX="559.0" layoutY="250.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Your Score:" />
+   <Label fx:id="gameOverScore" layoutX="695.0" layoutY="243.0" prefHeight="50.0" prefWidth="74.0" text="1000">
       <font>
          <Font size="30.0" />
       </font></Label>
-   <Label layoutX="275.0" layoutY="307.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Total cheries: " />
-   <Label fx:id="gameOverTokens" layoutX="421.0" layoutY="300.0" prefHeight="50.0" prefWidth="74.0" text="100">
+   <Label layoutX="550.0" layoutY="426.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Total cheries: " />
+   <Label fx:id="gameOverTokens" layoutX="696.0" layoutY="419.0" prefHeight="50.0" prefWidth="74.0" text="100">
       <font>
          <Font size="30.0" />
       </font>
    </Label>
-   <Label layoutX="283.0" layoutY="219.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Best Score: " />
-   <Label fx:id="gameOverBestScore" layoutX="420.0" layoutY="212.0" prefHeight="50.0" prefWidth="100.0" text="10000">
+   <Label layoutX="558.0" layoutY="338.0" style="-fx-font-size: 24px; -fx-text-fill: grey;" text="Best Score: " />
+   <Label fx:id="gameOverBestScore" layoutX="695.0" layoutY="331.0" prefHeight="50.0" prefWidth="100.0" text="10000">
       <font>
          <Font size="30.0" />
       </font>
    </Label>
-   <Circle fill="#4CAF50" layoutX="400.0" layoutY="449.0" radius="56.0" style="-fx-fill: red;" /> <!-- Replace with your score -->
+   <Circle fill="#4CAF50" layoutX="675.0" layoutY="568.0" radius="56.0" style="-fx-fill: red;" /> <!-- Replace with your score -->
 
           <!-- Restart Button -->
-    <Circle fill="#4caf50" layoutX="190.0" layoutY="449.0" radius="56.0" />
-    <Button accessibleText="Restart" layoutX="145.0" layoutY="429.0" mnemonicParsing="false" onAction="#switchToGamePlayPage" prefHeight="40.0" prefWidth="90.0" style="-fx-font-size: 18px; -fx-text-fill: white; -fx-background-color: #4CAF50;" text="Restart" />
+    <Circle fill="#4caf50" layoutX="465.0" layoutY="568.0" radius="56.0" />
+    <Button accessibleText="Restart" layoutX="420.0" layoutY="548.0" mnemonicParsing="false" onAction="#switchToGamePlayPage" prefHeight="40.0" prefWidth="90.0" style="-fx-font-size: 18px; -fx-text-fill: white; -fx-background-color: #4CAF50;" text="Restart" />
 
     <!-- Exit Button -->
-    <Button accessibleText="Exit" layoutX="350.0" layoutY="429.0" mnemonicParsing="false" onAction="#switchToMenuPage" prefHeight="40.0" prefWidth="100.0" style="-fx-font-size: 18px; -fx-text-fill: white; -fx-background-color: red;" text="Home" />
-   <Button fx:id="reviveButton" layoutX="573.0" layoutY="398.0" mnemonicParsing="false" onAction="#closePopupRevive" prefHeight="103.0" prefWidth="106.0" style="-fx-background-color: white; -fx-background-radius: 100000;" text="Revive">
+    <Button accessibleText="Exit" layoutX="625.0" layoutY="548.0" mnemonicParsing="false" onAction="#switchToMenuPage" prefHeight="40.0" prefWidth="100.0" style="-fx-font-size: 18px; -fx-text-fill: white; -fx-background-color: red;" text="Home" />
+   <Button fx:id="reviveButton" layoutX="848.0" layoutY="517.0" mnemonicParsing="false" onAction="#closePopupRevive" prefHeight="103.0" prefWidth="106.0" style="-fx-background-color: white; -fx-background-radius: 100000;" text="Revive">
       <font>
          <Font size="23.0" />
       </font>

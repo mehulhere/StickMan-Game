@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="firstController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.GamePlayController">
+<AnchorPane fx:id="firstController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_fx_project.GamePlayController">
     <AnchorPane fx:id="movableComponents" maxHeight="830.0" prefHeight="810.0" prefWidth="1440">
         <ImageView fx:id="bgImg1" fitHeight="810.0" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -64,7 +64,7 @@
         </image>
     </ImageView>
 
-       <Label fx:id="tokenLabel" layoutX="290.0" layoutY="17.0" prefHeight="68.0" prefWidth="126.0" text="0" textAlignment="RIGHT" textFill="WHITE">
+       <Label fx:id="tokenLabel" layoutX="245.0" layoutY="14.0" prefHeight="68.0" prefWidth="126.0" text="0" textAlignment="RIGHT" textFill="WHITE">
       <font>
          <Font name="Britannic Bold" size="50.0" />
       </font>

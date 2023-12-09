@@ -35,6 +35,9 @@ public class CharacterController extends SceneController{
     private ToggleButton characterTB7;
 
     @FXML
+    private ToggleButton characterTB8;
+
+    @FXML
     private ImageView imgDefaultCharacter;
 
     @FXML
@@ -42,7 +45,7 @@ public class CharacterController extends SceneController{
 
     private static int characterIndex = 0;
 
-    private static int numChars = 8;
+    private static int numChars = 9;
 
     public static int getCharacterIndex() {
         return characterIndex;

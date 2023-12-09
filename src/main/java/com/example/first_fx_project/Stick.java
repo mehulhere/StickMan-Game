@@ -46,6 +46,7 @@ public class Stick {
         timeline.setCycleCount(1);
         if(num == 0){
             timeline.setOnFinished(e -> {
+                System.out.println(".............................................................");
                 gamePlayController.checkStickCollision(); // Call the collision check after animation finishes
             });
         }

@@ -4,6 +4,7 @@ package com.example.first_fx_project;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 public class GameOverController extends SceneController{
 
@@ -17,6 +18,12 @@ public class GameOverController extends SceneController{
     private Label gameOverBestScore;
 
     @FXML
+    private Label reviveText;
+
+    @FXML
+    private ImageView heartImage;
+
+    @FXML
     public void initialize(){
         gameStatistics.checkBestScore();
         gameOverBestScore.setText(Integer.toString(gameStatistics.getBestScore()));
@@ -28,6 +35,8 @@ public class GameOverController extends SceneController{
         int finalTokens = gameStatistics.getTokens()-GameStatistics.getRevivals()-1;
         if (finalTokens < 0) {
             reviveButton.setDisable(true);
+            reviveText.setVisible(false);
+            heartImage.setVisible(false);
         }
     }
 

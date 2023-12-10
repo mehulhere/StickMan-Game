@@ -148,7 +148,7 @@ public class GamePlayController extends SceneController{
 
     public void loadThemes(){
         backgroundList.add(new Image(Objects.requireNonNull(getClass().getResource("assets/background_City.png")).toExternalForm()));
-            backgroundList.add(new Image(Objects.requireNonNull(getClass().getResource("assets/background_Mountains.png")).toExternalForm()));
+        backgroundList.add(new Image(Objects.requireNonNull(getClass().getResource("assets/background_Mountains.png")).toExternalForm()));
         backgroundList.add(new Image(Objects.requireNonNull(getClass().getResource("assets/background_Dungeon.png")).toExternalForm()));
     }
 

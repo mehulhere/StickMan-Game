@@ -41,7 +41,7 @@ public class CharacterController extends SceneController{
     @FXML
     private ToggleGroup characterToggleGroup;
 
-    private static int characterIndex = 0;
+    private static int characterIndex = 2;
 
     private static int numChars = 9;
 

@@ -89,5 +89,9 @@ public class GameStatistics implements Serializable {
     public void setBestScore(int bestScore) {
         this.bestScore = bestScore;
     }
+
+    public static void setInstance(GameStatistics instance) {
+        GameStatistics.instance = instance;
+    }
 }
 

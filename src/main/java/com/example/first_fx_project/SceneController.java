@@ -5,15 +5,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Objects;
+import javax.sound.sampled.*;
 
 public class SceneController {
 
@@ -64,6 +70,8 @@ public class SceneController {
 
     public void switchToMenuPage(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("menuPage.fxml"));
+            // Other parts of your application continue here while the audio is playing in the background
+
         root = fxmlLoader.load(); // Set the loaded FXML as the root
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -233,6 +241,43 @@ public class SceneController {
         System.exit(0);
     }
 
-    public void directionButtonClick(ActionEvent actionEvent) {
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public Parent getRoot() {
+        return root;
+    }
+
+    public void setRoot(Parent root) {
+        this.root = root;
+    }
+
+    public Scene getOverlayScene() {
+        return overlayScene;
+    }
+
+    public void setOverlayScene(Scene overlayScene) {
+        this.overlayScene = overlayScene;
+    }
+
+    public GameStatistics getGameStatistics() {
+        return gameStatistics;
+    }
+
+    public void setGameStatistics(GameStatistics gameStatistics) {
+        this.gameStatistics = gameStatistics;
     }
 }

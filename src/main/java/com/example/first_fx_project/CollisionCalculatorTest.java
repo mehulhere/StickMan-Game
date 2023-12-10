@@ -44,4 +44,6 @@ public class CollisionCalculatorTest {
         boolean collision = gameMechanics.collisionCalculator(stickEndX, platformStartX, platformEndX);
         assertFalse(collision);
     }
+
+
 }

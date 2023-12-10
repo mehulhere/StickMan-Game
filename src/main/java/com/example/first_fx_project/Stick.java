@@ -46,8 +46,10 @@ public class Stick {
         timeline.setCycleCount(1);
         if(num == 0){
             timeline.setOnFinished(e -> {
+                //add sound
                 System.out.println(".............................................................");
                 gamePlayController.checkStickCollision(); // Call the collision check after animation finishes
+
             });
         }
         timeline.play();
@@ -79,6 +81,26 @@ public class Stick {
     }
     public Line getStickLine() {
         return stickLine;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(int maxLength) {
+        this.maxLength = maxLength;
+    }
+
+    public void setStickLine(Line stickLine) {
+        this.stickLine = stickLine;
     }
 }
 

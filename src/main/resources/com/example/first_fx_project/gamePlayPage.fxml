@@ -18,30 +18,30 @@
                 <Image url="@assets/background_Dungeon.png" />
             </image>
         </ImageView>
-      <ImageView fx:id="bgImg2" fitHeight="810" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@assets/background_Dungeon.png" />
-         </image>
-      </ImageView>
+        <ImageView fx:id="bgImg2" fitHeight="810" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@assets/background_Dungeon.png" />
+            </image>
+        </ImageView>
         <ImageView fx:id="bgImg3" fitHeight="810" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@assets/background_Dungeon.png" />
             </image>
         </ImageView>
-    <!-- Pillars at the bottom -->
-    <Rectangle fx:id="platformRectangle1" height="257.0" width="50.0" x="400.0" y="555.0" />
-    <Rectangle fx:id="platformRectangle2" height="257.0" width="50.0" x="750.0" y="555.0" />
+        <!-- Pillars at the bottom -->
+        <Rectangle fx:id="platformRectangle1" height="257.0" width="50.0" x="400.0" y="555.0" />
+        <Rectangle fx:id="platformRectangle2" height="257.0" width="50.0" x="750.0" y="555.0" />
 
 
 
-    <!-- Rectangle for the player above the first pillar -->
+        <!-- Rectangle for the player above the first pillar -->
 
-    <!-- Stick between two pillars -->
-        <Line fx:id="stickLine1" endX="250" endY="555.0" opacity="0" startY="555.0" stroke="Black" strokeWidth="4.0" />
+        <!-- Stick between two pillars -->
+        <Line fx:id="stickLine1" endX="250" endY="555.0" opacity="0" startY="555.0" stroke="Black" strokeWidth="4.0" style="-fx-background-radius: 5px;; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 3, 0, 0, 0),        inset dropshadow(gaussian, rgba(255,255,255,0.5), 2, 0, 0, 0);; -fx-padding: 0 5px;; -fx-background-color: #333333;;" />
         <!-- Invisible Platform-->
         <Rectangle fx:id="platformRectangle3" height="257.0" width="50.0" x="1400.0" y="555.0" />
         <Line fx:id="stickLine2" endX="250" endY="555.0" opacity="0" startY="555.0" stroke="Black" strokeWidth="4.0" />
-      <Rectangle fx:id="hitPointRectangle2" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" stroke="BLACK" strokeType="INSIDE" width="20.0" x="765.0" y="555.0" />
+        <Rectangle fx:id="hitPointRectangle2" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" stroke="BLACK" strokeType="INSIDE" width="20.0" x="765.0" y="555.0" />
         <Rectangle fx:id="hitPointRectangle1" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" stroke="BLACK" strokeType="INSIDE" width="20.0" x="765.0" y="555.0" />
         <!-- Cherry below the stick -->
         <ImageView fx:id="imgToken" fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" x="550.0" y="562.0">
@@ -51,32 +51,34 @@
         <ImageView fx:id="imgToken2" fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" x="1200" y="562.0">
             <Image url="@assets/heart.png" />
         </ImageView>
-      <ImageView fx:id="imgCharacter" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="515.0">
+        <ImageView fx:id="imgCharacter" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="515.0">
             <Image url="@assets/stickHero0.png" />
-      </ImageView>
+        </ImageView>
+
 
     </AnchorPane>
+    <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#1b1b1b" height="68.0" layoutX="17.0" layoutY="48.0" stroke="BLACK" strokeType="INSIDE" width="157.0" x="618.0" y="37.0" />
+    <!-- Other UI Components-->
+    <Label layoutX="655.0" layoutY="85.0" prefHeight="68.0" prefWidth="82.0" text="SCORE: " textFill="WHITE">
+        <font>
+            <Font name="Bodoni MT" size="20.0" />
+        </font>
+    </Label>
+    <Label fx:id="scoreLabel" layoutX="721.0" layoutY="99.0" prefHeight="40.0" prefWidth="69.0" text="0" textFill="WHITE">
+        <padding>
+            <Insets left="27.0" />
+        </padding>
+        <font>
+            <Font size="21.0" />
+        </font>
+    </Label>
 
-       <Rectangle height="68.0" layoutX="238.0" layoutY="17.0" stroke="BLACK" strokeType="INSIDE" width="174.0" />
-    <ImageView fx:id="imgToken1" fitHeight="50.0" fitWidth="50.0" layoutX="-47.0" layoutY="-481.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="509.0">
+    <Rectangle arcHeight="25.0" arcWidth="25.0" height="68.0" layoutX="238.0" layoutY="17.0" stroke="BLACK" strokeType="INSIDE" width="174.0" />
+    <ImageView fx:id="imgToken1" fitHeight="50.0" fitWidth="50.0" layoutX="-151.0" layoutY="-480.0" pickOnBounds="true" preserveRatio="true" x="400.0" y="509.0">
         <image>
             <Image url="@assets/heart.png" />
         </image>
     </ImageView>
-
-       <Label fx:id="tokenLabel" layoutX="290.0" layoutY="17.0" prefHeight="68.0" prefWidth="126.0" text="0" textAlignment="RIGHT" textFill="WHITE">
-      <font>
-         <Font name="Britannic Bold" size="50.0" />
-      </font>
-   </Label>
-    <!-- Other UI Components-->
-    <Label layoutX="658.0" layoutY="14.0" prefHeight="68.0" prefWidth="58.0" text="SCORE: " />
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7c7c7c" height="68.0" layoutX="20.0" layoutY="-23.0" opacity="0.32" stroke="BLACK" strokeType="INSIDE" width="165.0" x="618.0" y="37.0" />
-    <Label fx:id="scoreLabel" layoutX="720.0" layoutY="28.0" prefHeight="40.0" prefWidth="58.0" text="0">
-        <padding>
-            <Insets left="27.0" />
-        </padding>
-    </Label>
     <Label fx:id="highScoreText" layoutX="612.0" layoutY="168.0" opacity="0.0" prefHeight="100.0" prefWidth="212.0" text="HIGH SCORE!" textAlignment="CENTER" textFill="#ffd900">
         <font>
             <Font name="Cooper Black" size="30.0" />
@@ -87,12 +89,18 @@
     </Label>
     <Button fx:id="extendStickButton" layoutX="107.0" layoutY="27.0" mnemonicParsing="false" onKeyPressed="#extendStick" onKeyReleased="#stopExtendStick" opacity="0.0" prefHeight="10.0" prefWidth="20.0" text="extend stick" />
     <Button fx:id="invertPlayerButton" disable="true" layoutX="77.0" layoutY="91.0" mnemonicParsing="false" onKeyPressed="#invertPlayer" opacity="0.0" prefHeight="25.0" prefWidth="20.0" text="invert player" />
-   <ImageView fitHeight="100.0" fitWidth="82.0" layoutX="1108.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@assets/pauseButton.png" />
-      </image>
-   </ImageView>
-    <Button fx:id="pauseButton" layoutX="1108.0" layoutY="11.0" minWidth="32.0" mnemonicParsing="false" onMouseClicked="#switchToPausePage" opacity="0.0" prefHeight="82.0" prefWidth="82.0" text="Pause" />
+    <ImageView fitHeight="100.0" fitWidth="82.0" layoutX="1108.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@assets/pauseButton.png" />
+        </image>
+    </ImageView>
+    <Button fx:id="pauseButton" layoutX="1108.0" layoutY="11.0" minWidth="32.0" mnemonicParsing="false" onMouseClicked="#switchToPausePage" opacity="0.0" prefHeight="82.0" prefWidth="82.0" style="-fx-background-radius: 40;" text="Pause" />
     <Rectangle arcHeight="5.0" arcWidth="5.0" height="810.0" layoutX="1262.0" stroke="BLACK" strokeType="INSIDE" width="430.0" />
-   <Rectangle height="810.0" layoutX="-305.0" stroke="BLACK" strokeType="INSIDE" width="485.0" />
+    <Rectangle height="810.0" layoutX="-305.0" stroke="BLACK" strokeType="INSIDE" width="485.0" />
+
+             <Label fx:id="tokenLabel" layoutX="325.0" layoutY="17.0" prefHeight="68.0" prefWidth="104.0" text="0" textAlignment="RIGHT" textFill="WHITE">
+        <font>
+            <Font name="Britannic Bold" size="50.0" />
+        </font>
+    </Label>
 </AnchorPane>

@@ -17,7 +17,6 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GamePlayController extends SceneController{
     @FXML
@@ -27,6 +26,7 @@ public class GamePlayController extends SceneController{
 
     @FXML
     public Button pauseButton;
+    public ImageView imgToken1;
 
     @FXML
     private ImageView imgCharacter;
@@ -106,6 +106,8 @@ public class GamePlayController extends SceneController{
     private ArrayList<Image> backgroundList = new ArrayList<>();
     @FXML
     public void initialize() {
+        Platform.platformReintialize();
+        GameMechanics.getInstance().setGamePlayController(this);
         platform1 = Platform.getInstance(1); //Using Flyweight Design Pattern
         platform2 = Platform.getInstance(2);
         platform3 = Platform.getInstance(3);
@@ -113,8 +115,10 @@ public class GamePlayController extends SceneController{
         platform2.setPlatformRectangle(platformRectangle2);
         platform3.setPlatformRectangle(platformRectangle3);
         double platform2startX = platform2.getPlatformRectangle().getX();
+        System.out.println("Platform2StartX: " + platform2startX);
         double platform2HalfWidth = platform2.getPlatformRectangle().getWidth()/2;
         double hitPointInitialPosition = platform2startX + platform2HalfWidth - (double) HitPoint.getWidth() /2;
+        System.out.println("Hitpoint Posn: "+ hitPointInitialPosition);
         hitPointFront = new HitPoint(hitPointRectangle1, hitPointInitialPosition);
         hitPointBack = new HitPoint(hitPointRectangle2, hitPointFront.getHitPointPosition());
         stick1 = new Stick(true, stickLine1);
@@ -157,7 +161,7 @@ public class GamePlayController extends SceneController{
         imgCharacter.setY(pillarY - imgCharacter.getFitHeight());
     }
 
-    void redefineVariables(double increment) {
+    void redefineVariables() {
         System.out.println("Redefining Variables");
         platform1.redefinePlatform();
         platform2.redefinePlatform();
@@ -271,7 +275,7 @@ public class GamePlayController extends SceneController{
                 GameStatistics.setHighScoreChecked(true);
             });
             fadeIn.play();
-        };
+        }
     }
 
     public void updateTokenCount(){
@@ -286,6 +290,7 @@ public class GamePlayController extends SceneController{
     }
 
     public void setHitPointPosition(HitPoint hitPoint, double x){
+        System.out.println("Hitpoint position: "+x);
         hitPoint.setHitPointPosition(x);
     }
 
@@ -391,6 +396,298 @@ public class GamePlayController extends SceneController{
         else{
             return stick2;
         }
+    }
+
+    public ImageView getImgToken() {
+        return imgToken;
+    }
+
+    public void setImgToken(ImageView imgToken) {
+        this.imgToken = imgToken;
+    }
+
+    public ImageView getImgToken2() {
+        return imgToken2;
+    }
+
+    public void setImgToken2(ImageView imgToken2) {
+        this.imgToken2 = imgToken2;
+    }
+
+    public Button getPauseButton() {
+        return pauseButton;
+    }
+
+    public void setPauseButton(Button pauseButton) {
+        this.pauseButton = pauseButton;
+    }
+
+    public ImageView getImgToken1() {
+        return imgToken1;
+    }
+
+    public void setImgToken1(ImageView imgToken1) {
+        this.imgToken1 = imgToken1;
+    }
+
+    public ImageView getImgCharacter() {
+        return imgCharacter;
+    }
+
+    public void setImgCharacter(ImageView imgCharacter) {
+        this.imgCharacter = imgCharacter;
+    }
+
+    public Line getStickLine1() {
+        return stickLine1;
+    }
+
+    public void setStickLine1(Line stickLine1) {
+        this.stickLine1 = stickLine1;
+    }
+
+    public Line getStickLine2() {
+        return stickLine2;
+    }
+
+    public void setStickLine2(Line stickLine2) {
+        this.stickLine2 = stickLine2;
+    }
+
+    public Button getExtendStickButton() {
+        return extendStickButton;
+    }
+
+    public void setExtendStickButton(Button extendStickButton) {
+        this.extendStickButton = extendStickButton;
+    }
+
+    public AnchorPane getMovableComponents() {
+        return movableComponents;
+    }
+
+    public void setMovableComponents(AnchorPane movableComponents) {
+        this.movableComponents = movableComponents;
+    }
+
+    public AnchorPane getFirstController() {
+        return firstController;
+    }
+
+    public void setFirstController(AnchorPane firstController) {
+        this.firstController = firstController;
+    }
+
+    public Button getInvertPlayerButton() {
+        return invertPlayerButton;
+    }
+
+    public void setInvertPlayerButton(Button invertPlayerButton) {
+        this.invertPlayerButton = invertPlayerButton;
+    }
+
+    public Rectangle getPlatformRectangle1() {
+        return platformRectangle1;
+    }
+
+    public void setPlatformRectangle1(Rectangle platformRectangle1) {
+        this.platformRectangle1 = platformRectangle1;
+    }
+
+    public Rectangle getPlatformRectangle2() {
+        return platformRectangle2;
+    }
+
+    public void setPlatformRectangle2(Rectangle platformRectangle2) {
+        this.platformRectangle2 = platformRectangle2;
+    }
+
+    public Rectangle getPlatformRectangle3() {
+        return platformRectangle3;
+    }
+
+    public void setPlatformRectangle3(Rectangle platformRectangle3) {
+        this.platformRectangle3 = platformRectangle3;
+    }
+
+    public Rectangle getHitPointRectangle2() {
+        return hitPointRectangle2;
+    }
+
+    public void setHitPointRectangle2(Rectangle hitPointRectangle2) {
+        this.hitPointRectangle2 = hitPointRectangle2;
+    }
+
+    public Rectangle getHitPointRectangle1() {
+        return hitPointRectangle1;
+    }
+
+    public void setHitPointRectangle1(Rectangle hitPointRectangle1) {
+        this.hitPointRectangle1 = hitPointRectangle1;
+    }
+
+    public Label getScoreLabel() {
+        return scoreLabel;
+    }
+
+    public void setScoreLabel(Label scoreLabel) {
+        this.scoreLabel = scoreLabel;
+    }
+
+    public Label getTokenLabel() {
+        return tokenLabel;
+    }
+
+    public void setTokenLabel(Label tokenLabel) {
+        this.tokenLabel = tokenLabel;
+    }
+
+    public Label getHighScoreText() {
+        return highScoreText;
+    }
+
+    public void setHighScoreText(Label highScoreText) {
+        this.highScoreText = highScoreText;
+    }
+
+    public void setBgImg1(ImageView bgImg1) {
+        this.bgImg1 = bgImg1;
+    }
+
+    public void setBgImg2(ImageView bgImg2) {
+        this.bgImg2 = bgImg2;
+    }
+
+    public ImageView getBgImg3() {
+        return bgImg3;
+    }
+
+    public void setBgImg3(ImageView bgImg3) {
+        this.bgImg3 = bgImg3;
+    }
+
+    public Platform getPlatform1() {
+        return platform1;
+    }
+
+    public void setPlatform1(Platform platform1) {
+        this.platform1 = platform1;
+    }
+
+    public Platform getPlatform2() {
+        return platform2;
+    }
+
+    public void setPlatform2(Platform platform2) {
+        this.platform2 = platform2;
+    }
+
+    public Platform getPlatform3() {
+        return platform3;
+    }
+
+    public void setPlatform3(Platform platform3) {
+        this.platform3 = platform3;
+    }
+
+    public static void setHitPointFront(HitPoint hitPointFront) {
+        GamePlayController.hitPointFront = hitPointFront;
+    }
+
+    public static void setHitPointBack(HitPoint hitPointBack) {
+        GamePlayController.hitPointBack = hitPointBack;
+    }
+
+    public Stick getStick1() {
+        return stick1;
+    }
+
+    public void setStick1(Stick stick1) {
+        this.stick1 = stick1;
+    }
+
+    public Stick getStick2() {
+        return stick2;
+    }
+
+    public void setStick2(Stick stick2) {
+        this.stick2 = stick2;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Token getToken1() {
+        return token1;
+    }
+
+    public void setToken1(Token token1) {
+        this.token1 = token1;
+    }
+
+    public Token getToken2() {
+        return token2;
+    }
+
+    public void setToken2(Token token2) {
+        this.token2 = token2;
+    }
+
+    public GameMechanics getGameMechanics() {
+        return gameMechanics;
+    }
+
+    public void setGameMechanics(GameMechanics gameMechanics) {
+        this.gameMechanics = gameMechanics;
+    }
+
+    public boolean isHitsPoint() {
+        return hitsPoint;
+    }
+
+    public double getTotalShiftDistance() {
+        return totalShiftDistance;
+    }
+
+    public void setTotalShiftDistance(double totalShiftDistance) {
+        this.totalShiftDistance = totalShiftDistance;
+    }
+
+    public DefaultCharacter getDefaultCharacter() {
+        return defaultCharacter;
+    }
+
+    public void setDefaultCharacter(DefaultCharacter defaultCharacter) {
+        this.defaultCharacter = defaultCharacter;
+    }
+
+    public GameStatistics getGameStatistics() {
+        return gameStatistics;
+    }
+
+    public void setGameStatistics(GameStatistics gameStatistics) {
+        this.gameStatistics = gameStatistics;
+    }
+
+    public ArrayList<Image> getBackgroundList() {
+        return backgroundList;
+    }
+
+    public void setBackgroundList(ArrayList<Image> backgroundList) {
+        this.backgroundList = backgroundList;
+    }
+
+    public Scene getOverlayScene() {
+        return overlayScene;
+    }
+
+    public void setOverlayScene(Scene overlayScene) {
+        this.overlayScene = overlayScene;
     }
 }
 

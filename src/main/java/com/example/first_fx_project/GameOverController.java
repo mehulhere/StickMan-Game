@@ -41,4 +41,36 @@ public class GameOverController extends SceneController{
     public void setGameOverTokens(String tokens){
         gameOverTokens.setText(tokens);
     }
+
+    public Label getGameOverScore() {
+        return gameOverScore;
+    }
+
+    public void setGameOverScore(Label gameOverScore) {
+        this.gameOverScore = gameOverScore;
+    }
+
+    public Label getGameOverTokens() {
+        return gameOverTokens;
+    }
+
+    public void setGameOverTokens(Label gameOverTokens) {
+        this.gameOverTokens = gameOverTokens;
+    }
+
+    public Label getGameOverBestScore() {
+        return gameOverBestScore;
+    }
+
+    public void setGameOverBestScore(Label gameOverBestScore) {
+        this.gameOverBestScore = gameOverBestScore;
+    }
+
+    public Button getReviveButton() {
+        return reviveButton;
+    }
+
+    public void setReviveButton(Button reviveButton) {
+        this.reviveButton = reviveButton;
+    }
 }

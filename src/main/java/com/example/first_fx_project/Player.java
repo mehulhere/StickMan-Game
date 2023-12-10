@@ -20,7 +20,6 @@ public abstract class Player {
     static private int speed;
     public boolean isInverted = false;
     private boolean meterIsFull;
-    private Position position;
     GamePlayController gamePlayController;
 
     private AtomicBoolean tokenCollected = new AtomicBoolean(false);
@@ -62,6 +61,9 @@ public abstract class Player {
             System.out.println(remainingDistance);
             System.out.println(remainingDistance);
             Timeline timeline1 = playerMovementAnimationTimeline(transitionRate, remainingDistance, targetPlatformEndX, true);
+        });
+        javafx.application.Platform.runLater(() -> {
+            gamePlayController.updateTokenCount();
         });
 //        timeline.stop();
         waitingThread.start();
@@ -234,11 +236,10 @@ public abstract class Player {
         });
 
         try {
-            // Wait for the task to complete
 
-// Schedule a task to interrupt the thread after a delay of 5 seconds
             System.out.println("Waiting for Revival return");
             future.get(); // This blocks until the task is done
+//            javafx.application.Platform.runLater();
             System.out.println("Revival returned");
             if (isInverted) {
                 invert();
@@ -304,5 +305,93 @@ public abstract class Player {
 
     // Getters and setters can be added for the private fields
 
+
+    public Stick getStick() {
+        return stick;
+    }
+
+    public void setStick(Stick stick) {
+        this.stick = stick;
+    }
+
+    public static int getLength() {
+        return length;
+    }
+
+    public static void setLength(int length) {
+        Player.length = length;
+    }
+
+    public static int getSpeed() {
+        return speed;
+    }
+
+    public static void setSpeed(int speed) {
+        Player.speed = speed;
+    }
+
+    public boolean isInverted() {
+        return isInverted;
+    }
+
+    public void setInverted(boolean inverted) {
+        isInverted = inverted;
+    }
+
+    public boolean isMeterIsFull() {
+        return meterIsFull;
+    }
+
+    public void setMeterIsFull(boolean meterIsFull) {
+        this.meterIsFull = meterIsFull;
+    }
+
+    public GamePlayController getGamePlayController() {
+        return gamePlayController;
+    }
+
+    public void setGamePlayController(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
+    }
+
+    public AtomicBoolean getTokenCollected() {
+        return tokenCollected;
+    }
+
+    public void setTokenCollected(AtomicBoolean tokenCollected) {
+        this.tokenCollected = tokenCollected;
+    }
+
+    public AtomicBoolean getTransitionRunning() {
+        return transitionRunning;
+    }
+
+    public void setTransitionRunning(AtomicBoolean transitionRunning) {
+        this.transitionRunning = transitionRunning;
+    }
+
+    public ImageView getImage() {
+        return image;
+    }
+
+    public void setImage(ImageView image) {
+        this.image = image;
+    }
+
+    public GameStatistics getGameStatistics() {
+        return gameStatistics;
+    }
+
+    public void setGameStatistics(GameStatistics gameStatistics) {
+        this.gameStatistics = gameStatistics;
+    }
+
+    public AtomicBoolean getCollectedToken() {
+        return collectedToken;
+    }
+
+    public void setCollectedToken(AtomicBoolean collectedToken) {
+        this.collectedToken = collectedToken;
+    }
 }
 

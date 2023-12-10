@@ -39,4 +39,24 @@ public class HitPoint {
     public void isVisible(boolean visible){
         hitPointRectangle.setVisible(visible);
     }
+
+    public static void setWidth(int width) {
+        HitPoint.width = width;
+    }
+
+    public static double getHeight() {
+        return height;
+    }
+
+    public static void setHeight(double height) {
+        HitPoint.height = height;
+    }
+
+    public Rectangle getHitPointRectangle() {
+        return hitPointRectangle;
+    }
+
+    public void setHitPointRectangle(Rectangle hitPointRectangle) {
+        this.hitPointRectangle = hitPointRectangle;
+    }
 }

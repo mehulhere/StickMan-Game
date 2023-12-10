@@ -31,7 +31,7 @@ public class Token { //In our game, instead of berries we have token class
             System.out.println("platformCurrentEndX: "+ platformCurrentEndX);
             System.out.println("platformTargetStartX: "+ platformTargetStartX);
             double tokenStartX =random.nextDouble(platformCurrentEndX, platformTargetStartX- imageWidth);
-            int opacity = random.nextInt(1,2);
+            int opacity = random.nextInt(-2,2);
             System.out.println("TokenStartX: "+tokenStartX);
             imgToken.setX(tokenStartX);
             imgToken.setOpacity(opacity);
@@ -76,5 +76,9 @@ public class Token { //In our game, instead of berries we have token class
     public void setCurrentToken(boolean currentToken) {
         this.currentToken = currentToken;
     }
+
+    public void setImgToken(ImageView imgToken) {
+        this.imgToken = imgToken;
     }
+}
 

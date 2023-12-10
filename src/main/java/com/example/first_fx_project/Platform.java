@@ -6,7 +6,6 @@ import javafx.animation.Timeline;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -18,7 +17,7 @@ public class Platform {
 
     private static int platform3Distance;
 
-    private static Map<Integer, Platform> PlatformInstances =
+    private static Map<Integer, Platform> platformInstances =
             new HashMap<Integer, Platform>(); //Flyweight Design Pattern Implemented
 
     public static int getPlatform3X() {
@@ -32,11 +31,15 @@ public class Platform {
         return platform3Distance;
     }
 
+    public static void platformReintialize(){
+        platformInstances.clear();
+    }
+
     public static Platform getInstance(int platformType) {
-        if (!PlatformInstances.containsKey(platformType)) {
-            PlatformInstances.put(platformType, new Platform(platformType));
+        if (!platformInstances.containsKey(platformType)) {
+            platformInstances.put(platformType, new Platform(platformType));
         }
-        return PlatformInstances.get(platformType);
+        return platformInstances.get(platformType);
     }
 
     private int platformType; // 1 for current. 2 for target. 3 for invisible.
@@ -153,6 +156,70 @@ public class Platform {
     public void setPlatformRectangle(Rectangle platformRectangle) {
         this.platformRectangle = platformRectangle;
         platformDefine( 0, 0);
+    }
+
+    public static Random getRandom() {
+        return random;
+    }
+
+    public static void setRandom(Random random) {
+        Platform.random = random;
+    }
+
+    public static int getHeight() {
+        return height;
+    }
+
+    public static void setHeight(int height) {
+        Platform.height = height;
+    }
+
+    public static int getPlatform3Distance() {
+        return platform3Distance;
+    }
+
+    public static void setPlatform3Distance(int platform3Distance) {
+        Platform.platform3Distance = platform3Distance;
+    }
+
+    public static Map<Integer, Platform> getPlatformInstances() {
+        return platformInstances;
+    }
+
+    public static void setPlatformInstances(Map<Integer, Platform> platformInstances) {
+        Platform.platformInstances = platformInstances;
+    }
+
+    public static int getMaxWidth() {
+        return maxWidth;
+    }
+
+    public static void setMaxWidth(int maxWidth) {
+        Platform.maxWidth = maxWidth;
+    }
+
+    public static int getMinWidth() {
+        return minWidth;
+    }
+
+    public static void setMinWidth(int minWidth) {
+        Platform.minWidth = minWidth;
+    }
+
+    public static int getSafetyDistance() {
+        return safetyDistance;
+    }
+
+    public static void setSafetyDistance(int safetyDistance) {
+        Platform.safetyDistance = safetyDistance;
+    }
+
+    public GamePlayController getGamePlayController() {
+        return gamePlayController;
+    }
+
+    public void setGamePlayController(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
     }
 }
 

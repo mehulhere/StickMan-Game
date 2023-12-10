@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class MenuPage extends Application {
-    private GraphicsContext g;
 
     @Override
     public void start(Stage primaryStage) throws Exception {

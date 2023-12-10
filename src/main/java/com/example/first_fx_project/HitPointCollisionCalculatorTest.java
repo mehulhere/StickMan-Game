@@ -45,5 +45,6 @@ public class HitPointCollisionCalculatorTest {
         boolean collision = GameMechanics.getInstance().hitPointCollisionCalculator(lowerLimit, stickX);
         assertFalse(collision);
     }
+
 }
 

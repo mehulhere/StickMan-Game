@@ -8,7 +8,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-public class GameMechanics {
+public class GameMechanics implements Mechanics {
     private GamePlayController gamePlayController;
     private static GameMechanics gameMechanics = null;
     public static GameMechanics getInstance()
@@ -22,6 +22,7 @@ public class GameMechanics {
     private GameMechanics() {
     }
 
+    @Override
     public void changeScene(Platform platform2, AnchorPane movableComponents, double shiftDistance, Button extendStickButton){
         try {
             Thread.sleep(200);
@@ -34,7 +35,7 @@ public class GameMechanics {
         translateTransition.setToX(movableComponents.getTranslateX() - shiftDistance);
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
-            gamePlayController.redefineVariables(shiftDistance);
+            gamePlayController.redefineVariables();
             gamePlayController.rotateBackground(shiftDistance);
             extendStickButton.setDisable(false);
             extendStickButton.requestFocus();
@@ -47,6 +48,7 @@ public class GameMechanics {
         return stickEndX >= platformStartX && stickEndX <= platformEndX;
     }
 
+    @Override
     public void checkCollision(Line stickLine, Rectangle platformRectangle, Platform platform2, ImageView playerImage){
         double stickLength = stickLine.getStartY() - stickLine.getEndY();
         double stickEndX = stickLine.getStartX() + stickLength;
@@ -86,25 +88,19 @@ public class GameMechanics {
         return hitPointCollisionCalculator(lowerLimit, stickX);
     }
 
-    public boolean checkTokenCollision(Token token) {
-        // Method to check collision between the player and a token
-        // Returns true if collision occurs, false otherwise
-        return false;
-    }
-
-    public void destroyPlayerClass() {
-        // Method to handle the destruction of the player class
-    }
-
-    public void resetMeter() {
-        // Method to reset powerMeter
-    }
-
     public GamePlayController getGamePlayController() {
         return gamePlayController;
     }
 
     public void setGamePlayController(GamePlayController gamePlayController) {
         this.gamePlayController = gamePlayController;
+    }
+
+    public static GameMechanics getGameMechanics() {
+        return gameMechanics;
+    }
+
+    public static void setGameMechanics(GameMechanics gameMechanics) {
+        GameMechanics.gameMechanics = gameMechanics;
     }
 }

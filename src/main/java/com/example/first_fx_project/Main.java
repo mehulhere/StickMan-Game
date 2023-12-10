@@ -6,15 +6,43 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import javax.sound.sampled.*;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Objects;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        try {
+            URL audioURL = getClass().getResource("assets/BGSound.wav");
+            Thread audioThread = new Thread(() -> {
+                try {
+                    File audioFile = new File(audioURL.toURI());
+                    System.out.println(audioFile);
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+                    AudioFormat format = audioStream.getFormat();
+                    DataLine.Info info = new DataLine.Info(Clip.class, format);
+                    Clip clip = (Clip) AudioSystem.getLine(info);
+                    clip.open(audioStream);
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+                    Thread.sleep(clip.getMicrosecondLength() / 1000);
+                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException |
+                         InterruptedException | NullPointerException e) {
+                    e.printStackTrace();
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            audioThread.start();
+        }
+        catch (NullPointerException nullPointerException){
+            nullPointerException.printStackTrace();
+        }
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("menuPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1440, 810);
         stage.getIcons().add(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource("assets/stickHero0.png")).toExternalForm())));
@@ -52,10 +80,9 @@ public class Main extends Application {
         TestRunner.main(args);
         try {
             deserialize();
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("WELCOME TO GAME");
         }
-
         launch();
     }
 }

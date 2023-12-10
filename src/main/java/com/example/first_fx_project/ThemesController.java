@@ -47,4 +47,40 @@ public class ThemesController extends SceneController{
     public static int getThemeIndex() {
         return themeIndex;
     }
+
+    public ImageView getThemeImageView() {
+        return themeImageView;
+    }
+
+    public void setThemeImageView(ImageView themeImageView) {
+        this.themeImageView = themeImageView;
+    }
+
+    public Button getThemeSwitchLeft() {
+        return themeSwitchLeft;
+    }
+
+    public void setThemeSwitchLeft(Button themeSwitchLeft) {
+        this.themeSwitchLeft = themeSwitchLeft;
+    }
+
+    public Button getThemeSwitchRight() {
+        return themeSwitchRight;
+    }
+
+    public void setThemeSwitchRight(Button themeSwitchRight) {
+        this.themeSwitchRight = themeSwitchRight;
+    }
+
+    public ArrayList<Image> getThemeList() {
+        return themeList;
+    }
+
+    public void setThemeList(ArrayList<Image> themeList) {
+        this.themeList = themeList;
+    }
+
+    public static void setThemeIndex(int themeIndex) {
+        ThemesController.themeIndex = themeIndex;
+    }
 }

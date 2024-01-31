@@ -62,10 +62,10 @@ This JavaFX-based game combines platform travel, token collection, character sel
     - Represents the stick used by the player to
 
 
-#Contributors
+### Contributors
 1. Mehul Pahuja
 2. Aditya Aggarwal
 
-#GitHub Link:
+### GitHub Link:
 https://github.com/mehulhere/FirstGame
 

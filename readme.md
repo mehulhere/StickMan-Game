@@ -4,7 +4,7 @@ This project is a JavaFX-based game that involves platform travelling, token col
 ### How To Play
 The Player has to click on play to enter the gameplay page. They would have to keep pressing the spacebar to extend a stick and release it to stop the extension. The goal is to extend the stick to such an extent such that on rotation, it helps the player travel across the platforms. The player can also press the spacebar between the travel to invert the character and collect tokens. If the stick lands directly in the middle of a platform, it grants an extra point. Once the player dies, they may see an option to revive the character and continue the game using the hearts they collected depending on the total number of hearts they have. The user can also choose various themes and character skins from the menu page.
 
-###Main Classes Used
+###Main Classes Used###
 ## Token Class: The Token class represents tokens in the game and has methods for generating, removing, and handling tokens. Tokens are used to revive the character given that sufficient tokens are present.
 
 ## Themes Controller: The ThemesController class handles the switching of themes in the game.

@@ -66,6 +66,3 @@ This JavaFX-based game combines platform travel, token collection, character sel
 1. Mehul Pahuja
 2. Aditya Aggarwal
 
-### GitHub Link:
-https://github.com/mehulhere/FirstGame
-
